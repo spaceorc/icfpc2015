@@ -83,6 +83,9 @@ namespace SomeSecretProject.Logic
 				cells.RemoveAt(lockedLines[i]);
 			}
 
+            for (int i=0; i<lockedLines.Count; i++)
+                cells.Insert(0, new Cell[Width]);
+
 			RefineMap();
 
 			return lockedLines.Count;
