@@ -11,36 +11,79 @@ namespace SomeSecretProject.Tests
 	[TestFixture]
 	class CellMoveTests
 	{
-		[Test]
-		public void MoveCellTests()
-		{
-			var cell = new Cell {x = 5, y = 0, filled = false};
-			CheckEqual(cell, 5, 0);
-			cell = cell.Move(new Vector(MoveType.E, cell.y));
-			CheckEqual(cell, 6, 0);
-			cell = cell.Move(new Vector(MoveType.SE, cell.y));
-			CheckEqual(cell, 6, 1);
-			cell = cell.Move(new Vector(MoveType.SE, cell.y));
-			CheckEqual(cell, 7, 2);
-			cell = cell.Move(new Vector(MoveType.SE, cell.y));
-			CheckEqual(cell, 7, 3);
-			cell = cell.Move(new Vector(MoveType.SE, cell.y));
-			CheckEqual(cell, 8, 4);
-			cell = cell.Move(new Vector(MoveType.W, cell.y));
-			CheckEqual(cell, 7, 4);
-			cell = cell.Move(new Vector(MoveType.W, cell.y));
-			CheckEqual(cell, 6, 4);
-			cell = cell.Move(new Vector(MoveType.W, cell.y));
-			CheckEqual(cell, 5, 4);
-			cell = cell.Move(new Vector(MoveType.W, cell.y));
-			CheckEqual(cell, 4, 4);
-			cell = cell.Move(new Vector(MoveType.SW, cell.y));
-			CheckEqual(cell, 3, 5);
-			cell = cell.Move(new Vector(MoveType.SW, cell.y));
-			CheckEqual(cell, 3, 6);
-			cell = cell.Move(new Vector(MoveType.SW, cell.y));
-			CheckEqual(cell, 2, 7);
-		}
+        [Test]
+        public void MoveCellTests_Even_One()
+        {
+            TestMove(2, 4, MoveType.E,  3, 4);
+            TestMove(2, 4, MoveType.SE, 2, 5);
+            TestMove(2, 4, MoveType.SW, 1, 5);
+            TestMove(2, 4, MoveType.W,  1, 4);
+            TestMove(2, 4, MoveType.NW, 1, 3);
+            TestMove(2, 4, MoveType.NE, 2, 3);
+        }
+
+        [Test]
+        public void MoveCellTests_Odd_One()
+        {
+            TestMove(2, 5, MoveType.E,  3, 5);
+            TestMove(2, 5, MoveType.SE, 3, 6);
+            TestMove(2, 5, MoveType.SW, 2, 6);
+            TestMove(2, 5, MoveType.W,  1, 5);
+            TestMove(2, 5, MoveType.NW, 2, 4);
+            TestMove(2, 5, MoveType.NE, 3, 4);
+        }
+
+        [Test]
+        public void MoveCellTests_Even_Three()
+        {
+            TestMove(2, 4, MoveType.E,  5, 4, length: 3);
+            TestMove(2, 4, MoveType.SE, 3, 7, length: 3);
+            TestMove(2, 4, MoveType.SW, 0, 7, length: 3);
+            TestMove(2, 4, MoveType.W, -1, 4, length: 3);
+            TestMove(2, 4, MoveType.NW, 0, 1, length: 3);
+            TestMove(2, 4, MoveType.NE, 3, 1, length: 3);
+        }
+        
+        [Test]
+        public void MoveCellTests_Odd_Three()
+        {
+            TestMove(2, 5, MoveType.E,  5, 5, length: 3);
+            TestMove(2, 5, MoveType.SE, 4, 8, length: 3);
+            TestMove(2, 5, MoveType.SW, 1, 8, length: 3);
+            TestMove(2, 5, MoveType.W, -1, 5, length: 3);
+            TestMove(2, 5, MoveType.NW, 1, 2, length: 3);
+            TestMove(2, 5, MoveType.NE, 4, 2, length: 3);
+        }
+        
+        [Test]
+        public void MoveCellTests_Even_Four()
+        {
+            TestMove(2, 4, MoveType.E,  6, 4, length: 4);
+            TestMove(2, 4, MoveType.SE, 4, 8, length: 4);
+            TestMove(2, 4, MoveType.SW, 0, 8, length: 4);
+            TestMove(2, 4, MoveType.W, -2, 4, length: 4);
+            TestMove(2, 4, MoveType.NW, 0, 0, length: 4);
+            TestMove(2, 4, MoveType.NE, 4, 0, length: 4);
+        }
+        
+        [Test]
+        public void MoveCellTests_Odd_Four()
+        {
+            TestMove(2, 5, MoveType.E,  6, 5, length: 4);
+            TestMove(2, 5, MoveType.SE, 4, 9, length: 4);
+            TestMove(2, 5, MoveType.SW, 0, 9, length: 4);
+            TestMove(2, 5, MoveType.W, -2, 5, length: 4);
+            TestMove(2, 5, MoveType.NW, 0, 1, length: 4);
+            TestMove(2, 5, MoveType.NE, 4, 1, length: 4);
+        }
+
+	    private void TestMove(int fX, int fY, MoveType moveType, int tX, int tY, int length = 1)
+	    {
+            var cell = new Cell { x = fX, y = fY, filled = false };
+	        var actual = cell.Move(new Vector(moveType, cell.y, length));
+            Assert.AreEqual(actual.x, tX);
+            Assert.AreEqual(actual.y, tY);
+	    }
 
 		[Test]
 		public void RotateTests()
