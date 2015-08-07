@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using JetBrains.Annotations;
 using SomeSecretProject.IO;
+using SomeSecretProject.Logic.Score;
 
 namespace SomeSecretProject.Logic
 {
@@ -40,6 +41,7 @@ namespace SomeSecretProject.Logic
 		public readonly Unit[] units;
 		private Unit currentUnit;
 		private int currentUnitIndex;
+		private int currentScore;
 		private readonly LinearCongruentalGenerator randomGenerator;
 
         public GameBase([NotNull] Problem problem, int seed)
@@ -60,6 +62,7 @@ namespace SomeSecretProject.Logic
             randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[seed]);
             state = State.WaitUnit;
             currentUnitIndex = 0;
+		    currentScore = 0;
         }
 
         /// <summary>
@@ -140,7 +143,8 @@ namespace SomeSecretProject.Logic
 		{
 			foreach (var cell in unit.members)
 				map[cell.x, cell.y] = cell.Fill();
-			// todo score!
+            //todo explode lines
+		    currentScore += ScoreCounter.GetMoveScore(unit, 0, 0); //todo lines cleared
 		}
 
 		[NotNull]

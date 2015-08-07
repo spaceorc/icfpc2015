@@ -6,23 +6,8 @@ namespace SomeSecretProject.Logic.Score
 {
     public static class ScoreCounter
     {
-        public static int Count(IList<UnitStep> steps)
+        public static int GetMoveScore(Unit unit, int currentStepClearedLinesAmount, int previousStepClearedLinesAmount)
         {
-            return steps
-                .Select((e, index) => new {CurrentStep = e, PreviousStep = index > 0 ? e : UnitStep.Null})
-                .Aggregate(0,
-                    (sum, info) =>
-                        GetMoveScore(info.CurrentStep.Item, info.CurrentStep.IsLocked, info.CurrentStep.ClearedLinesAmount,
-                            info.PreviousStep.ClearedLinesAmount) + GetPowerScores(info.CurrentStep.PowerPhrases));
-        }
-
-        private static int GetMoveScore(Unit unit, bool isLocked, int currentStepClearedLinesAmount, int previousStepClearedLinesAmount)
-        {
-            if (!isLocked)
-            {
-                return 0;
-            }
-
             var size = unit.members.Length;
             var ls = currentStepClearedLinesAmount;
             var ls_old = previousStepClearedLinesAmount;
@@ -33,12 +18,12 @@ namespace SomeSecretProject.Logic.Score
             return points + lineBonus;
         }
 
-        private static int GetPowerScores(IList<string> powerPhrases)
+        public static int GetPowerScores(IList<string> powerPhrases)
         {
             return powerPhrases
                 .GroupBy(e => e)
                 .Select(e => new {PowerPhrase = e.Key, Amount = e.Count()})
-                .Aggregate(0, (sum, info) => GetPowerScore(info.PowerPhrase, info.Amount));
+                .Aggregate(0, (sum, info) => sum + GetPowerScore(info.PowerPhrase, info.Amount));
         }
 
         private static int GetPowerScore(string powerPhrase, int reps)
