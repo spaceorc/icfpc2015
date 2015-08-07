@@ -29,6 +29,14 @@ namespace SomeSecretProject.Logic
 					Y = 1;
 					X = y % 2 == 0 ? 0 : 1;
 					break;
+				case MoveType.NW:
+					Y = -1;
+					X = y%2 == 0 ? -1 : 0;
+					break;
+				case MoveType.NE:
+					Y = -1;
+					X = y % 2 == 0 ? 0 : 1;
+					break;
 				default:
 					throw new ArgumentOutOfRangeException(move.ToString(), move, null);
 			}

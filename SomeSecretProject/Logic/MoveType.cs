@@ -6,6 +6,8 @@ namespace SomeSecretProject.Logic
 		W,
 		SW,
 		SE,
+		NW,
+		NE,
 		RotateCW,
 		RotateCCW
 	}
