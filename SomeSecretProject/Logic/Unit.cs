@@ -22,7 +22,7 @@ namespace SomeSecretProject.Logic
 				case MoveType.RotateCCW:
 					return new Unit { Pivot = Pivot, Cells = Cells.Select(cell => cell.RotateCCW(Pivot)).ToArray() };
 				default:
-					throw new ArgumentOutOfRangeException("move", move, null);
+					throw new ArgumentOutOfRangeException(move.ToString(), move, null);
 			}
 		}
 	}

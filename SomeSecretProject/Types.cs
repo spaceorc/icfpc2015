@@ -16,6 +16,5 @@ namespace SomeSecretProject
     {
         public Cell[] members;
         public Cell pivot;
-
     }
 }

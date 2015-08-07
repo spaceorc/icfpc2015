@@ -1,23 +1,32 @@
 ﻿
+using System;
 using System.Net;
+using System.Text;
+using SeasideResearch.LibCurlNet;
 
 
 namespace SomeSecretProject.IO
 {
     public static class HttpHelper
     {
-        public static string API_TOKEN;
-        public static int TEAM_ID;
+        public static string API_TOKEN = "LZPdLA9OaBh2PJO7Kogh6X+/sDzqX4nPdN+cNlAO39w=";
+        public static int TEAM_ID = 127;
 
-        private static WebClient client = new WebClient()
+       
+        private static WebClient getclient = new WebClient();
+        private static WebClient postclient = new WebClient();
+        static HttpHelper()
         {
-            Headers = new WebHeaderCollection() {"Content-Type", "application/json"}
-        };
+            string authInfo = ":"+API_TOKEN;
+            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+            postclient.Headers.Add("Authorization", "Basic " + authInfo);
+            postclient.Headers.Add("Content-Type", "application/json");
+        }
 
         public static Problem GetProblem(int problemnum)
         {
             var url = @"http://icfpcontest.org/problems/problem_" + problemnum + ".json";
-            var data = client.DownloadString(url);
+            var data = getclient.DownloadString(url);
             return data.ParseAsJson<Problem>();
         }
 
@@ -25,7 +34,7 @@ namespace SomeSecretProject.IO
         {
             var url = @"https://davar.icfpcontest.org/teams/" + TEAM_ID + @"/solutions";
             var data = output.ToJson();
-            var result = client.UploadString(url, "post", data);
+            var result = postclient.UploadData(url, "POST", Encoding.UTF8.GetBytes(data));
         }
     }
 }
