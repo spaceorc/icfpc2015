@@ -16,7 +16,7 @@ namespace Emulator.Drawing
 			ConsoleColor.DarkCyan
 		};
 
-		private readonly FastConsole.FastConsoleWriter console;
+	    public readonly FastConsole.FastConsoleWriter console;
 
 		public Drawer([NotNull] FastConsole console)
 		{

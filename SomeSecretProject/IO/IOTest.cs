@@ -20,7 +20,7 @@ namespace SomeSecretProject.IO
             {
                 problemId = 0,
                 seed = 0,
-                tag = "test",
+                tag = "re",
                 solution = "Ei!Ei!"
             };
             bool result = HttpHelper.SendOutput2(solution);
