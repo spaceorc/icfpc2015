@@ -19,12 +19,12 @@ namespace SomeSecretProject.Logic
 
 		public Cell RotateCW(Cell pivot)
 		{
-
+			throw new InvalidOperationException("TODO");
 		}
 
 		public Cell RotateCCW(Cell pivot)
 		{
-
+			throw new InvalidOperationException("TODO");
 		}
 	}
 }
