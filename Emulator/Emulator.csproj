@@ -44,11 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleUtils\ConsoleApi.cs" />
-    <Compile Include="ConsoleUtils\FastConsole.cs" />
-    <Compile Include="ConsoleUtils\FastConsoleRow.cs" />
-    <Compile Include="ConsoleUtils\FastConsoleRowSegment.cs" />
-    <Compile Include="Drawer.cs" />
+    <Compile Include="Drawing\ConsoleApi.cs" />
+    <Compile Include="Drawing\FastConsole.cs" />
+    <Compile Include="Drawing\FastConsoleRow.cs" />
+    <Compile Include="Drawing\FastConsoleRowSegment.cs" />
+    <Compile Include="Drawing\Drawer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

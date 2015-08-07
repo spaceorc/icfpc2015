@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Emulator.ConsoleUtils
+namespace Emulator.Drawing
 {
 	public class FastConsole
 	{

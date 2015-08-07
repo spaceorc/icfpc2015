@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Emulator.ConsoleUtils
+namespace Emulator.Drawing
 {
 	public static class ConsoleApi
 	{

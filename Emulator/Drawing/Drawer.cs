@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Emulator.ConsoleUtils;
 using JetBrains.Annotations;
 using SomeSecretProject.Logic;
 
-namespace Emulator
+namespace Emulator.Drawing
 {
 	public class Drawer : IDisposable
 	{

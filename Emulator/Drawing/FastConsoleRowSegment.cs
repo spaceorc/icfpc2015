@@ -1,6 +1,6 @@
 using System;
 
-namespace Emulator.ConsoleUtils
+namespace Emulator.Drawing
 {
 	public class FastConsoleRowSegment : IEquatable<FastConsoleRowSegment>
 	{

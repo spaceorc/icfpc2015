@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Emulator.ConsoleUtils
+namespace Emulator.Drawing
 {
 	public class FastConsoleRow : IEquatable<FastConsoleRow>
 	{

@@ -1,5 +1,5 @@
 ﻿using System;
-using Emulator.ConsoleUtils;
+using Emulator.Drawing;
 using SomeSecretProject.Logic;
 
 namespace Emulator
