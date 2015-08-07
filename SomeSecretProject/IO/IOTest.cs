@@ -21,9 +21,10 @@ namespace SomeSecretProject.IO
                 problemId = 0,
                 seed = 0,
                 tag = "test",
-                Solution = "Ei!Ei!Ei!"
+                solution = "Ei!Ei!"
             };
-            HttpHelper.SendOutput(solution);
+            bool result = HttpHelper.SendOutput2(solution);
+            Assert.IsTrue(result);
         }
     }
 }
