@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace SomeSecretProject.Logic
 {
@@ -53,28 +53,40 @@ namespace SomeSecretProject.Logic
 			return newCell;
 		}
 
-#region Bullshit
+		public override string ToString()
+		{
+			return string.Format("X: {1}, Y: {2}, Filled: {0}", filled, x, y);
+		}
 
-	    public override string ToString()
-	    {
-            return string.Format("X: {1}, Y: {2}, Filled: {0}", filled, x, y);
+		public bool Equals(Cell other)
+		{
+			if (ReferenceEquals(null, other))
+				return false;
+			if (ReferenceEquals(this, other))
+				return true;
+			return filled == other.filled && x == other.x && y == other.y;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj))
+				return false;
+			if (ReferenceEquals(this, obj))
+				return true;
+			if (obj.GetType() != GetType())
+				return false;
+			return Equals((Cell)obj);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				var hashCode = filled.GetHashCode();
+				hashCode = (hashCode * 397) ^ x;
+				hashCode = (hashCode * 397) ^ y;
+				return hashCode;
+			}
+		}
 	}
-
-	    public bool Equals(Cell other)
-	    {
-	        if (ReferenceEquals(null, other)) return false;
-	        if (ReferenceEquals(this, other)) return true;
-	        return x == other.x && filled == other.filled && y == other.y;
-}
-
-	    public override bool Equals(object obj)
-	    {
-	        if (ReferenceEquals(null, obj)) return false;
-	        if (ReferenceEquals(this, obj)) return true;
-	        if (obj.GetType() != this.GetType()) return false;
-	        return Equals((Cell) obj);
-        }
-#endregion
-
-    }
 }
