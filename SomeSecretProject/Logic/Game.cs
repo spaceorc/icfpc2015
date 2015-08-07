@@ -40,6 +40,7 @@ namespace SomeSecretProject.Logic
         public Unit currentUnit;
 		private int currentUnitIndex;
 		private int currentScore;
+		private int previouslyExplodedLines;
 		private readonly LinearCongruentalGenerator randomGenerator;
 
         public GameBase([NotNull] Problem problem, int seed)
@@ -61,6 +62,7 @@ namespace SomeSecretProject.Logic
             state = State.WaitUnit;
             currentUnitIndex = 0;
 		    currentScore = 0;
+            previouslyExplodedLines = 0;
         }
 
         /// <summary>
@@ -139,10 +141,10 @@ namespace SomeSecretProject.Logic
 
 		private void LockUnit([NotNull] Unit unit)
 		{
-			foreach (var cell in unit.members)
-				map[cell.x, cell.y] = cell.Fill();
-            //todo explode lines
-		    currentScore += ScoreCounter.GetMoveScore(unit, 0, 0); //todo lines cleared
+			map.LockUnit(unit);
+		    var currentlyExploded = map.RemoveLines();
+		    currentScore += ScoreCounter.GetMoveScore(unit, currentlyExploded, previouslyExplodedLines);
+		    previouslyExplodedLines = currentlyExploded;
 		}
 
 		[NotNull]
