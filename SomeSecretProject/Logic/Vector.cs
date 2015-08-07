@@ -30,7 +30,7 @@ namespace SomeSecretProject.Logic
 					X = y % 2 == 0 ? 0 : 1;
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("move", move, null);
+					throw new ArgumentOutOfRangeException(move.ToString(), move, null);
 			}
 		}
 	}
