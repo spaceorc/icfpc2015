@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
@@ -21,8 +22,20 @@ namespace SomeSecretProject.Logic
 			get { return cells[cell.y][cell.x]; }
 			set { cells[cell.y][cell.x] = value; }
 		}
-		
 
+		public Map(string map)
+		{
+			cells = map.Split('\n')
+				.Select(row => row
+					.Where(c => c == '.' || c == 'X')
+					.Select(c => new Cell {filled = c == 'X'})
+					.ToArray())
+				.ToList();
+			Height = cells.Count;
+			Width = cells.Max(row => row.Length);
+			RefineMap();
+		}
+		
 		public Map(int width, int height)
 		{
 			cells = new List<Cell[]>();
@@ -72,5 +85,11 @@ namespace SomeSecretProject.Logic
 
 			return lockedLines.Count;
 		}
+
+		public override string ToString()
+		{
+			return string.Join("\r\n", cells.Select((row, i) => (i%2 == 0 ? "" : " ") + String.Join(" ", row.Select(cell => cell.filled ? "X" : "."))));
+		}
+
 	}
 }
