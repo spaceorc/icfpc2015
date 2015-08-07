@@ -1,12 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace SomeSecretProject.Logic
 {
 	public class ForbiddenSequenceChecker
 	{
-		private MoveType prevMove = MoveType.NE;
-		private int rotateCount;
 		private readonly int symmetric = 6;
 		
 		public ForbiddenSequenceChecker([NotNull] Unit unit)
@@ -25,35 +24,34 @@ namespace SomeSecretProject.Logic
 			}
 		}
 
-		public bool CheckLastMove(IList<MoveType> moves, MoveType lastMove)
+		public bool CheckLastMove([NotNull] IList<MoveType> moves, MoveType lastMove)
 		{
-			if (move == MoveType.E && prevMove == MoveType.W)
+			if (lastMove == MoveType.NW || lastMove == MoveType.NE)
 				return false;
-			if (move == MoveType.W && prevMove == MoveType.E)
+			var prevMove = moves.Any() ? moves.Last() : (MoveType?)null;
+			if (lastMove == MoveType.E && prevMove == MoveType.W)
 				return false;
-			if (move == MoveType.RotateCCW && prevMove == MoveType.RotateCW)
+			if (lastMove == MoveType.W && prevMove == MoveType.E)
 				return false;
-			if (move == MoveType.RotateCW && prevMove == MoveType.RotateCCW)
+			if (lastMove == MoveType.RotateCCW && (symmetric == 1 || prevMove == MoveType.RotateCW))
 				return false;
-			switch (move)
+			if (lastMove == MoveType.RotateCW && (symmetric == 1 || prevMove == MoveType.RotateCCW))
+				return false;
+			if (lastMove == MoveType.RotateCCW || lastMove == MoveType.RotateCW)
 			{
-				case MoveType.NW:
-				case MoveType.NE:
-					return false;
-				case MoveType.RotateCCW:
-				case MoveType.RotateCW:
-					if (prevMove == move)
-						rotateCount++;
-					else
-						rotateCount = 1;
-					if (symmetric == rotateCount)
+				var rotateCount = 1;
+				for (int i = moves.Count - 1; i >= 0; --i)
+				{
+					var prevMoveType = moves[i];
+					if (prevMoveType == lastMove)
 					{
-						rotateCount--;
-						return false;
+						if (symmetric == ++rotateCount)
+							return false;
 					}
-					break;
+					else
+						break;
+				}
 			}
-			prevMove = move;
 			return true;
 		}
 	}
