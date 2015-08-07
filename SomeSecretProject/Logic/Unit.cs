@@ -25,5 +25,10 @@ namespace SomeSecretProject.Logic
 					throw new ArgumentOutOfRangeException(move.ToString(), move, null);
 			}
 		}
+
+		public bool CheckCorrectness(Map map)
+		{
+			return !Cells.Any(cell => cell.X < 0 || cell.Y < 0 || cell.X >= map.Width || cell.Y >= map.Height || map[cell.X, cell.Y].Locked);
+		}
 	}
 }
