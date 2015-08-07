@@ -33,20 +33,24 @@ namespace SomeSecretProject.Logic
 		}
 
 		private readonly Problem problem;
-		
-	    public readonly Map map;
+        private readonly int seed;
+		public Map map;
 		public State state { get; private set; }
-		public readonly Unit[] units;
+		public Unit[] units;
         public Unit currentUnit;
 		private int currentUnitIndex;
-		private int currentScore;
+		public int currentScore;
 		private int previouslyExplodedLines;
-		private readonly LinearCongruentalGenerator randomGenerator;
-
+		private LinearCongruentalGenerator randomGenerator;
         public GameBase([NotNull] Problem problem, int seed)
         {
-            var filledCells = problem.filled.ToDictionary(cell => Tuple.Create<int, int>(cell.x, cell.y), cell => cell.Fill());
             this.problem = problem;
+            ReStart();
+        }
+
+        public void ReStart()
+        {
+            var filledCells = problem.filled.ToDictionary(cell => Tuple.Create<int, int>(cell.x, cell.y), cell => cell.Fill());
             map = new Map(problem.width, problem.height);
             for (int x = 0; x < problem.width; x++)
                 for (int y = 0; y < problem.height; y++)
@@ -61,7 +65,7 @@ namespace SomeSecretProject.Logic
             randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[seed]);
             state = State.WaitUnit;
             currentUnitIndex = 0;
-		    currentScore = 0;
+            currentScore = 0;
             previouslyExplodedLines = 0;
         }
 
@@ -189,5 +193,7 @@ namespace SomeSecretProject.Logic
             }
             return false;
         }
+
+        
     }
 }
