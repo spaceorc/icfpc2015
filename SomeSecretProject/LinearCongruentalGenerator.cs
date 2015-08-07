@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SomeSecretProject
+﻿namespace SomeSecretProject
 {
 	public class LinearCongruentalGenerator
 	{
-		private const long Modulus = 1 << 32;
+		private const long Modulus = 1 << 31;
 		private const long Multiplier = 1103515245;
 		private const long Increment = 12345;
+		private const long mask = 0x000000007FFF0000; // bits 30..16
 
-		private long CurrentState = 0;
-		public int Seed { get; private set; }
+		private long state;
 
 		public LinearCongruentalGenerator(int seed)
 		{
-			Seed = seed;
+			state = seed;
 		}
 
 		public int GetNext()
 		{
-			CurrentState = (Multiplier*CurrentState + Increment)%Modulus; 
-			return (int)CurrentState;
+			var currentState = state;
+			state = (Multiplier * state + Increment) % Modulus;
+			return (int)((currentState & mask) >> 16);
 		}
 	}
 }

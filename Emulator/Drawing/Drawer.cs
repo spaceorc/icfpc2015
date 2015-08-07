@@ -15,7 +15,7 @@ namespace Emulator.Drawing
 			ConsoleColor.DarkYellow,
 			ConsoleColor.DarkCyan
 		};
-
+        
 	    public readonly FastConsole.FastConsoleWriter console;
 
 		public Drawer([NotNull] FastConsole console)
@@ -126,7 +126,7 @@ namespace Emulator.Drawing
 			}
 		}
 
-		private CellViewInfo GetViewInfo(Map map, Unit unit, int col, int row)
+	    private CellViewInfo GetViewInfo(Map map, Unit unit, int col, int row)
 		{
 			var result = GetMapViewInfo(map.cells[col, row]);
 			if (unit != null)
