@@ -17,7 +17,6 @@ namespace Emulator.Drawing
 		};
 
 		private readonly FastConsole.FastConsoleWriter console;
-		private static readonly Random random = new Random();
 
 		public Drawer([NotNull] FastConsole console)
 		{
@@ -49,12 +48,12 @@ namespace Emulator.Drawing
 
 		private CellViewInfo GetMapViewInfo(Cell cell)
 		{
-			if (cell.Locked)
+			if (cell.filled)
 				return new CellViewInfo
 				{
 					Char = ' ',
 					ForegroundColor = ConsoleColor.Black,
-					BackgroundColor = GetColor(cell.Y, cell.X)
+					BackgroundColor = GetColor(cell.y, cell.x)
 				};
 			return new CellViewInfo
 			{
@@ -66,14 +65,14 @@ namespace Emulator.Drawing
 
 		public void DrawMap(Map map, Unit unit)
 		{
-			for (int i = 0; i < 3 * map.Cells.GetLength(1) + 1; i++)
+			for (int i = 0; i < 3 * map.cells.GetLength(1) + 1; i++)
 			{
 				var row = i / 3;
 				if (i % 3 == 0)
 				{
 					console.BackgroundColor = ConsoleColor.Black;
 					console.Write(" ");
-					for (int col = 0; col < map.Cells.GetLength(0); ++col)
+					for (int col = 0; col < map.cells.GetLength(0); ++col)
 					{
 						if (row % 2 == 1)
 						{
@@ -82,7 +81,7 @@ namespace Emulator.Drawing
 							console.BackgroundColor = viewInfo.BackgroundColor;
 							console.Write(new string(viewInfo.Char, 2));
 						}
-						if (row < map.Cells.GetLength(1))
+						if (row < map.cells.GetLength(1))
 						{
 							var viewInfo = GetViewInfo(map, unit, col, row);
 							console.ForegroundColor = viewInfo.ForegroundColor;
@@ -115,7 +114,7 @@ namespace Emulator.Drawing
 						console.BackgroundColor = ConsoleColor.Black;
 						console.Write("  ");
 					}
-					for (int col = 0; col < map.Cells.GetLength(0); ++col)
+					for (int col = 0; col < map.cells.GetLength(0); ++col)
 					{
 						var viewInfo = GetViewInfo(map, unit, col, row);
 						console.ForegroundColor = viewInfo.ForegroundColor;
@@ -129,10 +128,10 @@ namespace Emulator.Drawing
 
 		private CellViewInfo GetViewInfo(Map map, Unit unit, int col, int row)
 		{
-			var result = GetMapViewInfo(map.Cells[col, row]);
+			var result = GetMapViewInfo(map.cells[col, row]);
 			if (unit != null)
 			{
-				var unitCell = unit.Cells.SingleOrDefault(x => x.X == col && x.Y == row);
+				var unitCell = unit.cells.SingleOrDefault(x => x.x == col && x.y == row);
 				if (unitCell != null)
 				{
 					result = new CellViewInfo
@@ -141,7 +140,7 @@ namespace Emulator.Drawing
 						Char = ' '
 					};
 				}
-				var isPivot = unit.Pivot.X == col && unit.Pivot.Y == row;
+				var isPivot = unit.pivot.x == col && unit.pivot.y == row;
 				if (isPivot)
 					result.Char = 'X';
 			}

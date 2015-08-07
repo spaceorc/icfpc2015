@@ -1,12 +1,14 @@
-﻿namespace SomeSecretProject.Logic
+﻿using NUnit.Framework;
+
+namespace SomeSecretProject.Logic
 {
 	public class Map
 	{
-		public Cell[,] Cells;
+		public readonly Cell[,] cells;
 
 		public Map(int width, int height)
 		{
-			Cells = new Cell[width, height];
+			cells = new Cell[width, height];
 		}
 	}
 }

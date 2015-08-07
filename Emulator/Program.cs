@@ -10,21 +10,21 @@ namespace Emulator
 		{
 			var console = new FastConsole();
 			var map = new Map(5, 5);
-			for (int i = 0; i < map.Cells.GetLength(0); i++)
+			for (int i = 0; i < map.cells.GetLength(0); i++)
 			{
-				for (int j = 0; j < map.Cells.GetLength(1); j++)
-					map.Cells[i, j] = new Cell { X = i, Y = j, Locked = j >= 3 };
+				for (int j = 0; j < map.cells.GetLength(1); j++)
+					map.cells[i, j] = new Cell { x = i, y = j, filled = j >= 3 };
 			}
 			var unit = new Unit
 			{
-				Cells = new[] { new Cell { X = 1, Y = 1 }, new Cell { X = 3, Y = 2 } },
-				Pivot = new Cell { X = 1, Y = 1 }
+				cells = new[] { new Cell { x = 1, y = 1 }, new Cell { x = 3, y = 2 } },
+				pivot = new Cell { x = 1, y = 1 }
 			};
 			using (var drawer = new Drawer(console))
 			{
 				drawer.DrawMap(map, unit);
 			}
-			Console.SetCursorPosition(0, map.Cells.GetLength(1) * 3 + 1);
+			Console.SetCursorPosition(0, map.cells.GetLength(1) * 3 + 1);
 		}
 	}
 }

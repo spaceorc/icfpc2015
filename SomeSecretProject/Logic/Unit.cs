@@ -5,8 +5,8 @@ namespace SomeSecretProject.Logic
 {
 	public class Unit
 	{
-		public Cell Pivot;
-		public Cell[] Cells;
+		public Cell pivot;
+		public Cell[] cells;
 
 		public Unit Move(MoveType move)
 		{
@@ -16,11 +16,11 @@ namespace SomeSecretProject.Logic
 				case MoveType.W:
 				case MoveType.SW:
 				case MoveType.SE:
-					return new Unit { Pivot = Pivot.Move(new Vector(move, Pivot.Y)), Cells = Cells.Select(cell => cell.Move(new Vector(move, cell.Y))).ToArray() };
+					return new Unit { pivot = pivot.Move(new Vector(move, pivot.y)), cells = cells.Select(cell => cell.Move(new Vector(move, cell.y))).ToArray() };
 				case MoveType.RotateCW:
-					return new Unit { Pivot = Pivot, Cells = Cells.Select(cell => cell.RotateCW(Pivot)).ToArray() };
+					return new Unit { pivot = pivot, cells = cells.Select(cell => cell.RotateCW(pivot)).ToArray() };
 				case MoveType.RotateCCW:
-					return new Unit { Pivot = Pivot, Cells = Cells.Select(cell => cell.RotateCCW(Pivot)).ToArray() };
+					return new Unit { pivot = pivot, cells = cells.Select(cell => cell.RotateCCW(pivot)).ToArray() };
 				default:
 					throw new ArgumentOutOfRangeException(move.ToString(), move, null);
 			}

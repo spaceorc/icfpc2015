@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SomeSecretProject
 {
-	class LinearCongruentalGenerator
+	public class LinearCongruentalGenerator
 	{
 		private const long Modulus = 1 << 32;
 		private const long Multiplier = 1103515245;
