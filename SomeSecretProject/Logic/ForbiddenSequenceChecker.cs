@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace SomeSecretProject.Logic
@@ -8,7 +9,7 @@ namespace SomeSecretProject.Logic
 		{
 		}
 
-		public bool Move(MoveType move)
+		public bool CheckLastMove(IList<MoveType> move)
 		{
 			return true;
 		}
