@@ -65,14 +65,14 @@ namespace Emulator.Drawing
 
 		public void DrawMap(Map map, Unit unit)
 		{
-			for (int i = 0; i < 3 * map.cells.GetLength(1) + 1; i++)
+			for (int i = 0; i < 3 * map.Height + 1; i++)
 			{
 				var row = i / 3;
 				if (i % 3 == 0)
 				{
 					console.BackgroundColor = ConsoleColor.Black;
 					console.Write(" ");
-					for (int col = 0; col < map.cells.GetLength(0); ++col)
+					for (int col = 0; col < map.Width; ++col)
 					{
 						if (row % 2 == 1)
 						{
@@ -81,7 +81,7 @@ namespace Emulator.Drawing
 							console.BackgroundColor = viewInfo.BackgroundColor;
 							console.Write(new string(viewInfo.Char, 2));
 						}
-						if (row < map.cells.GetLength(1))
+						if (row < map.Height)
 						{
 							var viewInfo = GetViewInfo(map, unit, col, row);
 							console.ForegroundColor = viewInfo.ForegroundColor;
@@ -114,7 +114,7 @@ namespace Emulator.Drawing
 						console.BackgroundColor = ConsoleColor.Black;
 						console.Write("  ");
 					}
-					for (int col = 0; col < map.cells.GetLength(0); ++col)
+					for (int col = 0; col < map.Width; ++col)
 					{
 						var viewInfo = GetViewInfo(map, unit, col, row);
 						console.ForegroundColor = viewInfo.ForegroundColor;

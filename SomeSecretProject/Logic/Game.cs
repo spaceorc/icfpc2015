@@ -26,8 +26,7 @@ namespace SomeSecretProject.Logic
 			new[] { MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW }
 		};
 
-		private int[] forbiddenSequencePositions = new[]
-		{
+		private readonly int[] forbiddenSequencePositions = {
 			0, 0, 0, 0, 0, 0
 		};
 

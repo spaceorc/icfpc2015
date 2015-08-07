@@ -10,9 +10,9 @@ namespace Emulator
 		{
 			var console = new FastConsole();
 			var map = new Map(5, 5);
-			for (int i = 0; i < map.cells.GetLength(0); i++)
+			for (int i = 0; i < map.Width; i++)
 			{
-				for (int j = 0; j < map.cells.GetLength(1); j++)
+				for (int j = 0; j < map.Height; j++)
 					map.cells[i, j] = new Cell { x = i, y = j, filled = j >= 3 };
 			}
 			var unit = new Unit
@@ -24,7 +24,7 @@ namespace Emulator
 			{
 				drawer.DrawMap(map, unit);
 			}
-			Console.SetCursorPosition(0, map.cells.GetLength(1) * 3 + 1);
+			Console.SetCursorPosition(0, map.Height * 3 + 1);
 		}
 	}
 }
