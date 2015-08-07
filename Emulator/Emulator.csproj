@@ -51,6 +51,7 @@
     <Compile Include="Drawing\FastConsoleRowSegment.cs" />
     <Compile Include="Drawing\Drawer.cs" />
     <Compile Include="Emulator.cs" />
+    <Compile Include="ProblemSolverTester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

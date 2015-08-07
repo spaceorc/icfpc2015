@@ -24,7 +24,7 @@ namespace Emulator
                 var game = new Game(problem, output);
                 var emulator = new Emulator(game, 0);
                 emulator.Run();
-                scores.Add(game.currentScore);
+                scores.Add(game.CurrentScore);
                 states.Add(game.state);
                 outputs.Add(output);
             }

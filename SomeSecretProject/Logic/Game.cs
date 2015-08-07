@@ -37,7 +37,7 @@ namespace SomeSecretProject.Logic
         private readonly int seed;
 		public Map map;
 		public State state { get; private set; }
-		public readonly Unit[] units;
+		public Unit[] units;
         private string[] knownMagicSpells;
         public Unit currentUnit;
         private int currentUnitIndex;
@@ -46,7 +46,12 @@ namespace SomeSecretProject.Logic
         private int previouslyExplodedLines;
         private StringBuilder enteredString;
         private List<string> enteredMagicSpells;
-        private readonly LinearCongruentalGenerator randomGenerator;
+        private LinearCongruentalGenerator randomGenerator;
+
+        public int CurrentScore
+        {
+            get { return currentMovesScore + currentSpellsScore; }
+        }
 
         public GameBase([NotNull] Problem problem, int seed)
         {
