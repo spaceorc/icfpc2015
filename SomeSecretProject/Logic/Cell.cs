@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SomeSecretProject.Logic
 {
-	class Cell
+	public class Cell
 	{
 		public bool Locked;
 		public int X;

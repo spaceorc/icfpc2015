@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SomeSecretProject.Logic
 {
-	class Unit
+	public class Unit
 	{
 		public Cell Pivot;
 		public Cell[] Cells;
@@ -28,15 +25,5 @@ namespace SomeSecretProject.Logic
 					throw new ArgumentOutOfRangeException(nameof(move), move, null);
 			}
 		}
-	}
-
-	internal enum MoveType
-	{
-		E,
-		W,
-		SW,
-		SE,
-		RotateCW,
-		RotateCCW
 	}
 }

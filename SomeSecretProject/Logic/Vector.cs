@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SomeSecretProject.Logic
 {
-	class Vector
+	public class Vector
 	{
 		public int X;
 		public int Y;

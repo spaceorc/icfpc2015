@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SomeSecretProject.Logic
+﻿namespace SomeSecretProject.Logic
 {
-	class Map
+	public class Map
 	{
-		private Cell[,] cells;
+		public Cell[,] Cells;
 
 		public Map(int width, int height)
 		{
-			cells = new Cell[width, height];
+			Cells = new Cell[width, height];
 		}
-
 	}
 }
