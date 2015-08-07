@@ -81,12 +81,13 @@ namespace SomeSecretProject.Logic
 						return;
 					}
 					var unitIndex = randomGenerator.GetNext() % units.Length;
-					currentUnit = TryPlaceUnit(SpawnUnit(units[unitIndex], problem));
-					if (currentUnit == null)
+					var spawnedUnit = SpawnUnit(units[unitIndex], problem);
+					if (!spawnedUnit.CheckCorrectness(map))
 					{
 						state = State.End;
 						return;
 					}
+					currentUnit = spawnedUnit;
 					state = State.UnitInGame;
 					return;
 				case State.UnitInGame:
@@ -118,8 +119,8 @@ namespace SomeSecretProject.Logic
 						state = State.EndInvalidCommand;
 						return;
 					}
-					var movedUnit = TryPlaceUnit(currentUnit.Move(moveType));
-					if (movedUnit == null)
+					var movedUnit = currentUnit.Move(moveType);
+					if (!movedUnit.CheckCorrectness(map))
 					{
 						LockUnit(currentUnit);
 						state = State.WaitUnit;
@@ -159,12 +160,6 @@ namespace SomeSecretProject.Logic
 			foreach (var cell in unit.members)
 				map[cell.x, cell.y] = cell.Fill();
 			// todo score!
-		}
-
-		[CanBeNull]
-		private Unit TryPlaceUnit([NotNull] Unit unit)
-		{
-			throw new NotImplementedException();
 		}
 
 		[NotNull]
