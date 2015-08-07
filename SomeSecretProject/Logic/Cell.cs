@@ -18,23 +18,29 @@
 
 		public Cell RotateCW(Cell pivot)
 		{
-			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(x - pivot.x, y - pivot.y);
+			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(x, y);
+			var pivotHexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(pivot.x, pivot.y);
+			hexCoords.X -= pivotHexCoords.X;
+			hexCoords.Y -= pivotHexCoords.Y;
 			hexCoords.RotateCW();
+			hexCoords.X += pivotHexCoords.X;
+			hexCoords.Y += pivotHexCoords.Y;
 			var newCell = new Cell();
 			hexCoords.GetInGameCoords(out newCell.x, out newCell.y);
-			newCell.x += pivot.x;
-			newCell.y += pivot.y;
 			return newCell;
 		}
 
 		public Cell RotateCCW(Cell pivot)
 		{
-			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(x - pivot.x, y - pivot.y);
-			hexCoords.RotateCW();
+			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(x, y);
+			var pivotHexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(pivot.x, pivot.y);
+			hexCoords.X -= pivotHexCoords.X;
+			hexCoords.Y -= pivotHexCoords.Y;
+			hexCoords.RotateCCW();
+			hexCoords.X += pivotHexCoords.X;
+			hexCoords.Y += pivotHexCoords.Y;
 			var newCell = new Cell();
 			hexCoords.GetInGameCoords(out newCell.x, out newCell.y);
-			newCell.x += pivot.x;
-			newCell.y += pivot.y;
 			return newCell;
 		}
 	}
