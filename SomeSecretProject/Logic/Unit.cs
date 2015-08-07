@@ -28,7 +28,7 @@ namespace SomeSecretProject.Logic
 
 		public bool CheckCorrectness(Map map)
 		{
-			return !Cells.Any(cell => cell.X < 0 || cell.Y < 0 || cell.X >= map.Width || cell.Y >= map.Height || map[cell.X, cell.Y].Locked);
+			return !cells.Any(cell => cell.x < 0 || cell.y < 0 || cell.x >= map.Width || cell.y >= map.Height || map[cell.x, cell.y].filled);
 		}
 	}
 }

@@ -8,18 +8,18 @@ namespace SomeSecretProject.Logic
 
 		public Cell this[int x, int y]
 		{
-			get { return Cells[x, y]; }
-			set { Cells[x, y] = value; }
+			get { return cells[x, y]; }
+			set { cells[x, y] = value; }
 		}
 
 		public int Width
 		{
-			get { return Cells.GetLength(0); }
+			get { return cells.GetLength(0); }
 		}
 
 		public int Height
 		{
-			get { return Cells.GetLength(1); }
+			get { return cells.GetLength(1); }
 		}
 
 		public Map(int width, int height)

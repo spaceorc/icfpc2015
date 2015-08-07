@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SomeSecretProject.Logic
+﻿namespace SomeSecretProject.Logic
 {
 	public class Cell
 	{
@@ -20,23 +18,23 @@ namespace SomeSecretProject.Logic
 
 		public Cell RotateCW(Cell pivot)
 		{
-			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(X - pivot.X, Y - pivot.Y);
+			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(x - pivot.x, y - pivot.y);
 			hexCoords.RotateCW();
 			var newCell = new Cell();
-			hexCoords.GetInGameCoords(out newCell.X, out newCell.Y);
-			newCell.X += pivot.X;
-			newCell.Y += pivot.Y;
+			hexCoords.GetInGameCoords(out newCell.x, out newCell.y);
+			newCell.x += pivot.x;
+			newCell.y += pivot.y;
 			return newCell;
 		}
 
 		public Cell RotateCCW(Cell pivot)
 		{
-			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(X - pivot.X, Y - pivot.Y);
+			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(x - pivot.x, y - pivot.y);
 			hexCoords.RotateCW();
 			var newCell = new Cell();
-			hexCoords.GetInGameCoords(out newCell.X, out newCell.Y);
-			newCell.X += pivot.X;
-			newCell.Y += pivot.Y;
+			hexCoords.GetInGameCoords(out newCell.x, out newCell.y);
+			newCell.x += pivot.x;
+			newCell.y += pivot.y;
 			return newCell;
 		}
 	}

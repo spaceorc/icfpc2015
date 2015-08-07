@@ -11,7 +11,7 @@ namespace SomeSecretProject.Tests
         {
             var unit1 = new Logic.Unit
             {
-                Cells = new Logic.Cell[1]
+                cells = new Logic.Cell[1]
             };
 
             var unitSteps1 = new[]
