@@ -60,7 +60,7 @@ namespace Emulator
 			return new CellViewInfo
 			{
 				Char = '·',
-				ForegroundColor = GetColor(cell.Y, cell.X),
+				ForegroundColor = ConsoleColor.DarkGray,
 				BackgroundColor = ConsoleColor.Black
 			};
 		}

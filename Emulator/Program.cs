@@ -24,7 +24,7 @@ namespace Emulator
 			{
 				drawer.DrawMap(map, unit);
 			}
-			Console.ReadLine();
+			Console.SetCursorPosition(0, map.Cells.GetLength(1) * 3 + 1);
 		}
 	}
 }
