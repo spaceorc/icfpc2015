@@ -11,9 +11,17 @@ namespace SomeSecretProject.Logic
 		public int X;
 		public int Y;
 
-		public HexagonalVector(int inGameX, int inGameY)
+		public static HexagonalVector GetHexagonalVectorFromInGameCoords(int x, int y)
 		{
-
+			return new HexagonalVector {Y = y, X = x - y/2};
 		}
+
+		private void GetInGameCoords(out int x, out int y)
+		{
+			y = Y;
+			x = X + y/2;
+		}
+
+
 	}
 }
