@@ -128,7 +128,7 @@ namespace Emulator.Drawing
 
 	    private CellViewInfo GetViewInfo(Map map, Unit unit, int col, int row)
 		{
-			var result = GetMapViewInfo(map.cells[col, row]);
+			var result = GetMapViewInfo(map[col, row]);
 			if (unit != null)
 			{
 				var unitCell = unit.cells.SingleOrDefault(x => x.x == col && x.y == row);
