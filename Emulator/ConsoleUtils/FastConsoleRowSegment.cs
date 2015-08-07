@@ -42,9 +42,9 @@ namespace Emulator.ConsoleUtils
 			Text = text;
 		}
 
-		public ConsoleColor ForegroundColor { get; }
-		public ConsoleColor BackgroundColor { get; }
-		public string Text { get; }
+		public ConsoleColor ForegroundColor { get; private set; }
+		public ConsoleColor BackgroundColor { get; private set; }
+		public string Text { get; private set; }
 
 		public override string ToString()
 		{
