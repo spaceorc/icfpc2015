@@ -34,8 +34,8 @@ namespace SomeSecretProject.Logic
 		}
 
 		private readonly Problem problem;
-		
-	    public readonly Map map;
+        private readonly int seed;
+		public Map map;
 		public State state { get; private set; }
 		public readonly Unit[] units;
         private string[] knownMagicSpells;
@@ -50,8 +50,13 @@ namespace SomeSecretProject.Logic
 
         public GameBase([NotNull] Problem problem, int seed)
         {
-            var filledCells = problem.filled.ToDictionary(cell => Tuple.Create<int, int>(cell.x, cell.y), cell => cell.Fill());
             this.problem = problem;
+            ReStart();
+        }
+
+        public void ReStart()
+        {
+            var filledCells = problem.filled.ToDictionary(cell => Tuple.Create<int, int>(cell.x, cell.y), cell => cell.Fill());
             map = new Map(problem.width, problem.height);
             for (int x = 0; x < problem.width; x++)
                 for (int y = 0; y < problem.height; y++)
@@ -211,5 +216,7 @@ namespace SomeSecretProject.Logic
             }
             return false;
         }
+
+        
     }
 }

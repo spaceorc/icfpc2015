@@ -37,7 +37,7 @@ namespace Emulator
 	    }
 
 
-	    public static void PlayManual(int problemnum)
+	    public static void PlayManual(int problemnum, int seed = 0)
 	    {
             var problem = ProblemServer.GetProblem(problemnum);
             var game = new ConsoleGame(problem, problem.sourceSeeds[0]);
@@ -45,7 +45,7 @@ namespace Emulator
             emulator.Run();
 	    }
 
-	    public static void PlayAuto(int problemnum, string solution)
+	    public static void PlayAuto(int problemnum, string solution, int seed = 0)
 	    {
 	        var problem = ProblemServer.GetProblem(problemnum);
             var game = new Game(problem, new Output(){solution = solution});
