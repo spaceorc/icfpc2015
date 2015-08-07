@@ -81,7 +81,7 @@ namespace SomeSecretProject.Logic
 						return;
 					}
 					var unitIndex = randomGenerator.GetNext() % units.Length;
-					currentUnit = TryPlaceUnit(SpawnUnit(units[unitIndex]));
+					currentUnit = TryPlaceUnit(SpawnUnit(units[unitIndex], problem));
 					if (currentUnit == null)
 					{
 						state = State.End;
@@ -168,9 +168,17 @@ namespace SomeSecretProject.Logic
 		}
 
 		[NotNull]
-		private Unit SpawnUnit([NotNull] Unit unit)
+		public static Unit SpawnUnit([NotNull] Unit unit, [NotNull] Problem problem)
 		{
-			throw new NotImplementedException();
+		    var surr = unit.GetSurroundingRectangle();
+		    var unitWidth = surr.Item2.x - surr.Item1.x + 1;
+		    var leftShiftFromZero = ((problem.width - unitWidth) / 2);
+
+		    var upped = unit.Move(MoveType.NW, surr.Item1.y);
+            var uppedSurr = upped.GetSurroundingRectangle();
+		    var leftShift = leftShiftFromZero - uppedSurr.Item1.x;
+
+            return upped.Move(MoveType.E, leftShift);
 		}
 	}
 }

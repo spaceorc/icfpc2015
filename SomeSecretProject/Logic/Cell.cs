@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace SomeSecretProject.Logic
 {
 	[JsonObject]
-	public class Cell
+	public class Cell : IEquatable<Cell>
 	{
 		[JsonIgnore]
 		public bool filled;
@@ -51,5 +52,29 @@ namespace SomeSecretProject.Logic
 			hexCoords.GetInGameCoords(out newCell.x, out newCell.y);
 			return newCell;
 		}
+
+#region Bullshit
+
+	    public override string ToString()
+	    {
+            return string.Format("X: {1}, Y: {2}, Filled: {0}", filled, x, y);
 	}
+
+	    public bool Equals(Cell other)
+	    {
+	        if (ReferenceEquals(null, other)) return false;
+	        if (ReferenceEquals(this, other)) return true;
+	        return x == other.x && filled == other.filled && y == other.y;
+}
+
+	    public override bool Equals(object obj)
+	    {
+	        if (ReferenceEquals(null, obj)) return false;
+	        if (ReferenceEquals(this, obj)) return true;
+	        if (obj.GetType() != this.GetType()) return false;
+	        return Equals((Cell) obj);
+        }
+#endregion
+
+    }
 }
