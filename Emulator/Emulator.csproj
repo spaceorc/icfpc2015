@@ -48,6 +48,7 @@
     <Compile Include="ConsoleUtils\FastConsole.cs" />
     <Compile Include="ConsoleUtils\FastConsoleRow.cs" />
     <Compile Include="ConsoleUtils\FastConsoleRowSegment.cs" />
+    <Compile Include="Drawer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -30,10 +30,10 @@ namespace Emulator.ConsoleUtils
 		{
 			private readonly FastConsole fastConsole;
 			private readonly List<FastConsoleRow> rows;
-			private int line = 0;
 
 			public FastConsoleWriter(FastConsole fastConsole, List<FastConsoleRow> rows)
 			{
+				Line = 0;
 				this.rows = rows ?? new List<FastConsoleRow>();
 				ResetColor();
 				this.fastConsole = fastConsole;
@@ -54,9 +54,9 @@ namespace Emulator.ConsoleUtils
 			{
 				get
 				{
-					while (rows.Count <= line)
+					while (rows.Count <= Line)
 						rows.Add(new FastConsoleRow());
-					return rows[line].Length;
+					return rows[Line].Length;
 				}
 			}
 
@@ -91,28 +91,30 @@ namespace Emulator.ConsoleUtils
 					Write(texts.Last());
 					return;
 				}
-				while (rows.Count <= line)
+				while (rows.Count <= Line)
 					rows.Add(new FastConsoleRow());
-				if (rows[line].Length + text.Length > Console.WindowWidth)
+				if (rows[Line].Length + text.Length > Console.WindowWidth)
 				{
-					var breakIndex = Console.WindowWidth - rows[line].Length;
+					var breakIndex = Console.WindowWidth - rows[Line].Length;
 					WriteLine(text.Substring(0, breakIndex));
 					Write(text.Substring(breakIndex));
 					return;
 				}
-				rows[line].Segments.Add(new FastConsoleRowSegment(ForegroundColor, BackgroundColor, text));
+				rows[Line].Segments.Add(new FastConsoleRowSegment(ForegroundColor, BackgroundColor, text));
 			}
 
 			public void WriteLine()
 			{
-				line++;
+				Line++;
 			}
+
+			public int Line { get; set; }
 
 			public void EndWrite()
 			{
-				for (var i = Math.Min(line + 1, fastConsole.rows.Count); i < fastConsole.rows.Count; i++)
+				for (var i = Math.Min(Line + 1, fastConsole.rows.Count); i < fastConsole.rows.Count; i++)
 					WriteLine();
-				while (rows.Count <= line)
+				while (rows.Count <= Line)
 					rows.Add(new FastConsoleRow());
 				for (var i = 0; i < Math.Min(rows.Count, fastConsole.rows.Count); i++)
 				{
