@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
@@ -37,12 +38,15 @@ namespace SomeSecretProject.Logic
 	    public readonly Map map;
 		public State state { get; private set; }
 		public readonly Unit[] units;
+        private string[] knownMagicSpells;
         public Unit currentUnit;
-		private int currentUnitIndex;
-		private int currentScore;
-		private int previouslyExplodedLines;
+        private int currentUnitIndex;
+        private int currentMovesScore;
+        private int currentSpellsScore;
+        private int previouslyExplodedLines;
         private StringBuilder enteredString;
-		private readonly LinearCongruentalGenerator randomGenerator;
+        private List<string> enteredMagicSpells;
+        private readonly LinearCongruentalGenerator randomGenerator;
 
         public GameBase([NotNull] Problem problem, int seed)
         {
@@ -62,9 +66,12 @@ namespace SomeSecretProject.Logic
             randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[seed]);
             state = State.WaitUnit;
             currentUnitIndex = 0;
-		    currentScore = 0;
+		    currentMovesScore = 0;
+		    currentSpellsScore = 0;
             previouslyExplodedLines = 0;
             enteredString = new StringBuilder();
+            enteredMagicSpells = new List<string>();
+            knownMagicSpells = new [] {"Ei!"}; //todo constructor+
         }
 
         /// <summary>
@@ -107,6 +114,7 @@ namespace SomeSecretProject.Logic
 			            return;
 			        }
 			        enteredString.Append(move);
+                    ParseNewMagicSpells();
 			        var movedUnit = currentUnit.Move(moveType.Value);
 					if (!movedUnit.CheckCorrectness(map))
 					{
@@ -143,11 +151,21 @@ namespace SomeSecretProject.Logic
 			}
 		}
 
+        private void ParseNewMagicSpells()
+        {
+            foreach (var magicSpell in knownMagicSpells)
+            {
+                if (enteredString.ToString().EndsWith(magicSpell)) //performance slow to use tostring
+                    enteredMagicSpells.Add(magicSpell);
+            }
+            currentSpellsScore = ScoreCounter.GetPowerScores(enteredMagicSpells);
+        }
+
 		private void LockUnit([NotNull] Unit unit)
 		{
 			map.LockUnit(unit);
 		    var currentlyExploded = map.RemoveLines();
-		    currentScore += ScoreCounter.GetMoveScore(unit, currentlyExploded, previouslyExplodedLines);
+		    currentMovesScore += ScoreCounter.GetMoveScore(unit, currentlyExploded, previouslyExplodedLines);
 		    previouslyExplodedLines = currentlyExploded;
 		}
 
