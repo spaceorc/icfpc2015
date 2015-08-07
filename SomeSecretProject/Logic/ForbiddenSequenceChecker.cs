@@ -9,7 +9,7 @@ namespace SomeSecretProject.Logic
 		{
 		}
 
-		public bool CheckLastMove(IList<MoveType> move)
+		public bool CheckLastMove(IList<MoveType> moves, MoveType lastMove)
 		{
 			return true;
 		}
