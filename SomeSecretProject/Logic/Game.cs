@@ -70,8 +70,37 @@ namespace SomeSecretProject.Logic
 			currentUnitIndex = 0;
 		}
 
+	    public bool TryGetNextMove(out MoveType? moveType)
+	    {
+            moveType = null;
+	        while (currentCommand < output.solution.Length)
+	        {
+	            if (moveW.IndexOf(output.solution[currentCommand]) >= 0)
+	                moveType = MoveType.W;
+	            else if (moveE.IndexOf(output.solution[currentCommand]) >= 0)
+	                moveType = MoveType.E;
+	            else if (moveSW.IndexOf(output.solution[currentCommand]) >= 0)
+	                moveType = MoveType.SW;
+	            else if (moveSE.IndexOf(output.solution[currentCommand]) >= 0)
+	                moveType = MoveType.SE;
+	            else if (rotateCW.IndexOf(output.solution[currentCommand]) >= 0)
+	                moveType = MoveType.RotateCW;
+	            else if (rotateCCW.IndexOf(output.solution[currentCommand]) >= 0)
+	                moveType = MoveType.RotateCCW;
+	            else if (ignored.IndexOf(output.solution[currentCommand]) >= 0)
+	            {
+	                currentCommand++;
+	                continue;
+	            }
+	            return true;
+	        }
+	        
+	        return false;
+	    }
+
 		public void Step()
 		{
+		    
 			switch (state)
 			{
 				case State.WaitUnit:
@@ -91,35 +120,18 @@ namespace SomeSecretProject.Logic
 					state = State.UnitInGame;
 					return;
 				case State.UnitInGame:
-					if (currentCommand >= output.solution.Length)
-					{
-						state = State.End;
-						return;
-					}
-					MoveType moveType;
-					if (moveW.IndexOf(output.solution[currentCommand]) >= 0)
-						moveType = MoveType.W;
-					else if (moveE.IndexOf(output.solution[currentCommand]) >= 0)
-						moveType = MoveType.E;
-					else if (moveSW.IndexOf(output.solution[currentCommand]) >= 0)
-						moveType = MoveType.SW;
-					else if (moveSE.IndexOf(output.solution[currentCommand]) >= 0)
-						moveType = MoveType.SE;
-					else if (rotateCW.IndexOf(output.solution[currentCommand]) >= 0)
-						moveType = MoveType.RotateCW;
-					else if (rotateCCW.IndexOf(output.solution[currentCommand]) >= 0)
-						moveType = MoveType.RotateCCW;
-					else if (ignored.IndexOf(output.solution[currentCommand]) >= 0)
-					{
-						currentCommand++;
-						return;
-					}
-					else
-					{
-						state = State.EndInvalidCommand;
-						return;
-					}
-					var movedUnit = currentUnit.Move(moveType);
+                    MoveType? moveType;
+			        if (!TryGetNextMove(out moveType))
+			        {
+			            state = State.End;
+			            return;
+			        }
+                    else if (moveType == null)
+                    {
+                        state = State.EndInvalidCommand;
+                        return;
+                    }
+					var movedUnit = currentUnit.Move(moveType.Value);
 					if (!movedUnit.CheckCorrectness(map))
 					{
 						LockUnit(currentUnit);
