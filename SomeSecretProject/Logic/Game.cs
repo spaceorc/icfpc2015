@@ -59,9 +59,9 @@ namespace SomeSecretProject.Logic
 				{
 					Cell cell;
 					if (filledCells.TryGetValue(Tuple.Create(x, y), out cell))
-						map.cells[x, y] = cell;
+						map[x, y] = cell;
 					else
-						map.cells[x, y] = new Cell { x = x, y = y };
+						map[x, y] = new Cell { x = x, y = y };
 				}
 			units = problem.units.ToList();
 			randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[output.seed]);
@@ -157,7 +157,7 @@ namespace SomeSecretProject.Logic
 		private void LockUnit([NotNull] Unit unit)
 		{
 			foreach (var cell in unit.cells)
-				map.cells[cell.x, cell.y] = cell.Fill();
+				map[cell.x, cell.y] = cell.Fill();
 			// todo score!
 		}
 
