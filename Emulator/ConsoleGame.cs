@@ -15,7 +15,7 @@ namespace Emulator
             move = (char) 0;
             while (true)
             {
-                var key = Console.ReadKey(false);
+                var key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.A) move = 'p'; //todo all keys may be?
                 else if (key.Key == ConsoleKey.D) move = 'b';
                 else if (key.Key == ConsoleKey.Z) move = 'a';
