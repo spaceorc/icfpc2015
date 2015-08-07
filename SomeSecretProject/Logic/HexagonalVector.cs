@@ -16,12 +16,24 @@ namespace SomeSecretProject.Logic
 			return new HexagonalVector {Y = y, X = x - y/2};
 		}
 
-		private void GetInGameCoords(out int x, out int y)
+		public void GetInGameCoords(out int x, out int y)
 		{
 			y = Y;
 			x = X + y/2;
 		}
 
-
+		public void RotateCW()
+		{
+			var newY = X + Y;
+			X = -Y;
+			Y = newY;
+		}
+		
+		public void RotateCCW()
+		{
+			var newX = X + Y;
+			Y = -X;
+			X = newX;
+		}
 	}
 }

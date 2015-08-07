@@ -1,8 +1,8 @@
 ﻿
 using System;
+using System.IO;
 using System.Net;
 using System.Text;
-using SeasideResearch.LibCurlNet;
 
 
 namespace SomeSecretProject.IO
@@ -18,9 +18,11 @@ namespace SomeSecretProject.IO
         static HttpHelper()
         {
             string authInfo = ":"+API_TOKEN;
+            //postclient.Credentials = new NetworkCredential("", API_TOKEN);
             authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
             postclient.Headers.Add("Authorization", "Basic " + authInfo);
             postclient.Headers.Add("Content-Type", "application/json");
+            
         }
 
         public static Problem GetProblem(int problemnum)
@@ -30,11 +32,12 @@ namespace SomeSecretProject.IO
             return data.ParseAsJson<Problem>();
         }
 
-        public static void SendOutput(Output output)
+        public static bool SendOutput2(Output output)
         {
             var url = @"https://davar.icfpcontest.org/teams/" + TEAM_ID + @"/solutions";
-            var data = output.ToJson();
-            var result = postclient.UploadData(url, "POST", Encoding.UTF8.GetBytes(data));
+            var data = "[" + output.ToJson() + "]";
+            var result = postclient.UploadString(url, "POST", data);
+            return result == "created";
         }
     }
 }

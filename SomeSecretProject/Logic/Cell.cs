@@ -20,12 +20,24 @@ namespace SomeSecretProject.Logic
 
 		public Cell RotateCW(Cell pivot)
 		{
-			throw new InvalidOperationException("TODO");
+			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(X - pivot.X, Y - pivot.Y);
+			hexCoords.RotateCW();
+			var newCell = new Cell();
+			hexCoords.GetInGameCoords(out newCell.X, out newCell.Y);
+			newCell.X += pivot.X;
+			newCell.Y += pivot.Y;
+			return newCell;
 		}
 
 		public Cell RotateCCW(Cell pivot)
 		{
-			throw new InvalidOperationException("TODO");
+			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(X - pivot.X, Y - pivot.Y);
+			hexCoords.RotateCW();
+			var newCell = new Cell();
+			hexCoords.GetInGameCoords(out newCell.X, out newCell.Y);
+			newCell.X += pivot.X;
+			newCell.Y += pivot.Y;
+			return newCell;
 		}
 	}
 }

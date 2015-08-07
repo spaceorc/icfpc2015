@@ -12,7 +12,6 @@ namespace SomeSecretProject.IO
         public int problemId;
         public int seed;
         public string tag;
-        public char[] solution;
-        public String Solution {get{return new string(solution);} set { solution = value.ToCharArray(); }}
+        public string solution;
     }
 }
