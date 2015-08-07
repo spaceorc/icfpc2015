@@ -1,9 +1,17 @@
-﻿namespace SomeSecretProject.Logic
+﻿using Newtonsoft.Json;
+
+namespace SomeSecretProject.Logic
 {
+	[JsonObject]
 	public class Cell
 	{
+		[JsonIgnore]
 		public bool filled;
+
+		[JsonProperty("x")]
 		public int x;
+
+		[JsonProperty("y")]
 		public int y;
 
 		public Cell Fill()

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using SomeSecretProject.IO;
@@ -44,8 +43,9 @@ namespace SomeSecretProject.Logic
 		private int currentCommand;
 	    public readonly Map map;
 		private State state;
-		private readonly List<Unit> units;
+		public readonly Unit[] units;
 		private Unit currentUnit;
+		private int currentUnitIndex;
 		private readonly LinearCongruentalGenerator randomGenerator;
 
 		public Game([NotNull] Problem problem, [NotNull] Output output)
@@ -63,10 +63,11 @@ namespace SomeSecretProject.Logic
 					else
 						map[x, y] = new Cell { x = x, y = y };
 				}
-			units = problem.units.ToList();
+			units = problem.units;
 			randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[output.seed]);
 			state = State.WaitUnit;
 			currentCommand = 0;
+			currentUnitIndex = 0;
 		}
 
 		public void Step()
@@ -74,19 +75,18 @@ namespace SomeSecretProject.Logic
 			switch (state)
 			{
 				case State.WaitUnit:
-					if (units.Count == 0)
+					if (currentUnitIndex++ >= problem.sourceLength)
 					{
 						state = State.End;
 						return;
 					}
-					var unitIndex = randomGenerator.GetNext() % units.Count;
+					var unitIndex = randomGenerator.GetNext() % units.Length;
 					currentUnit = TryPlaceUnit(SpawnUnit(units[unitIndex]));
 					if (currentUnit == null)
 					{
 						state = State.End;
 						return;
 					}
-					units.RemoveAt(unitIndex);
 					state = State.UnitInGame;
 					return;
 				case State.UnitInGame:
@@ -156,7 +156,7 @@ namespace SomeSecretProject.Logic
 
 		private void LockUnit([NotNull] Unit unit)
 		{
-			foreach (var cell in unit.cells)
+			foreach (var cell in unit.members)
 				map[cell.x, cell.y] = cell.Fill();
 			// todo score!
 		}

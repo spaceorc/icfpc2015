@@ -23,7 +23,7 @@ namespace SomeSecretProject.Logic.Score
                 return 0;
             }
 
-            var size = unit.cells.Length;
+            var size = unit.members.Length;
             var ls = currentStepClearedLinesAmount;
             var ls_old = previousStepClearedLinesAmount;
 

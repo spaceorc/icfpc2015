@@ -38,6 +38,8 @@ namespace SomeSecretProject.Logic
 		
 		public Map(int width, int height)
 		{
+			Width = width;
+			Height = height;
 			cells = new List<Cell[]>();
 			RefineMap();
 		}
@@ -61,7 +63,7 @@ namespace SomeSecretProject.Logic
 
 		public void LockUnit(Unit unit)
 		{
-			foreach (var cell in unit.cells)
+			foreach (var cell in unit.members)
 			{
 				this[cell.x, cell.y].filled = true;
 			}

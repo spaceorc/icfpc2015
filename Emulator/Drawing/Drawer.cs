@@ -63,6 +63,35 @@ namespace Emulator.Drawing
 			};
 		}
 
+		public void DrawUnit(Unit unit)
+		{
+			var minY = unit.members.Concat(new[]{unit.pivot}).Min(cell => cell.y);
+			while (minY > 0)
+			{
+				unit = unit.Move(MoveType.NE);
+				minY--;
+			}
+			while (minY < 0)
+			{
+				unit = unit.Move(MoveType.SE);
+				minY++;
+			}
+			var minX = unit.members.Min(cell => cell.x);
+			while (minX > 0)
+			{
+				unit = unit.Move(MoveType.W);
+				minX--;
+			}
+			while (minX < 0)
+			{
+				unit = unit.Move(MoveType.E);
+				minX++;
+			}
+			var map = new Map(unit.members.Concat(new[] { unit.pivot }).Max(cell => cell.x) + 1, unit.members.Concat(new[] { unit.pivot }).Max(cell => cell.y) + 1);
+			console.WriteLine();
+			DrawMap(map, unit);
+		}
+
 		public void DrawMap(Map map, Unit unit)
 		{
 			for (int i = 0; i < 3 * map.Height + 1; i++)
@@ -131,7 +160,7 @@ namespace Emulator.Drawing
 			var result = GetMapViewInfo(map[col, row]);
 			if (unit != null)
 			{
-				var unitCell = unit.cells.SingleOrDefault(x => x.x == col && x.y == row);
+				var unitCell = unit.members.SingleOrDefault(x => x.x == col && x.y == row);
 				if (unitCell != null)
 				{
 					result = new CellViewInfo
