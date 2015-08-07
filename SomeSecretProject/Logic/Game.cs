@@ -26,8 +26,7 @@ namespace SomeSecretProject.Logic
 			new[] { MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW }
 		};
 
-		private int[] forbiddenSequencePositions = new[]
-		{
+		private readonly int[] forbiddenSequencePositions = {
 			0, 0, 0, 0, 0, 0
 		};
 
@@ -43,7 +42,7 @@ namespace SomeSecretProject.Logic
 		private readonly Problem problem;
 		private readonly Output output;
 		private int currentCommand;
-		private readonly Map map;
+	    public readonly Map map;
 		private State state;
 		private readonly List<Unit> units;
 		private Unit currentUnit;
