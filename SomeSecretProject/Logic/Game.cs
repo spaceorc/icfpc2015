@@ -1,19 +1,14 @@
 using System;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using JetBrains.Annotations;
 using SomeSecretProject.IO;
 
 namespace SomeSecretProject.Logic
 {
-	public class Game
+    public abstract class GameBase
 	{
-		private const string moveW = "p'!.03";
-		private const string moveE = "bcefy2";
-		private const string moveSW = "aghij4";
-		private const string moveSE = "lmno 5";
-		private const string rotateCW = "dqrvz1";
-		private const string rotateCCW = "kstuwx";
-		private const string ignored = "\t\n\r";
+		
 
 		private static readonly MoveType[][] forbiddenSequences =
 		{
@@ -39,8 +34,7 @@ namespace SomeSecretProject.Logic
 		}
 
 		private readonly Problem problem;
-		private readonly Output output;
-		private int currentCommand;
+		
 	    public readonly Map map;
 		private State state;
 		public readonly Unit[] units;
@@ -48,59 +42,34 @@ namespace SomeSecretProject.Logic
 		private int currentUnitIndex;
 		private readonly LinearCongruentalGenerator randomGenerator;
 
-		public Game([NotNull] Problem problem, [NotNull] Output output)
-		{
-			this.problem = problem;
-			this.output = output;
-			var filledCells = problem.filled.ToDictionary(cell => Tuple.Create<int, int>(cell.x, cell.y), cell => cell.Fill());
-			map = new Map(problem.width, problem.height);
-			for (int x = 0; x < problem.width; x++)
-				for (int y = 0; y < problem.height; y++)
-				{
-					Cell cell;
-					if (filledCells.TryGetValue(Tuple.Create(x, y), out cell))
-						map[x, y] = cell;
-					else
-						map[x, y] = new Cell { x = x, y = y };
-				}
-			units = problem.units;
-			randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[output.seed]);
-			state = State.WaitUnit;
-			currentCommand = 0;
-			currentUnitIndex = 0;
-		}
+        public GameBase([NotNull] Problem problem, int seed)
+        {
+            var filledCells = problem.filled.ToDictionary(cell => Tuple.Create<int, int>(cell.x, cell.y), cell => cell.Fill());
+            this.problem = problem;
+            map = new Map(problem.width, problem.height);
+            for (int x = 0; x < problem.width; x++)
+                for (int y = 0; y < problem.height; y++)
+                {
+                    Cell cell;
+                    if (filledCells.TryGetValue(Tuple.Create(x, y), out cell))
+                        map[x, y] = cell;
+                    else
+                        map[x, y] = new Cell { x = x, y = y };
+                }
+            units = problem.units;
+            randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[seed]);
+            state = State.WaitUnit;
+            currentUnitIndex = 0;
+        }
 
-	    public bool TryGetNextMove(out MoveType? moveType)
-	    {
-            moveType = null;
-	        while (currentCommand < output.solution.Length)
-	        {
-	            if (moveW.IndexOf(output.solution[currentCommand]) >= 0)
-	                moveType = MoveType.W;
-	            else if (moveE.IndexOf(output.solution[currentCommand]) >= 0)
-	                moveType = MoveType.E;
-	            else if (moveSW.IndexOf(output.solution[currentCommand]) >= 0)
-	                moveType = MoveType.SW;
-	            else if (moveSE.IndexOf(output.solution[currentCommand]) >= 0)
-	                moveType = MoveType.SE;
-	            else if (rotateCW.IndexOf(output.solution[currentCommand]) >= 0)
-	                moveType = MoveType.RotateCW;
-	            else if (rotateCCW.IndexOf(output.solution[currentCommand]) >= 0)
-	                moveType = MoveType.RotateCCW;
-	            else if (ignored.IndexOf(output.solution[currentCommand]) >= 0)
-	            {
-	                currentCommand++;
-	                continue;
-	            }
-	            return true;
-	        }
-	        
-	        return false;
-	    }
+        /// <summary>
+        /// return true if exist some next move, and false if EndOfSequence
+        /// moveType == null if there are is invalid nextMove.
+        /// </summary>
+        protected abstract bool TryGetNextMove(out MoveType? moveType);
 
-		public void Step()
+	    public void Step()
 		{
-		    
 			switch (state)
 			{
 				case State.WaitUnit:
@@ -188,4 +157,33 @@ namespace SomeSecretProject.Logic
             return upped.Move(MoveType.E, leftShift);
 		}
 	}
+
+    public class Game : GameBase
+    {
+        private readonly Output output;
+        private int currentCommand;
+
+        public Game([NotNull] Problem problem, [NotNull] Output output)
+            :base(problem, output.seed)
+		{
+			this.output = output;
+            currentCommand = 0;
+		}
+
+        protected override bool TryGetNextMove(out MoveType? moveType)
+        {
+            moveType = null;
+            while (currentCommand < output.solution.Length)
+            {
+                if (MoveTypeExt.IsIgnored(output.solution[currentCommand]))
+                {
+                    currentCommand++;
+                    continue;
+                }
+                moveType = MoveTypeExt.Convert(output.solution[currentCommand]);
+                return true;
+            }
+            return false;
+        }
+    }
 }
