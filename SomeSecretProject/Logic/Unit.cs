@@ -39,18 +39,45 @@ namespace SomeSecretProject.Logic
 		}
 
         //returns positions of: topleft, bottomright
-	    public Tuple<Cell, Cell> GetSurroundingRectangle()
-	    {
-	        var tl = new Cell {x = Int32.MaxValue, y = Int32.MaxValue};
-            var br = new Cell { x = Int32.MinValue, y = Int32.MinValue };
+		public Tuple<Cell, Cell> GetSurroundingRectangle()
+		{
+			var tl = new Cell {x = Int32.MaxValue, y = Int32.MaxValue};
+			var br = new Cell {x = Int32.MinValue, y = Int32.MinValue};
 			foreach (var cell in members)
-	        {
-	            tl.x = Math.Min(cell.x, tl.x);
-	            tl.y = Math.Min(cell.y, tl.y);
-	            br.x = Math.Max(cell.x, br.x);
-	            br.y = Math.Max(cell.y, br.y);
-	}
-	        return Tuple.Create(tl, br);
-	    }
+			{
+				tl.x = Math.Min(cell.x, tl.x);
+				tl.y = Math.Min(cell.y, tl.y);
+				br.x = Math.Max(cell.x, br.x);
+				br.y = Math.Max(cell.y, br.y);
+			}
+			return Tuple.Create(tl, br);
+		}
+
+#region overrides
+		public bool Equals(Unit other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return Equals(pivot, other.pivot) && members.Length == other.members.Length && !members.Where((m, i) => !m.Equals(other.members[i])).Any();
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != this.GetType()) return false;
+			return Equals((Unit)obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return members.Aggregate(pivot.GetHashCode(), (s, n) => (n.GetHashCode() * 397) & s);
+		}
+#endregion
+
+		public override string ToString()
+		{
+			return string.Format("Pivot: {0}, Members: [{1}]", pivot, string.Join(", ", members.Select(m => m.ToString())));
+		}
 	}
 }
