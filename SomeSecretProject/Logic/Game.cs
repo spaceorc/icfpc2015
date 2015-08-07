@@ -9,8 +9,6 @@ namespace SomeSecretProject.Logic
 {
     public abstract class GameBase
 	{
-		
-
 		private static readonly MoveType[][] forbiddenSequences =
 		{
 			new[] { MoveType.E, MoveType.W },
@@ -25,7 +23,7 @@ namespace SomeSecretProject.Logic
 			0, 0, 0, 0, 0, 0
 		};
 
-		private enum State
+		public enum State
 		{
 			WaitUnit,
 			UnitInGame,
@@ -37,9 +35,9 @@ namespace SomeSecretProject.Logic
 		private readonly Problem problem;
 		
 	    public readonly Map map;
-		private State state;
+		public State state { get; private set; }
 		public readonly Unit[] units;
-		private Unit currentUnit;
+        public Unit currentUnit;
 		private int currentUnitIndex;
 		private int currentScore;
 		private readonly LinearCongruentalGenerator randomGenerator;
