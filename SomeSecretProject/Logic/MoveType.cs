@@ -37,7 +37,7 @@ namespace SomeSecretProject.Logic
                 moveType = MoveType.RotateCW;
             else if (rotateCCW.IndexOf(c) >= 0)
                 moveType = MoveType.RotateCCW;
-            return null;
+            return moveType;
         }
 
         public static bool IsIgnored(char c)

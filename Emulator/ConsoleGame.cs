@@ -10,20 +10,21 @@ namespace Emulator
             :base(problem,seed)
         {}
 
-        protected override bool TryGetNextMove(out MoveType? moveType)
+        protected override bool TryGetNextMove(out char move)
         {
-            moveType = null;
+            move = (char) 0;
             while (true)
             {
                 var key = Console.ReadKey(false);
-                if (key.Key == ConsoleKey.A) moveType = MoveType.W;
-                else if (key.Key == ConsoleKey.D) moveType = MoveType.E;
-                else if (key.Key == ConsoleKey.Z) moveType = MoveType.SW;
-                else if (key.Key == ConsoleKey.X) moveType = MoveType.SE;
-                else if (key.Key == ConsoleKey.Q) moveType = MoveType.RotateCCW;
-                else if (key.Key == ConsoleKey.E) moveType = MoveType.RotateCW;
+                if (key.Key == ConsoleKey.A) move = 'p'; //todo all keys may be?
+                else if (key.Key == ConsoleKey.D) move = 'b';
+                else if (key.Key == ConsoleKey.Z) move = 'a';
+                else if (key.Key == ConsoleKey.X) move = 'l';
+                else if (key.Key == ConsoleKey.Q) move = 'd';
+                else if (key.Key == ConsoleKey.E) move = 'k';
                 else if (key.Key == ConsoleKey.Escape) return false;
-                if (moveType != null) return true;
+                if (move != 0)
+                    return true;
             }
         }
     }

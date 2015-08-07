@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
+using System.Text;
 using JetBrains.Annotations;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic.Score;
@@ -41,6 +41,7 @@ namespace SomeSecretProject.Logic
 		private int currentUnitIndex;
 		private int currentScore;
 		private int previouslyExplodedLines;
+        private StringBuilder enteredString;
 		private readonly LinearCongruentalGenerator randomGenerator;
 
         public GameBase([NotNull] Problem problem, int seed)
@@ -63,13 +64,14 @@ namespace SomeSecretProject.Logic
             currentUnitIndex = 0;
 		    currentScore = 0;
             previouslyExplodedLines = 0;
+            enteredString = new StringBuilder();
         }
 
         /// <summary>
         /// return true if exist some next move, and false if EndOfSequence
         /// moveType == null if there are is invalid nextMove.
         /// </summary>
-        protected abstract bool TryGetNextMove(out MoveType? moveType);
+        protected abstract bool TryGetNextMove(out char move);
 
 	    public void Step()
 		{
@@ -92,18 +94,20 @@ namespace SomeSecretProject.Logic
 					state = State.UnitInGame;
 					return;
 				case State.UnitInGame:
-                    MoveType? moveType;
-			        if (!TryGetNextMove(out moveType))
+                    char move;
+			        if (!TryGetNextMove(out move))
 			        {
 			            state = State.End;
 			            return;
 			        }
-                    else if (moveType == null)
-                    {
-                        state = State.EndInvalidCommand;
-                        return;
-                    }
-					var movedUnit = currentUnit.Move(moveType.Value);
+			        var moveType = MoveTypeExt.Convert(move);
+			        if (moveType == null)
+			        {
+			            state = State.EndInvalidCommand;
+			            return;
+			        }
+			        enteredString.Append(move);
+			        var movedUnit = currentUnit.Move(moveType.Value);
 					if (!movedUnit.CheckCorrectness(map))
 					{
 						LockUnit(currentUnit);
@@ -174,9 +178,9 @@ namespace SomeSecretProject.Logic
             currentCommand = 0;
 		}
 
-        protected override bool TryGetNextMove(out MoveType? moveType)
+        protected override bool TryGetNextMove(out char move)
         {
-            moveType = null;
+            move = (char) 0;
             while (currentCommand < output.solution.Length)
             {
                 if (MoveTypeExt.IsIgnored(output.solution[currentCommand]))
@@ -184,7 +188,7 @@ namespace SomeSecretProject.Logic
                     currentCommand++;
                     continue;
                 }
-                moveType = MoveTypeExt.Convert(output.solution[currentCommand]);
+                move = output.solution[currentCommand];
                 return true;
             }
             return false;
