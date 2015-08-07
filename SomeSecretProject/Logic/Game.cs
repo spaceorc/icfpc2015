@@ -47,6 +47,7 @@ namespace SomeSecretProject.Logic
         private StringBuilder enteredString;
         private List<string> enteredMagicSpells;
         private LinearCongruentalGenerator randomGenerator;
+        protected int step = 0;
 
         public int CurrentScore
         {
@@ -75,6 +76,7 @@ namespace SomeSecretProject.Logic
             units = problem.units;
             randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[seed]);
             state = State.WaitUnit;
+            step = 0;
             currentUnitIndex = 0;
 		    currentMovesScore = 0;
 		    currentSpellsScore = 0;
@@ -84,6 +86,14 @@ namespace SomeSecretProject.Logic
             knownMagicSpells = new [] {"Ei!"}; //todo constructor+
         }
 
+        public void StepBack(int backSteps)
+        {
+            var newstep = Math.Max(0, step - backSteps);
+            ReStart();
+            while(step <  newstep)
+                Step();
+        }
+
         /// <summary>
         /// return true if exist some next move, and false if EndOfSequence
         /// moveType == null if there are is invalid nextMove.
@@ -91,7 +101,8 @@ namespace SomeSecretProject.Logic
         protected abstract bool TryGetNextMove(out char move);
 
 	    public void Step()
-		{
+	    {
+	        ++step;
 			switch (state)
 			{
 				case State.WaitUnit:
