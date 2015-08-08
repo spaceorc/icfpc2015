@@ -19,7 +19,6 @@ namespace Emulator
 			List<int> scores = new List<int>();
 			for (int seedInd = 0; seedInd < problem.sourceSeeds.Length; ++seedInd)
 			{
-				Console.WriteLine("seed: {0}", seedInd);
 				var seed = problem.sourceSeeds[seedInd];
 				var solution = solver.Solve(problem, seed, DavarMagicSpells.Items);
 				var output = new Output() { problemId = problem.id, seed = seed, solution = solution };
@@ -31,6 +30,7 @@ namespace Emulator
 				scores.Add(game.CurrentScore);
 				states.Add(game.state);
 				outputs.Add(output);
+				Console.WriteLine("seed: {0}, score: {1}", seedInd, game.CurrentScore);
 				SaveOutput("output\\output" + problem.id, output);
 			}
 			var result = new Result { Outputs = outputs.ToArray(), EndStates = states.ToArray(), Scores = scores.ToArray() };
