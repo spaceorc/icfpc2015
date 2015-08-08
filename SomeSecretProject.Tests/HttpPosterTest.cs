@@ -13,13 +13,13 @@ namespace SomeSecretProject.Tests
         [SetUp]
         public void SetUp()
         {
-            httpPoster = new HttpPoster(new MuggleProblemSolver());
+            httpPoster = new HttpPoster();
         }
 
         [Test]
         public void PostAll()
         {
-            httpPoster.PostAll(DavarAccount.MainTeam, "muggle1");
+            httpPoster.PostAll(DavarAccount.MainTeam, "1_Muddle_7cbff25c");
         }
     }
 }

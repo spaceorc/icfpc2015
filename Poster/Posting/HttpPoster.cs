@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using SomeSecretProject;
 using SomeSecretProject.IO;
 
@@ -7,30 +9,21 @@ namespace Poster.Posting
 {
     public class HttpPoster
     {
-        private readonly IProblemSolver problemSolver;
-
-        public HttpPoster(IProblemSolver problemSolver)
+        public void PostAll(DavarAccount account, string solveName, string tag = null)
         {
-            this.problemSolver = problemSolver;
-        }
-
-        public void PostAll(DavarAccount account, string tag = null)
-        {
-            string[] powerPhrases = PowerDatas.GetPowerPhrases();
-            var outputs = Enumerable.Range(0, 24)
-                .Select(ProblemsSet.GetProblem)
-                .SelectMany(problem => problem.sourceSeeds
-                    .Select(seed => new Output
-                    {
-                        problemId = problem.id,
-                        seed = seed,
-                        solution = problemSolver.Solve(problem, seed, powerPhrases),
-                        tag = tag
-                    }));
-
-            foreach (var output in outputs)
+            var directoryMain = @"..\..\..\importantSolves\" + solveName;
+            var problems = Directory.EnumerateDirectories(directoryMain);
+            foreach (var p in problems.Select(Path.GetFileName))
             {
-                HttpHelper.SendOutput(account, output);
+                foreach (var f in Directory.EnumerateFiles(Path.Combine(directoryMain, p)).Select(Path.GetFileName))
+                {
+                    if (f.StartsWith("score"))
+                        continue;
+                    var output = File.ReadAllText(Path.Combine(directoryMain, p, f)).ParseAsJson<Output>();
+                    output.tag = tag ?? solveName + " " + DateTime.Now.ToString("O");
+                    HttpHelper.SendOutput(account, output);
+                    Thread.Sleep(200);
+                }
             }
         }
     }
