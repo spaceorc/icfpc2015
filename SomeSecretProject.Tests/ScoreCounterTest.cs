@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using NUnit.Framework;
 using SomeSecretProject.Logic;
 using SomeSecretProject.Logic.Score;
 
@@ -10,7 +11,7 @@ namespace SomeSecretProject.Tests
         [Test]
         public void CountUnit()
         {
-            var unit = new Unit {members = new[] {new Cell(), new Cell()}};
+            var unit = new Unit {members = new HashSet<Cell>(new[] {new Cell(), new Cell()})};
 
             Assert.AreEqual(2, ScoreCounter.GetMoveScore(unit, 0, 0));
             Assert.AreEqual(102, ScoreCounter.GetMoveScore(unit, 1, 0));

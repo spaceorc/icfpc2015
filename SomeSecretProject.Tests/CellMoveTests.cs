@@ -114,6 +114,21 @@ namespace SomeSecretProject.Tests
 			CheckEqual(cell, 3, 7);
 		}
 
+		[Test]
+		public void RotateTests_Bug()
+		{
+			var pivot = new Cell {x = 1, y = -1};
+			var cell = new Cell {x = 3, y = 0};
+			cell = cell.RotateCW(pivot);
+			CheckEqual(cell, 1, 1);
+			cell = new Cell {x = 2, y = 1};
+			cell = cell.RotateCW(pivot);
+			CheckEqual(cell, 0, 1);
+			cell = new Cell {x = 1, y = 1};
+			cell = cell.RotateCW(pivot);
+			CheckEqual(cell, 0, 0);
+		}
+
 		private void CheckEqual(Cell cell, int x, int y)
 		{
 			Assert.AreEqual(cell.x, x, String.Format("expected {0} {1}, but found {2} {3}", x, y, cell.x, cell.y));

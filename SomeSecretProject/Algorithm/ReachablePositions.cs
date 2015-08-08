@@ -10,25 +10,35 @@ namespace SomeSecretProject.Algorithm
 	public class ReachablePositions
 	{
 		private readonly Map map;
+		private readonly MoveType[] allowedMoves =
+		{
+			MoveType.E, MoveType.W,
+			MoveType.SE, MoveType.SW,
+			MoveType.RotateCW, MoveType.RotateCCW,
+		};
 
 		public ReachablePositions(Map map)
 		{
 			this.map = map;
 		}
 
-		public IList<Unit> AllPositions(Unit currentUnit)
+		public IList<Tuple<Unit, IList<MoveType>>> EndPositions(Unit currentUnit)
 		{
-			var allowedMoves = new[]
-				{
-					MoveType.E, MoveType.W,
-					MoveType.SE, MoveType.SW,
-					MoveType.RotateCW, MoveType.RotateCCW,
-				};
-			if (!currentUnit.CheckCorrectness(map))
+			return AllPositions(currentUnit).Where(u => IsFinal(u.Item1)).ToList();
+		}
+
+		private bool IsFinal(Unit unit)
+		{
+			return allowedMoves.Any(m => !unit.Move(m).IsCorrect(map));
+		}
+
+		public IList<Tuple<Unit, IList<MoveType>>> AllPositions(Unit currentUnit)
+		{
+			if (!currentUnit.IsCorrect(map))
 			{
-				return new Unit[0];
+				return new Tuple<Unit, IList<MoveType>>[0];
 			}
-			var chacker = new ForbiddenSequenceChecker(currentUnit);
+			var checker = new ForbiddenSequenceChecker(currentUnit);
 			var visited = new Dictionary<Unit, List<MoveType>>
 			              {
 				              {currentUnit, new List<MoveType>()},
@@ -37,16 +47,16 @@ namespace SomeSecretProject.Algorithm
 			while (queue.Any())
 			{
 				var unit = queue.Dequeue();
-				foreach (var move in allowedMoves.Where(m => chacker.CheckLastMove(visited[unit], m)))
+				foreach (var move in allowedMoves.Where(m => checker.CheckLastMove(visited[unit], m)))
 				{
 					var next = unit.Move(move);
-					if (!next.CheckCorrectness(map) || visited.ContainsKey(next))
+					if (!next.IsCorrect(map) || visited.ContainsKey(next))
 						continue;
 					queue.Enqueue(next);
 					visited[next] = visited[unit].Concat(new[] {move}).ToList();
 				}
 			}
-			return visited.Keys.ToList();
+			return visited.Keys.Select(u => Tuple.Create(u, (IList<MoveType>)visited[u])).ToList();
 		}
 	}
 }

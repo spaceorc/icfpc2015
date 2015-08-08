@@ -113,7 +113,7 @@ namespace SomeSecretProject.Logic
 					}
 					var unitIndex = randomGenerator.GetNext() % units.Length;
 					var spawnedUnit = SpawnUnit(units[unitIndex], problem);
-					if (!spawnedUnit.CheckCorrectness(map))
+					if (!spawnedUnit.IsCorrect(map))
 					{
 						state = State.End;
 						return;
@@ -137,7 +137,7 @@ namespace SomeSecretProject.Logic
 			        enteredString.Append(move);
                     ParseNewMagicSpells();
 			        var movedUnit = currentUnit.Move(moveType.Value);
-					if (!movedUnit.CheckCorrectness(map))
+					if (!movedUnit.IsCorrect(map))
 					{
 						LockUnit(currentUnit);
 						state = State.WaitUnit;

@@ -8,7 +8,7 @@ namespace SomeSecretProject.Logic.Score
     {
         public static int GetMoveScore(Unit unit, int currentStepClearedLinesAmount, int previousStepClearedLinesAmount)
         {
-            var size = unit.members.Length;
+            var size = unit.members.Count;
             var ls = currentStepClearedLinesAmount;
             var ls_old = previousStepClearedLinesAmount;
 
