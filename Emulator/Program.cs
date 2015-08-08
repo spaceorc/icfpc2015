@@ -18,7 +18,11 @@ namespace Emulator
                 if (args.Length > 3) PlayAuto(int.Parse(args[1]), args[2].ToLower(), int.Parse(args[3]));
                 else PlayManual(int.Parse(args[1]));
 			if (args[0] == "--solve")
+				Solve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
+			if (args[0] == "--debugsolve")
 				DebugSolve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
+			if (args[0] == "--solveall")
+				SolveAll();
 			//Console.SetCursorPosition(0, map.Height * 3 + 1);
 		}
 
@@ -63,13 +67,20 @@ namespace Emulator
             emulator.Run();
 	    }
 
+		public static void SolveAll()
+		{
+			var tester = new ProblemSolverTester();
+			var solver = new MuggleProblemSolver();
+			tester.ScoreOverAllProblems(solver);
+		}
+
 		public static void Solve(int problemnum, int seed, string[] magicSpells)
 	    {
 			var problem = ProblemServer.GetProblem(problemnum);
 		    var muggleProblemSolver = new MuggleProblemSolver();
 			var solution = muggleProblemSolver.Solve(problem, seed, magicSpells);
 			var game = new Game(problem, new Output { seed = seed, solution = solution });
-			var emulator = new Emulator(game, -1);
+			var emulator = new Emulator(game, 10);
 			emulator.Run();
 	    }
 		
@@ -98,7 +109,7 @@ namespace Emulator
 							drawer.DrawMap(g.map, unit, locked: true);
 						unit = newUnit;
 					}
-					Thread.Sleep(500);
+					Thread.Sleep(10);
 				}
 				Console.ReadKey(true);
 			};

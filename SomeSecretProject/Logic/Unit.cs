@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Newtonsoft.Json;
 
@@ -81,9 +82,13 @@ namespace SomeSecretProject.Logic
 			return Equals((Unit)obj);
 		}
 
+		private int? hashcode;
 		public override int GetHashCode()
 		{
-			return members.OrderBy(m => m.y).ThenBy(m => m.x).Aggregate(pivot.GetHashCode(), (s, n) => (n.GetHashCode() * 397) & s);
+			if (hashcode != null)
+				return hashcode.Value;
+			hashcode = members.OrderBy(m => m.y).ThenBy(m => m.x).Aggregate(pivot.GetHashCode(), (s, n) => (n.GetHashCode() * 397) & s);
+			return hashcode.Value;
 		}
 
 		public override string ToString()
