@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using SomeSecretProject.Logic;
 
 namespace SomeSecretProject.Algorithm
 {
-    class EvaluatePositions
+	class EvaluatePositions
     {
         private List<List<Cell>> emptyCellsInLines = new List<List<Cell>>();
         private Map map;
