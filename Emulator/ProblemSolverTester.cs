@@ -70,7 +70,7 @@ namespace Emulator
 
 			long sum = 0;
 		    var agg = new StringBuilder();
-		    for (int i = 0; i < 24; ++i)
+		    for (int i = 0; i < 25; ++i)
 			{
 				var problem = ProblemsSet.GetProblem(i);
 				WriteMessage(agg, "Problem: {0}, w:{1}, h:{2}, seeds:{3}", i, problem.width, problem.height, problem.sourceSeeds.Length);
@@ -85,7 +85,7 @@ namespace Emulator
 			}
 			WriteMessage(agg, "Total score: {0}", sum);
             File.WriteAllText(folder + @"\" + "totalog.txt", agg.ToString());
-			return (int)(sum / 24);
+			return (int)(sum / 25);
 		}
 
 	    private void WriteMessage(StringBuilder aggregator, string f, params object[] args)

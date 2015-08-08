@@ -71,7 +71,7 @@ namespace Emulator
 		public static void ShowProblems()
 		{
 			var console = new FastConsole();
-			for (int p = 0; p < 24;)
+			for (int p = 0; p < 25;)
 			{
 				var problem = ProblemsSet.GetProblem(p);
 				var game = new Game(problem, new Output() { solution = "" }, new string[0]);
