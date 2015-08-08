@@ -80,6 +80,7 @@ namespace SomeSecretProject.Algorithm
 								return value;
 							return estimated[p.Item1] = evaluatePositions.Evaluate(p.Item1);
 						});
+                        var score = evaluatePositions.Evaluate(bestPosition.Item1);
 						var wayToBestPosition = bestPosition.Item2;
 						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition);
 						SolutionAdded(game, unitSolution);

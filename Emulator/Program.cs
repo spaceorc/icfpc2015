@@ -65,6 +65,7 @@ namespace Emulator
 				case "debug":
 					DebugSolve(problem, seed, powerPhrases, delay);
 					break;
+                
 			}
 		}
 
@@ -139,9 +140,12 @@ namespace Emulator
 			var fastConsole = new FastConsole();
 			muggleProblemSolver.SolutionAdded += (g, s) =>
 			{
-				using (var drawer = new Drawer(fastConsole))
-					drawer.DrawMap(g.map, g.currentUnit);
-				Console.ReadKey(true);
+			    using (var drawer = new Drawer(fastConsole))
+			    {
+			        drawer.DrawMap(g.map, g.currentUnit);
+                    drawer.console.WriteLine("Score: " + g.CurrentScore);
+			    }
+			    Console.ReadKey(true);
 				var unit = g.currentUnit;
 				foreach (var c in s.Where(x => !MoveTypeExt.IsIgnored(x)))
 				{
@@ -155,6 +159,7 @@ namespace Emulator
 							drawer.DrawMap(g.map, newUnit);
 						else
 							drawer.DrawMap(g.map, unit, locked: true);
+                        drawer.console.WriteLine("Score: " + g.CurrentScore);
 						unit = newUnit;
 					}
 					Thread.Sleep(delay < 0 ? 0 : delay);
@@ -162,6 +167,8 @@ namespace Emulator
 				Console.ReadKey(true);
 			};
 			muggleProblemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
+            while (Console.ReadKey(true).Key != ConsoleKey.Escape)
+            { }
 		}
 	}
 }

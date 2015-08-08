@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SomeSecretProject.Logic;
 
 namespace SomeSecretProject.Algorithm
@@ -11,15 +12,10 @@ namespace SomeSecretProject.Algorithm
     {
         private List<List<Cell>> emptyCellsInLines = new List<List<Cell>>();
         private Dictionary<Cell, int> freeInputsForCells = new Dictionary<Cell, int>(); 
+        private Dictionary<Cell, double> UsabilityForCells = new Dictionary<Cell, double>(); 
         private Map map;
 
-        private double UsabilityOfCell(Cell cell)
-        {
-            var y = cell.y;
-            return 1.0/emptyCellsInLines[y].Count;
-        }
-
-        public EvaluatePositions2(Map map)
+       public EvaluatePositions2(Map map)
         {
             this.map = map;
             for (int y = 0; y < map.Height; ++y)
@@ -32,6 +28,9 @@ namespace SomeSecretProject.Algorithm
                         freeInputsForCells[map[x, y]] = CountFreeInputs(map[x,y]);
                     }
                 emptyCellsInLines.Add(emptyCellsInLine);
+                int countLockedInLine = emptyCellsInLine.Count(c => freeInputsForCells[c] == 0);
+                foreach (var c in emptyCellsInLine)
+                    UsabilityForCells[c] = 0.1 + 1.0/emptyCellsInLine.Count - ((double)countLockedInLine)/map.Width;
             }
         }
 
@@ -71,24 +70,28 @@ namespace SomeSecretProject.Algorithm
         {
             // Уничтожаемые линии это хорошо
             
+            
             var dropped = DroppedLines(unit);
-            double scoreDropped = dropped.Select((isDrop, i) => isDrop ? 1.0 +  ((double)i)/map.Height : 0.0).Sum();
+            double scoreDropped = Math.Pow(dropped.Count(isDrop => isDrop)-1, 2) + dropped.Select((isDrop, i) => isDrop ? 1.0 +  ((double)i)/map.Height : 0.0).Sum();
             // Занимаем полезные клетки - это хорошо
-            double scoreOccupied = unit.members.Sum(m => UsabilityOfCell(m));
+            var usabilities = unit.members.Select(m => UsabilityForCells[m]).ToArray();
+            double scoreOccupied = unit.members.Sum(m => UsabilityForCells[m]);
             // Ухудшаем возможность занять полезные клетки - это плохо
             var freeSurroundingCells = GetFreeSurroundingCells(unit);
-            double scoreClosed = freeSurroundingCells.Select(c => (CountFreeInputs(c, unit) - freeInputsForCells[c])*UsabilityOfCell(c)).Sum();
+            Dictionary<Cell, int> newFreeInputCells = freeSurroundingCells.ToDictionary(c => c, c => CountFreeInputs(c, unit));
+            double scoreClosed = freeSurroundingCells.Select(c => (newFreeInputCells[c] - freeInputsForCells[c])*UsabilityForCells[c]).Sum();
             // Некомпактность - слишком много свободных клеток вокруг - это плохо
             double scoreCompact = ((double)-freeSurroundingCells.Length)/unit.GetSurroundingCells().Length;
             // Чем ниже тем лучше
-            double scorePosHeigh = ((double)unit.GetSurroundingRectangle().Item1.y)/map.Height;
+            double scorePosHeigh = unit.members.Average(m =>((double)m.y)/map.Height);
 
 
-            var score = scoreDropped +
+            var score = 0.1*scoreDropped +
                         scoreOccupied +
-                        scoreClosed +
-                        scoreCompact +
-                        scorePosHeigh;
+                        0.5*scoreClosed +
+                        0.2*scoreCompact +
+                        0.1*scorePosHeigh+
+                        0;
             return score;
         }
 
