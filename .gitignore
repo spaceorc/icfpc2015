@@ -12,4 +12,5 @@ _ReSharper.*
 *.resharper
 .vs/
 packages/
+solves/
 Pack/
