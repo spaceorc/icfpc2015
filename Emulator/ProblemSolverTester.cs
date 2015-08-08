@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using Emulator.Posting;
 using SomeSecretProject;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -54,7 +55,7 @@ namespace Emulator
 
         public static void SendResult(Result result)
         {
-            HttpHelper.SendOutput(result.Outputs.ToArray());
+            HttpHelper.SendOutput(DavarAccount.MainTeam, result.Outputs.ToArray());
         }
 
         public int ScoreOverAllProblems(IProblemSolver solver)
