@@ -19,6 +19,10 @@ namespace Emulator
                 else PlayManual(int.Parse(args[1]));
 			if (args[0] == "--solve")
 				Solve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
+			if (args[0] == "--debugsolve")
+				DebugSolve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
+			if (args[0] == "--solveall")
+				SolveAll();
 			//Console.SetCursorPosition(0, map.Height * 3 + 1);
 		}
 
@@ -62,6 +66,13 @@ namespace Emulator
             var emulator = new Emulator(game, 1000);
             emulator.Run();
 	    }
+
+		public static void SolveAll()
+		{
+			var tester = new ProblemSolverTester();
+			var solver = new MuggleProblemSolver();
+			tester.ScoreOverAllProblems(solver);
+		}
 
 		public static void Solve(int problemnum, int seed, string[] magicSpells)
 	    {
