@@ -8,7 +8,7 @@ namespace SomeSecretProject.Tests
         [Test]
         public void RunAll()
         {
-            Emulator.Program.SolveAll();
+            Emulator.Program.SolveAll(null); //todo
         }
     }
 }

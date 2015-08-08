@@ -12,7 +12,7 @@ namespace Emulator
 {
 	public class ProblemSolverTester
 	{
-		public Result CountScore(Problem problem, IProblemSolver solver, string[] powerPhrases)
+		public Result CountScore(Problem problem, IProblemSolver solver, string[] powerPhrases, string folder)
 		{
 			long sum = 0;
 			List<Output> outputs = new List<Output>();
@@ -79,8 +79,8 @@ namespace Emulator
 		    for (int i = 0; i < 24; ++i)
 			{
 				var problem = ProblemServer.GetProblem(i);
-				WriteMessage("Problem: {0}, w:{1}, h:{2}, seeds:{3}", i, problem.width, problem.height, problem.sourceSeeds.Length);
-				var results = CountScore(problem, solver, folder, powerPhrases);
+				WriteMessage(agg, "Problem: {0}, w:{1}, h:{2}, seeds:{3}", i, problem.width, problem.height, problem.sourceSeeds.Length);
+				var results = CountScore(problem, solver, powerPhrases, folder);
 				sum += results.TotalScore;
 				for (int k = 0; k < results.EndStates.Length; ++k)
 				{
