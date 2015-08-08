@@ -134,6 +134,7 @@ namespace SomeSecretProject.Logic
 					if (!movedUnit.IsCorrect(map))
 					{
 						LockUnit(currentUnit);
+						currentUnit = null;
 						state = State.WaitUnit;
 						return;
 					}
