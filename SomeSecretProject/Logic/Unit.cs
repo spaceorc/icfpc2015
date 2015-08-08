@@ -83,7 +83,7 @@ namespace SomeSecretProject.Logic
 
 		public override int GetHashCode()
 		{
-			return members.Aggregate(pivot.GetHashCode(), (s, n) => (n.GetHashCode() * 397) & s);
+			return members.OrderBy(m => m.y).ThenBy(m => m.x).Aggregate(pivot.GetHashCode(), (s, n) => (n.GetHashCode() * 397) & s);
 		}
 
 		public override string ToString()

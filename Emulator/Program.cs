@@ -1,6 +1,7 @@
 ﻿using System;
 using Emulator.Drawing;
 using Emulator.Posting;
+using SomeSecretProject.Algorithm;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
 
@@ -14,7 +15,8 @@ namespace Emulator
             if (args[0]=="--play") 
                 if (args.Length > 2) PlayAuto(int.Parse(args[1]), args[2]);
                 else PlayManual(int.Parse(args[1]));
-		        
+			if (args[0] == "--solve")
+				Solve(int.Parse(args[1]));
 			//Console.SetCursorPosition(0, map.Height * 3 + 1);
 		}
 
@@ -30,7 +32,12 @@ namespace Emulator
 		        {
                     drawer.console.WriteLine(string.Format("problem {0}", p));
 		            drawer.DrawMap(map, null);
+			        foreach (var unit in game.units)
+			        {
+				        drawer.DrawUnit(unit);
+			        }
 		        }
+				Console.SetWindowPosition(0, 0);
                 var key = Console.ReadKey();
 		        if (key.Key == ConsoleKey.LeftArrow) --p;
 		        else ++p;
@@ -54,6 +61,14 @@ namespace Emulator
             emulator.Run();
 	    }
 
-
+	    public static void Solve(int problemnum, int seed = 0)
+	    {
+			var problem = ProblemServer.GetProblem(problemnum);
+		    var muggleProblemSolver = new MuggleProblemSolver();
+			var solution = muggleProblemSolver.Solve(problem, seed);
+			var game = new Game(problem, new Output { seed = seed, solution = solution });
+			var emulator = new Emulator(game, -1);
+			emulator.Run();
+	    }
 	}
 }

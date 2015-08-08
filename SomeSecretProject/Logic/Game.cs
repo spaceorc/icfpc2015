@@ -50,7 +50,7 @@ namespace SomeSecretProject.Logic
             ReStart();
         }
 
-        public void ReStart()
+        public virtual void ReStart()
         {
             var filledCells = problem.filled.ToDictionary(cell => Tuple.Create<int, int>(cell.x, cell.y), cell => cell.Fill());
             map = new Map(problem.width, problem.height);

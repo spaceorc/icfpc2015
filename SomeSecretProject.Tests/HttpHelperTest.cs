@@ -26,6 +26,7 @@ namespace SomeSecretProject.Tests
                 tag = "re",
                 solution = "Ei!"
             };
+            
             var result = HttpHelper.SendOutput(DavarAccount.TestTeam, solution);
             Assert.IsTrue(result);
         }

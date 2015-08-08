@@ -17,7 +17,7 @@ namespace Emulator.Posting
             return data.ParseAsJson<Problem>();
         }
 
-        public static bool SendOutput(DavarAccount account, Output output)
+        public static bool SendOutput(DavarAccount account, params Output[] output)
         {
             var client = new WebClient();
 
@@ -27,7 +27,7 @@ namespace Emulator.Posting
             client.Headers.Add("Content-Type", "application/json");
 
             var url = string.Format("https://davar.icfpcontest.org/teams/{0}/solutions", account.TeamId);
-            var data = "[" + output.ToJson() + "]";
+            var data = output.ToJson();
             var result = client.UploadString(url, "POST", data);
 
             return result == "created";
