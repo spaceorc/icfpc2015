@@ -1,9 +1,9 @@
-﻿using System.IO;
+﻿using System;
 using System.Linq;
 using SomeSecretProject;
 using SomeSecretProject.IO;
 
-namespace Emulator.Posting
+namespace Poster.Posting
 {
     public class HttpPoster
     {
@@ -18,17 +18,14 @@ namespace Emulator.Posting
         {
             string[] powerPhrases = PowerDatas.GetPowerPhrases();
             var outputs = Enumerable.Range(0, 24)
-                .Select(ProblemServer.GetProblem)
+                .Select(ProblemsSet.GetProblem)
                 .SelectMany(problem => problem.sourceSeeds
-                    .Select(seed =>
+                    .Select(seed => new Output
                     {
-                        return new Output
-                        {
-                            problemId = problem.id,
-                            seed = seed,
-							solution = problemSolver.Solve(problem, seed, powerPhrases),
-                            tag = tag
-                        };
+                        problemId = problem.id,
+                        seed = seed,
+                        solution = problemSolver.Solve(problem, seed, powerPhrases),
+                        tag = tag
                     }));
 
             foreach (var output in outputs)

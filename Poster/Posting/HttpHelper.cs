@@ -3,7 +3,7 @@ using System.Net;
 using System.Text;
 using SomeSecretProject.IO;
 
-namespace Emulator.Posting
+namespace Poster.Posting
 {
     public static class HttpHelper
     {

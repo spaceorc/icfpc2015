@@ -44,7 +44,6 @@
     <Compile Include="Posting\DavarAccount.cs" />
     <Compile Include="Posting\HttpHelper.cs" />
     <Compile Include="Posting\HttpPoster.cs" />
-    <Compile Include="Posting\ProblemServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

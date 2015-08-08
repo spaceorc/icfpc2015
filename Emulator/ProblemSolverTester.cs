@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Emulator.Posting;
 using SomeSecretProject;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -65,11 +64,6 @@ namespace Emulator
 			File.WriteAllText(path, output.ToJson());
 		}
 
-		public static void SendResult(Result result)
-		{
-			HttpHelper.SendOutput(DavarAccount.MainTeam, result.Outputs.ToArray());
-		}
-
 		public int ScoreOverAllProblems(IProblemSolver solver, string[] powerPhrases)
 		{
 		    var folder = @"..\..\..\solves\" + DateTime.Now.ToString("O").Replace(":", "_") + @"\";
@@ -78,7 +72,7 @@ namespace Emulator
 		    var agg = new StringBuilder();
 		    for (int i = 0; i < 24; ++i)
 			{
-				var problem = ProblemServer.GetProblem(i);
+				var problem = ProblemsSet.GetProblem(i);
 				WriteMessage(agg, "Problem: {0}, w:{1}, h:{2}, seeds:{3}", i, problem.width, problem.height, problem.sourceSeeds.Length);
 				var results = CountScore(problem, solver, powerPhrases, folder);
 				sum += results.TotalScore;

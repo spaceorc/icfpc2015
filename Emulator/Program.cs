@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Emulator.Drawing;
-using Emulator.Posting;
 using NDesk.Options;
 using SomeSecretProject;
 using SomeSecretProject.Algorithm;
@@ -74,7 +73,7 @@ namespace Emulator
 			var console = new FastConsole();
 			for (int p = 0; p < 24;)
 			{
-				var problem = ProblemServer.GetProblem(p);
+				var problem = ProblemsSet.GetProblem(p);
 				var game = new Game(problem, new Output() { solution = "" }, new string[0]);
 				var map = game.map;
 				using (var drawer = new Drawer(console))
@@ -98,7 +97,7 @@ namespace Emulator
 
 		public static void PlayManual(int problemnum, int seed, string[] powerPhrases, int delay)
 		{
-			var problem = ProblemServer.GetProblem(problemnum);
+            var problem = ProblemsSet.GetProblem(problemnum);
 			var game = new ConsoleGame(problem, problem.sourceSeeds[seed], powerPhrases);
 			var emulator = new Emulator(game, delay);
 			emulator.Run();
@@ -106,7 +105,7 @@ namespace Emulator
 
 		public static void PlayAuto(int problemnum, string solution, int seed, string[] powerPhrases, int delay)
 		{
-			var problem = ProblemServer.GetProblem(problemnum);
+            var problem = ProblemsSet.GetProblem(problemnum);
 			var game = new Game(problem, new Output() { solution = solution, seed = problem.sourceSeeds[seed] }, powerPhrases);
 			var emulator = new Emulator(game, delay);
 			emulator.Run();
@@ -121,7 +120,7 @@ namespace Emulator
 
 		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay)
 		{
-			var problem = ProblemServer.GetProblem(problemnum);
+            var problem = ProblemsSet.GetProblem(problemnum);
 			var muggleProblemSolver = new MuggleProblemSolver();
 			var solution = muggleProblemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
 			var game = new Game(problem, new Output { seed = problem.sourceSeeds[seed], solution = solution }, magicSpells);
@@ -131,7 +130,7 @@ namespace Emulator
 
 		public static void DebugSolve(int problemnum, int seed, string[] magicSpells, int delay)
 		{
-			var problem = ProblemServer.GetProblem(problemnum);
+            var problem = ProblemsSet.GetProblem(problemnum);
 			var muggleProblemSolver = new MuggleProblemSolver();
 			var fastConsole = new FastConsole();
 			muggleProblemSolver.SolutionAdded += (g, s) =>

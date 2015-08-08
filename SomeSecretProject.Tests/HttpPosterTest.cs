@@ -1,5 +1,5 @@
-using Emulator.Posting;
 using NUnit.Framework;
+using Poster.Posting;
 using SomeSecretProject.Algorithm;
 
 namespace SomeSecretProject.Tests

@@ -1,6 +1,6 @@
 ﻿using System;
-using Emulator.Posting;
 using NUnit.Framework;
+using Poster.Posting;
 using SomeSecretProject.IO;
 
 namespace SomeSecretProject.Tests
@@ -36,7 +36,7 @@ namespace SomeSecretProject.Tests
         {
             for (var i = 0; i < 24; ++i)
             {
-                ProblemServer.GetProblem(i);
+                ProblemsSet.GetProblem(i);
             }
         }
     }

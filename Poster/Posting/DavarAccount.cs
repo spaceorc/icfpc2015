@@ -1,4 +1,4 @@
-namespace Emulator.Posting
+namespace Poster.Posting
 {
     public class DavarAccount
     {
