@@ -16,7 +16,7 @@ namespace Emulator
                 if (args.Length > 2) PlayAuto(int.Parse(args[1]), args[2]);
                 else PlayManual(int.Parse(args[1]));
 			if (args[0] == "--solve")
-				Solve(int.Parse(args[1]));
+				Solve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
 			//Console.SetCursorPosition(0, map.Height * 3 + 1);
 		}
 
@@ -61,11 +61,11 @@ namespace Emulator
             emulator.Run();
 	    }
 
-	    public static void Solve(int problemnum, int seed = 0)
+		public static void Solve(int problemnum, int seed, string[] magicSpells)
 	    {
 			var problem = ProblemServer.GetProblem(problemnum);
 		    var muggleProblemSolver = new MuggleProblemSolver();
-			var solution = muggleProblemSolver.Solve(problem, seed);
+			var solution = muggleProblemSolver.Solve(problem, seed, magicSpells);
 			var game = new Game(problem, new Output { seed = seed, solution = solution });
 			var emulator = new Emulator(game, -1);
 			emulator.Run();

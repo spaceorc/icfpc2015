@@ -50,7 +50,7 @@ namespace Emulator
 
     public class EmulatorProblemSolver : IProblemSolver
     {
-        public string Solve(Problem problem, int seed)
+		public string Solve(Problem problem, int seed, string[] magicSpells)
         {
             var game = new ConsoleGame(problem, seed);
             var emulator = new Emulator(game, -1);
