@@ -92,7 +92,7 @@ namespace Emulator.Drawing
 			DrawMap(map, unit);
 		}
 
-		public void DrawMap(Map map, Unit unit)
+		public void DrawMap(Map map, Unit unit, bool locked = false)
 		{
 			for (int i = 0; i < 3 * map.Height + 1; i++)
 			{
@@ -105,14 +105,14 @@ namespace Emulator.Drawing
 					{
 						if (row % 2 == 1)
 						{
-							var viewInfo = GetViewInfo(map, unit, col, row - 1);
+							var viewInfo = GetViewInfo(map, unit, col, row - 1, locked);
 							console.ForegroundColor = viewInfo.ForegroundColor;
 							console.BackgroundColor = viewInfo.BackgroundColor;
 							console.Write(new string(viewInfo.Char, 2));
 						}
 						if (row < map.Height)
 						{
-							var viewInfo = GetViewInfo(map, unit, col, row);
+							var viewInfo = GetViewInfo(map, unit, col, row, locked);
 							console.ForegroundColor = viewInfo.ForegroundColor;
 							console.BackgroundColor = viewInfo.BackgroundColor;
 							console.Write(new string(viewInfo.Char, 2));
@@ -129,7 +129,7 @@ namespace Emulator.Drawing
 						}
 						else if (row % 2 == 0)
 						{
-							var viewInfo = GetViewInfo(map, unit, col, row - 1);
+							var viewInfo = GetViewInfo(map, unit, col, row - 1, locked);
 							console.ForegroundColor = viewInfo.ForegroundColor;
 							console.BackgroundColor = viewInfo.BackgroundColor;
 							console.Write(new string(viewInfo.Char, 2));
@@ -145,7 +145,7 @@ namespace Emulator.Drawing
 					}
 					for (int col = 0; col < map.Width; ++col)
 					{
-						var viewInfo = GetViewInfo(map, unit, col, row);
+						var viewInfo = GetViewInfo(map, unit, col, row, locked);
 						console.ForegroundColor = viewInfo.ForegroundColor;
 						console.BackgroundColor = viewInfo.BackgroundColor;
 						console.Write(new string(viewInfo.Char, 4));
@@ -155,7 +155,7 @@ namespace Emulator.Drawing
 			}
 		}
 
-	    private CellViewInfo GetViewInfo(Map map, Unit unit, int col, int row)
+	    private CellViewInfo GetViewInfo(Map map, Unit unit, int col, int row, bool locked)
 		{
 			var result = GetMapViewInfo(map[col, row]);
 			if (unit != null)
@@ -165,7 +165,7 @@ namespace Emulator.Drawing
 				{
 					result = new CellViewInfo
 					{
-						BackgroundColor = ConsoleColor.Red,
+						BackgroundColor = locked ? ConsoleColor.Green : ConsoleColor.Red,
 						Char = ' '
 					};
 				}

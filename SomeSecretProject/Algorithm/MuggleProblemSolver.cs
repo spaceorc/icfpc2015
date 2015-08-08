@@ -15,6 +15,8 @@ namespace SomeSecretProject.Algorithm
 			powerPhraseBuilder = new RandomPowerPhraseBuilder(new Random(12345));
 		}
 
+		public event Action<GameBase, string> SolutionAdded = (g, s) => { }; 
+
 		public class SolverGame : GameBase
 		{
 			public SolverGame([NotNull] Problem problem, int seed, string[] magicSpells)
@@ -79,6 +81,7 @@ namespace SomeSecretProject.Algorithm
 						});
 						var wayToBestPosition = bestPosition.Item2;
 						var unitSolution = powerPhraseBuilder.Build(wayToBestPosition);
+						SolutionAdded(game, unitSolution);
 						game.ApplyUnitSolution(unitSolution);
 						solution += unitSolution + "\r\n";
 						break;
