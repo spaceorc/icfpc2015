@@ -11,4 +11,12 @@ namespace SomeSecretProject
     {
         string Solve(Problem problem, int seed);
     }
+
+    public static class ProblemSolverFactory
+    {
+        public static IProblemSolver GetSolver()
+        {
+            throw new Exception();
+        }
+    }
 }
