@@ -11,7 +11,7 @@ namespace SomeSecretProject
         private static readonly Dictionary<string, Action<InputParameters, string>> actions = new Dictionary<string, Action<InputParameters, string>>
         {
             {"-f", ParseFilename},
-            {"-p", ParsePower},
+            {"-p", ParsePower},//todo
             {"-t", ParseTL},
             {"-m", ParseML},
             {"-c", ParseCores}
