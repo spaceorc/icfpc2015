@@ -10,6 +10,8 @@ namespace SomeSecretProject.Tests
     [TestFixture]
     public class EmulatorViaTest
     {
+        private const string idealSolvesFolder = @"..\..\..\importantSolves";
+
         [Test]
         public void RunAll()
         {
@@ -19,7 +21,20 @@ namespace SomeSecretProject.Tests
         [Test]
         public void CompareSolves()
         {
-            var idealSolvesFolder = @"..\..\..\importantSolves";
+            var groupBy = GetSolves();
+            foreach (var result in groupBy)
+            {
+                Console.WriteLine("Problem" + result.Key);
+                foreach (var res in result.OrderByDescending(r => r.Item3))
+                {
+                    Console.WriteLine("{0}: {1}", res.Item1, res.Item3);
+                }
+                Console.WriteLine();
+            }
+        }
+
+        private static IEnumerable<IGrouping<string, Tuple<string, string, int>>> GetSolves()
+        {
             var dirs = Directory.EnumerateDirectories(idealSolvesFolder).Select(s => Path.GetFileName(s));
             var groupBy = dirs.SelectMany(
                 d =>
@@ -37,14 +52,23 @@ namespace SomeSecretProject.Tests
                                     .Replace(".txt", ""));
                                 return Tuple.Create(d, problem, score);
                             })).GroupBy(e => e.Item2);
-            foreach (var result in groupBy)
+            return groupBy;
+        }
+
+        [Test]
+        public void ChooseBestSolves()
+        {
+            var groupBy = GetSolves();
+            var newSolve = Path.Combine(idealSolvesFolder, "best-" + DateTime.Now.ToString("O").Replace(":", "_"));
+            Directory.CreateDirectory(newSolve);
+            foreach (var problemGroup in groupBy)
             {
-                Console.WriteLine("Problem" + result.Key);
-                foreach (var res in result.OrderByDescending(r => r.Item3))
-                {
-                    Console.WriteLine("{0}: {1}", res.Item1, res.Item3);
-                }
-                Console.WriteLine();
+                var newPAth = Path.Combine(newSolve, problemGroup.Key);
+                Directory.CreateDirectory(newPAth);
+                var best = problemGroup.OrderByDescending(p => p.Item3).First();
+                var path = Path.Combine(idealSolvesFolder, best.Item1, problemGroup.Key);
+                foreach (var a in Directory.EnumerateFiles(path))
+                    File.Copy(a, Path.Combine(newPAth, Path.GetFileName(a)));
             }
         }
     }
