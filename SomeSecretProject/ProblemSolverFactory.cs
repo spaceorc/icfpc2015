@@ -1,5 +1,3 @@
-using System;
-
 namespace SomeSecretProject
 {
     public static class ProblemSolverFactory

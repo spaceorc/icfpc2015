@@ -9,32 +9,24 @@ namespace SomeSecretProject.Tests
     [Ignore]
     public class HttpHelperTest
     {
-        private HttpHelper httpHelper;
-
-        [SetUp]
-        public void SetUp()
-        {
-            httpHelper = new HttpHelper(DavarAccounts.TEST_TEAM_TOKEN, DavarAccounts.TEST_TEAM_ID);
-        }
-
         [TestCase]
         public void TestLoadProblem()
         {
-            var problem = httpHelper.GetProblem(0);
+            var problem = HttpHelper.GetProblem(0);
             Console.WriteLine(problem.width +" x "+problem.height);
         }
 
-        [TestCase]
+        [Test]
         public void TestSendSolution()
         {
             var solution = new Output
             {
-                problemId = 0,
+                problemId = 1,
                 seed = 0,
                 tag = "re",
-                solution = "Ei!Ei!"
+                solution = "Ei!"
             };
-            var result = httpHelper.SendOutput(solution);
+            var result = HttpHelper.SendOutput(DavarAccount.TestTeam, solution);
             Assert.IsTrue(result);
         }
 
