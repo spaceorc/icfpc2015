@@ -34,7 +34,7 @@ namespace SomeSecretProject.Algorithm
             for (int l = rect.Item1.y; l < rect.Item2.y; ++l)
             {
                 var emptyCellsInLine = emptyCellsInLines[l];
-                if (emptyCellsInLine.Count > unit.members.Length) continue;
+                if (emptyCellsInLine.Count > unit.members.Count) continue;
                 if (emptyCellsInLine.TrueForAll(c => unit.members.Contains(c)))
                     ndropped++;
             }
