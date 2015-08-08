@@ -62,6 +62,16 @@ namespace SomeSecretProject.Algorithm
             return countOfInputs.ToArray();
         }
 
+        public double Evaluate(Unit unit)
+        {
+            var dropped = NDroppedLines(unit);
+            int[] freedomInts = CountFreeInputsForSurroundingPoints(unit);
+            int[] byCountFree = new int[5];
+            foreach (var nfree in freedomInts)
+                byCountFree[nfree]++;
+            return 100*dropped - 10*byCountFree[0] - 5*byCountFree[1] - 2*byCountFree[2] - 1*byCountFree[3];
+        }
+
 
 
     }
