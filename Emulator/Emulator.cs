@@ -25,9 +25,9 @@ namespace Emulator
                 using (var drawer = new Drawer(console))
                 {
                     Console.SetWindowPosition(0, 0);
-                    drawer.console.WriteLine("Score=" + game.CurrentScore);
+                    //drawer.console.WriteLine("Score=" + game.CurrentScore);
                     drawer.DrawMap(game.map, game.currentUnit);
-                    //Console.WriteLine("Score=" + game.currentScore);
+                    drawer.console.WriteLine("Score=" + game.CurrentScore);
                 }
                 Console.SetWindowPosition(0, 0);
                 if (delay > 0) Thread.Sleep(delay);

@@ -70,7 +70,7 @@ namespace SomeSecretProject.Algorithm
 						break;
 					case GameBase.State.UnitInGame:
 						var reachablePositions = new ReachablePositions(game.map);
-						var evaluatePositions = new EvaluatePositions(game.map);
+						var evaluatePositions = new EvaluatePositions2(game.map);
 						var endPositions = reachablePositions.EndPositions(game.currentUnit);
 						var estimated = new Dictionary<Unit, double>();
 						var bestPosition = endPositions.ArgMax(p =>
