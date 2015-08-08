@@ -16,15 +16,15 @@ namespace SomeSecretProject.Tests
             Console.WriteLine(problem.width +" x "+problem.height);
         }
 
-        [TestCase]
+        [Test]
         public void TestSendSolution()
         {
             var solution = new Output
             {
-                problemId = 0,
+                problemId = 1,
                 seed = 0,
                 tag = "re",
-                solution = "Ei!Ei!"
+                solution = "Ei!"
             };
             var result = HttpHelper.SendOutput(DavarAccount.TestTeam, solution);
             Assert.IsTrue(result);

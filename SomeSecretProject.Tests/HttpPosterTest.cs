@@ -4,6 +4,7 @@ using NUnit.Framework;
 namespace SomeSecretProject.Tests
 {
     [TestFixture]
+    [Ignore]
     public class HttpPosterTest
     {
         private HttpPoster httpPoster;
