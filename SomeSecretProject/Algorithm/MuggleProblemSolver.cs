@@ -7,7 +7,7 @@ namespace SomeSecretProject.Algorithm
 {
 	public class MuggleProblemSolver : IProblemSolver
 	{
-		private IPowerPhraseBuilder powerPhraseBuilder;
+		private readonly IPowerPhraseBuilder powerPhraseBuilder;
 
 		public MuggleProblemSolver()
 		{
@@ -44,10 +44,12 @@ namespace SomeSecretProject.Algorithm
 				{
 					nextMove = solution[i];
 					Step();
-					if (state != State.UnitInGame)
+					if (i < solution.Length - 1 && state != State.UnitInGame)
 						throw new InvalidOperationException(string.Format("Invalid game state: {0}", state));
 				}
 				nextMove = null;
+				if (state != State.End && state != State.WaitUnit)
+					throw new InvalidOperationException(string.Format("Invalid game state: {0}", state));
 			}
 		}
 
@@ -70,7 +72,7 @@ namespace SomeSecretProject.Algorithm
 						var wayToBestPosition = bestPosition.Item2;
 						var unitSolution = powerPhraseBuilder.Build(wayToBestPosition);
 						game.ApplyUnitSolution(unitSolution);
-
+						solution += unitSolution;
 						break;
 					case GameBase.State.EndInvalidCommand:
 					case GameBase.State.EndPositionRepeated:

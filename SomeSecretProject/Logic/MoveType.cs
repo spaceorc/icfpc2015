@@ -1,5 +1,9 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
 namespace SomeSecretProject.Logic
 {
+	[JsonConverter(typeof(StringEnumConverter))]
 	public enum MoveType
 	{
 		E,

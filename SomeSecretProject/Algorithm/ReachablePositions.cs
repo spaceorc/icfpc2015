@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SomeSecretProject.Logic;
 
 namespace SomeSecretProject.Algorithm
@@ -10,6 +8,7 @@ namespace SomeSecretProject.Algorithm
 	public class ReachablePositions
 	{
 		private readonly Map map;
+
 		private readonly MoveType[] allowedMoves =
 		{
 			MoveType.E, MoveType.W,
@@ -24,12 +23,13 @@ namespace SomeSecretProject.Algorithm
 
 		public IList<Tuple<Unit, IList<MoveType>>> EndPositions(Unit currentUnit)
 		{
-			return AllPositions(currentUnit).Where(u => IsFinal(u.Item1)).ToList();
+			return AllPositions(currentUnit)
+				.SelectMany(p => FinalMoves(p.Item1).Select(f => Tuple.Create(p.Item1, (IList<MoveType>)p.Item2.Concat(new[] { f }).ToList()))).ToList();
 		}
 
-		private bool IsFinal(Unit unit)
+		private List<MoveType> FinalMoves(Unit unit)
 		{
-			return allowedMoves.Any(m => !unit.Move(m).IsCorrect(map));
+			return allowedMoves.Where(m => !unit.Move(m).IsCorrect(map)).ToList();
 		}
 
 		public IList<Tuple<Unit, IList<MoveType>>> AllPositions(Unit currentUnit)
@@ -40,10 +40,10 @@ namespace SomeSecretProject.Algorithm
 			}
 			var checker = new ForbiddenSequenceChecker(currentUnit);
 			var visited = new Dictionary<Unit, List<MoveType>>
-			              {
-				              {currentUnit, new List<MoveType>()},
-			              };
-			var queue = new Queue<Unit>(new [] {currentUnit});
+			{
+				{ currentUnit, new List<MoveType>() },
+			};
+			var queue = new Queue<Unit>(new[] { currentUnit });
 			while (queue.Any())
 			{
 				var unit = queue.Dequeue();
@@ -53,7 +53,7 @@ namespace SomeSecretProject.Algorithm
 					if (!next.IsCorrect(map) || visited.ContainsKey(next))
 						continue;
 					queue.Enqueue(next);
-					visited[next] = visited[unit].Concat(new[] {move}).ToList();
+					visited[next] = visited[unit].Concat(new[] { move }).ToList();
 				}
 			}
 			return visited.Keys.Select(u => Tuple.Create(u, (IList<MoveType>)visited[u])).ToList();
