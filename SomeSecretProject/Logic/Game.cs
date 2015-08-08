@@ -30,7 +30,7 @@ namespace SomeSecretProject.Logic
         private int currentMovesScore;
         private int currentSpellsScore;
         private int previouslyExplodedLines;
-        private StringBuilder enteredString;
+        public StringBuilder enteredString;
         private List<string> enteredMagicSpells;
         private LinearCongruentalGenerator randomGenerator;
         protected int step = 0;
