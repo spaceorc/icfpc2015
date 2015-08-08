@@ -23,20 +23,9 @@ namespace Emulator.Posting
                 return File.ReadAllText(path).ParseAsJson<Problem>();
             }
 
-            var httpHelper = new HttpHelper(DavarAccounts.MAIN_TEAM_TOKEN, DavarAccounts.MAIN_TEAM_ID);
-
-            var problem = httpHelper.GetProblem(problemnum);
+            var problem = HttpHelper.GetProblem(problemnum);
             File.WriteAllText(path, problem.ToJson());
             return problem;
         }
-    }
-
-    public static class DavarAccounts
-    {
-        public const string MAIN_TEAM_TOKEN = "LZPdLA9OaBh2PJO7Kogh6X+/sDzqX4nPdN+cNlAO39w=";
-        public const int MAIN_TEAM_ID = 127;
-
-        public const string TEST_TEAM_TOKEN = "MAXOFfmF0wuQ4QYjz0mpShQckV6x/64vQuvT8aSI4Xg=";
-        public const int TEST_TEAM_ID = 188;
     }
 }

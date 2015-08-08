@@ -55,6 +55,7 @@
     <Compile Include="Drawing\FastConsoleRowSegment.cs" />
     <Compile Include="Drawing\Drawer.cs" />
     <Compile Include="Emulator.cs" />
+    <Compile Include="Posting\DavarAccount.cs" />
     <Compile Include="Posting\HttpHelper.cs" />
     <Compile Include="Posting\HttpPoster.cs" />
     <Compile Include="Posting\ProblemServer.cs" />

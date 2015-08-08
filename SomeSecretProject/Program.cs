@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using SomeSecretProject.IO;
 
 namespace SomeSecretProject
 {
@@ -13,7 +12,8 @@ namespace SomeSecretProject
             {"-f", ParseFilename},
             {"-p", ParsePower},
             {"-t", ParseTL},
-            {"-m", ParseML}
+            {"-m", ParseML},
+            {"-c", ParseCores}
         };
 
 		static void Main(string[] args)
@@ -35,7 +35,21 @@ namespace SomeSecretProject
 		        Console.WriteLine("Error: " + ex.Message);
                 Environment.Exit(111);
 		    }
-            //todo call game and return output
+            var problem = File.ReadAllText(inputParameters.InputFilename).ParseAsJson<Problem>();
+            var outputs = new List<Output>();
+		    var problemSolver = ProblemSolverFactory.GetSolver();
+		    foreach (var seed in problem.sourceSeeds)
+		    {
+		        var answer = problemSolver.Solve(problem, seed);
+		        outputs.Add(new Output
+		        {
+		            problemId = problem.id,
+                    seed = seed,
+                    tag = DateTime.Now.ToString("O"),
+                    solution = answer
+		        });
+		    }
+		    Console.Write(outputs.ToJson()); //too big strng?
 		}
 
 	    private static void ParseFilename(InputParameters input, string value)
@@ -56,6 +70,11 @@ namespace SomeSecretProject
         private static void ParseML(InputParameters input, string value)
         {
             input.MemoryLimitMb = int.Parse(value);
+        }
+
+        private static void ParseCores(InputParameters input, string value)
+        {
+            input.Cores = int.Parse(value);
         }
 
 	    private static Tuple<string, string> ParseNextArg(Queue<string> args)
@@ -79,9 +98,10 @@ namespace SomeSecretProject
             MemoryLimitMb = 1024;
         }
 
+        public int Cores { get; set; }
         public string InputFilename { get; set; }
         public int MemoryLimitMb { get; set; }
-        public int TimeLimitSec { get; set; }
+        public int TimeLimitSec { get; set; } //todo is for all seeds or for each?
         public IList<string> PowerPhrases { get; set; }
     }
 }
