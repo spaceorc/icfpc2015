@@ -83,7 +83,7 @@ namespace SomeSecretProject.Algorithm
 						var unitSolution = powerPhraseBuilder.Build(wayToBestPosition);
 						SolutionAdded(game, unitSolution);
 						game.ApplyUnitSolution(unitSolution);
-						solution += unitSolution + "\r\n";
+						solution += unitSolution;
 						break;
 					case GameBase.State.EndInvalidCommand:
 					case GameBase.State.EndPositionRepeated:

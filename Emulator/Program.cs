@@ -14,8 +14,8 @@ namespace Emulator
 		private static void Main(string[] args)
 		{
 			if (args[0]=="--show") ShowProblems();
-            if (args[0]=="--play") 
-                if (args.Length > 2) PlayAuto(int.Parse(args[1]), args[2]);
+            if (args[0]=="--play")
+                if (args.Length > 3) PlayAuto(int.Parse(args[1]), args[2].ToLower(), int.Parse(args[3]));
                 else PlayManual(int.Parse(args[1]));
 			if (args[0] == "--solve")
 				DebugSolve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
@@ -59,7 +59,7 @@ namespace Emulator
 	    {
 	        var problem = ProblemServer.GetProblem(problemnum);
             var game = new Game(problem, new Output(){solution = solution});
-            var emulator = new Emulator(game, 1000);
+            var emulator = new Emulator(game, -1);
             emulator.Run();
 	    }
 

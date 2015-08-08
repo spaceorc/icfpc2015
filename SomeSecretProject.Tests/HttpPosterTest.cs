@@ -1,5 +1,6 @@
 using Emulator.Posting;
 using NUnit.Framework;
+using SomeSecretProject.Algorithm;
 
 namespace SomeSecretProject.Tests
 {
@@ -12,13 +13,13 @@ namespace SomeSecretProject.Tests
         [SetUp]
         public void SetUp()
         {
-            httpPoster = new HttpPoster(new SimpleProblemSolver());
+            httpPoster = new HttpPoster(new MuggleProblemSolver());
         }
 
         [Test]
         public void PostAll()
         {
-            httpPoster.PostAll(DavarAccount.MainTeam, "test");
+            httpPoster.PostAll(DavarAccount.MainTeam, "muggle1");
         }
     }
 }

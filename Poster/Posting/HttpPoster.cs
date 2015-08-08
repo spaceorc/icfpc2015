@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using SomeSecretProject;
 using SomeSecretProject.IO;
 
@@ -21,13 +20,11 @@ namespace Emulator.Posting
                 .SelectMany(problem => problem.sourceSeeds
                     .Select(seed =>
                     {
-                        var ans = problemSolver.Solve(problem, seed, DavarMagicSpells.Items);
-                        Console.WriteLine("{0} {1} {2}", problem.id, seed, ans);
                         return new Output
                         {
                             problemId = problem.id,
                             seed = seed,
-                            solution = ans,
+                            solution = problemSolver.Solve(problem, seed, DavarMagicSpells.Items),
                             tag = tag
                         };
                     }));

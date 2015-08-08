@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Emulator.Drawing;
 using SomeSecretProject;
@@ -40,6 +41,10 @@ namespace Emulator
                     else if (key.Key == ConsoleKey.Escape) break;
                 }
                 game.Step();
+                Console.SetCursorPosition(0, 40);
+                Console.Write(new string(Enumerable.Range(0, 500).Select(_ => ' ').ToArray()));
+                Console.SetCursorPosition(0, 40);
+                Console.Write(game.enteredString.ToString());
             }
             Console.Write("GAME OVER");
             Console.WriteLine(game.state);
