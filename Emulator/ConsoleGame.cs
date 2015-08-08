@@ -7,7 +7,7 @@ namespace Emulator
     class ConsoleGame : GameBase
     {
         public ConsoleGame(Problem problem, int seed)
-            :base(problem,seed)
+            :base(problem, seed, new string[0])
         {}
 
         protected override bool TryGetNextMove(out char move)

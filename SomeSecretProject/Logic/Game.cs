@@ -24,7 +24,7 @@ namespace SomeSecretProject.Logic
 		public Map map;
 		public State state { get; private set; }
 		public Unit[] units;
-        private string[] knownMagicSpells;
+        private readonly string[] knownMagicSpells;
         public Unit currentUnit;
         private int currentUnitIndex;
         private int currentMovesScore;
@@ -42,9 +42,11 @@ namespace SomeSecretProject.Logic
             get { return currentMovesScore + currentSpellsScore; }
         }
 
-        public GameBase([NotNull] Problem problem, int seed)
+        public GameBase([NotNull] Problem problem, int seed, string[] knownMagicSpells)
         {
             this.problem = problem;
+            this.seed = seed;
+            this.knownMagicSpells = knownMagicSpells;
             ReStart();
         }
 
@@ -62,7 +64,7 @@ namespace SomeSecretProject.Logic
                         map[x, y] = new Cell { x = x, y = y };
                 }
             units = problem.units;
-            randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[seed]);
+            randomGenerator = new LinearCongruentalGenerator(seed);
             state = State.WaitUnit;
             step = 0;
 	        currentUnit = null;
@@ -74,7 +76,6 @@ namespace SomeSecretProject.Logic
             previouslyExplodedLines = 0;
             enteredString = new StringBuilder();
             enteredMagicSpells = new List<string>();
-            knownMagicSpells = new [] {"Ei!"}; //todo constructor+
         }
 
         public void StepBack(int backSteps)
@@ -192,7 +193,7 @@ namespace SomeSecretProject.Logic
         private int currentCommand;
 
         public Game([NotNull] Problem problem, [NotNull] Output output)
-            :base(problem, output.seed)
+            :base(problem, output.seed, new string[0])
 		{
 			this.output = output;
             currentCommand = 0;

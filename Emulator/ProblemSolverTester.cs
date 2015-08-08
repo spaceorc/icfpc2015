@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using Emulator.Posting;
 using SomeSecretProject;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -19,7 +19,7 @@ namespace Emulator
             for (int seedInd = 0; seedInd < problem.sourceSeeds.Length; ++seedInd)
             {
                 var seed = problem.sourceSeeds[seedInd];
-                var solution = solver.Solve(problem, seed);
+                var solution = solver.Solve(problem, seed, DavarMagicSpells.Items);
                 var output = new Output() {seed = seed, solution = solution};
                 var game = new Game(problem, output);
                 var emulator = new Emulator(game, 0);

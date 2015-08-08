@@ -4,6 +4,6 @@ namespace SomeSecretProject
 {
     public interface IProblemSolver
     {
-        string Solve(Problem problem, int seed);
+        string Solve(Problem problem, int seed, string[] magicSpells);
     }
 }
