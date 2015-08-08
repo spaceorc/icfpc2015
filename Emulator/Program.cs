@@ -19,7 +19,7 @@ namespace Emulator
 		{
 			string action = "help";
 			string solution = "";
-			string[] powerPhrases = DavarMagicSpells.Items;
+			string[] powerPhrases = File.ReadAllLines(Path.Combine(@"..\..\..\data\power", "default.txt"));
 			int seed = 0;
 			int problem = 0;
 			int delay = 0;

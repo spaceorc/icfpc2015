@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using SomeSecretProject;
 using SomeSecretProject.IO;
 
@@ -15,6 +16,7 @@ namespace Emulator.Posting
 
         public void PostAll(DavarAccount account, string tag = null)
         {
+			string[] powerPhrases = File.ReadAllLines(Path.Combine(@"..\..\..\data\power", "default.txt"));
             var outputs = Enumerable.Range(0, 24)
                 .Select(ProblemServer.GetProblem)
                 .SelectMany(problem => problem.sourceSeeds
@@ -24,7 +26,7 @@ namespace Emulator.Posting
                         {
                             problemId = problem.id,
                             seed = seed,
-                            solution = problemSolver.Solve(problem, seed, DavarMagicSpells.Items),
+							solution = problemSolver.Solve(problem, seed, powerPhrases),
                             tag = tag
                         };
                     }));
