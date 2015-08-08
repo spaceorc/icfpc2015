@@ -11,7 +11,7 @@ namespace SomeSecretProject.Tests
         [Test]
         public void CountUnit()
         {
-            var unit = new Unit {members = new HashSet<Cell>(new[] {new Cell(), new Cell()})};
+            var unit = new Unit {members = new HashSet<Cell>(new[] {new Cell {x = 1, y = 1}, new Cell {x = 2, y = 2}})};
 
             Assert.AreEqual(2, ScoreCounter.GetMoveScore(unit, 0, 0));
             Assert.AreEqual(102, ScoreCounter.GetMoveScore(unit, 1, 0));
