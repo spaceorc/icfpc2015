@@ -160,5 +160,59 @@ namespace SomeSecretProject.Tests
 			}
 			return map;
 		}
+
+		[Test]
+		public void TestPaths()
+		{
+			var map = GetMap(@"
+...##
+.....
+##...
+.#...
+.....");
+			var unit = "{pivot:{x:1,y:0},members:[{x:1,y:0}]}".ParseAsJson<Unit>();
+			var reacher = new ReachablePositions(map);
+
+			var expected = @"[
+				['E', 'E'],
+				['W', 'W'],
+				['W', 'SW'],
+				['SE', 'SW'],
+				['SW', 'W'],
+				['SW', 'SE'],
+				['SW', 'SW'],
+				['SE', 'SE', 'W'],
+				['SE', 'SE', 'SW'],
+				['SE', 'SE', 'SE', 'W'],
+				['E', 'SE', 'E', 'E', 'E'],
+				['E', 'SE', 'E', 'E', 'SE'],
+				['E', 'SE', 'E', 'SE', 'E'],
+				['SE', 'SE', 'SE', 'SE', 'SE'],
+				['SE', 'SE', 'SE', 'SE', 'SW'],
+				['SE', 'SE', 'SE', 'SW', 'SE'],
+				['SE', 'SE', 'SE', 'SW', 'SW'],
+				['E', 'SE', 'E', 'SE', 'SE', 'E'],
+				['E', 'SE', 'E', 'SE', 'SE', 'SE'],
+				['E', 'SE', 'SE', 'SE', 'SE', 'E'],
+				['E', 'SE', 'SE', 'SE', 'SE', 'SE'],
+				['E', 'SE', 'SE', 'SE', 'SE', 'SW'],
+				['SE', 'SE', 'SE', 'SW', 'W', 'SE'],
+				['SE', 'SE', 'SE', 'SW', 'W', 'SW'],
+				['SE', 'SE', 'SE', 'SW', 'W', 'W', 'W'],
+				['SE', 'SE', 'SE', 'SW', 'W', 'W', 'SE'],
+				['SE', 'SE', 'SE', 'SW', 'W', 'W', 'SW']
+			]".ParseAsJson<MoveType[][]>();
+
+			var forPrint = reacher.EndPositions(unit)
+				.Select(g => g.Item1 + " - " +  "['" + string.Join("', '", g.Item2) + "'],");
+			var actual = reacher.EndPositions(unit)
+				.Select(x => x.Item2).ToArray();
+			foreach (var u in forPrint)
+			{
+				Console.WriteLine(u);
+			}
+			CollectionAssert.AreEqual(expected, actual.ToArray());
+			
+		}
 	}
 }
