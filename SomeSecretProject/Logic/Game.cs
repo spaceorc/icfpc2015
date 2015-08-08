@@ -155,6 +155,7 @@ namespace SomeSecretProject.Logic
 			}
 		}
 
+
         private void ParseNewMagicSpells()
         {
             foreach (var magicSpell in knownMagicSpells)

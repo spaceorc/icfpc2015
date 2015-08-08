@@ -23,7 +23,7 @@ namespace SomeSecretProject.Tests
             {
                 problemId = 0,
                 seed = 0,
-                tag = "re",
+                tag = "reg" + " " + DateTime.Now.ToString("O"),
                 solution = "Ei!"
             };
             
