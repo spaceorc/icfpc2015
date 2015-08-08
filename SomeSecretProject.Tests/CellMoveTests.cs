@@ -115,7 +115,7 @@ namespace SomeSecretProject.Tests
 		}
 
 		[Test]
-		public void RotateTests_Bug()
+		public void RotateTests_NegativeCoords_BugFixed()
 		{
 			var pivot = new Cell {x = 1, y = -1};
 			var cell = new Cell {x = 3, y = 0};
