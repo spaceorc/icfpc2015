@@ -8,7 +8,7 @@ namespace SomeSecretProject.Algorithm
 	public class ReachablePositionsWithWords
 	{
 		private readonly Map map;
-		private readonly string[] powerPhrases;
+		private readonly Queue<string> powerPhrases;
 
 		private readonly MoveType[] allowedMoves =
 		{
@@ -20,7 +20,7 @@ namespace SomeSecretProject.Algorithm
 		public ReachablePositionsWithWords(Map map, string[] powerPhrases)
 		{
 			this.map = map;
-			this.powerPhrases = powerPhrases;
+			this.powerPhrases = new Queue<string>(powerPhrases);
 		}
 		
 		public IEnumerable<Tuple<Unit, IList<MoveType>>> SingleEndPositions(Unit currentUnit)

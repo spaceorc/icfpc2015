@@ -122,8 +122,9 @@ namespace Emulator
 		public static void SolveAll(string[] powerPhrases)
 		{
 			var tester = new ProblemSolverTester();
-			var solver = new MuggleProblemSolver();
-			tester.ScoreOverAllProblems(solver, powerPhrases);
+			//var problemSolver = new MuggleProblemSolver();
+			var problemSolver = new MuggleProblemSolver_MultiUnit(1);
+			tester.ScoreOverAllProblems(problemSolver, powerPhrases);
 		}
 
 		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
@@ -131,8 +132,8 @@ namespace Emulator
             var problem = ProblemsSet.GetProblem(problemnum);
 //			var muggleProblemSolver = new MuggleProblemSolver();
 			//var muggleProblemSolver = new MagicProblemSolver();
-			var muggleProblemSolver = new MuggleProblemSolver_MultiUnit(1);
-			var solution = muggleProblemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
+			var solver = new MuggleProblemSolver_MultiUnit(1);
+			var solution = solver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
 			var game = new Game(problem, new Output { seed = problem.sourceSeeds[seed], solution = solution }, magicSpells);
 			if (visualize)
 			{
