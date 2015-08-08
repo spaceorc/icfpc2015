@@ -11,13 +11,13 @@ namespace SomeSecretProject.Tests
         [SetUp]
         public void SetUp()
         {
-            httpPoster = new HttpPoster(DavarAccounts.MAIN_TEAM_TOKEN, DavarAccounts.MAIN_TEAM_ID);
+            httpPoster = new HttpPoster(new SimpleProblemSolver());
         }
 
         [Test]
         public void PostAll()
         {
-            httpPoster.PostAll("test");
+            httpPoster.PostAll(DavarAccount.MainTeam, "test");
         }
     }
 }

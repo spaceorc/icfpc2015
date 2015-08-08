@@ -7,15 +7,13 @@ namespace Emulator.Posting
     public class HttpPoster
     {
         private readonly IProblemSolver problemSolver;
-        private readonly HttpHelper httpHelper;
 
-        public HttpPoster(string apiToken, int teamId)
+        public HttpPoster(IProblemSolver problemSolver)
         {
-            problemSolver = ProblemSolverFactory.GetSolver();
-            httpHelper = new HttpHelper(apiToken, teamId);
+            this.problemSolver = problemSolver;
         }
 
-        public void PostAll(string tag = null)
+        public void PostAll(DavarAccount account, string tag = null)
         {
             var outputs = Enumerable.Range(0, 24)
                 .Select(ProblemServer.GetProblem)
@@ -30,7 +28,7 @@ namespace Emulator.Posting
 
             foreach (var output in outputs)
             {
-                httpHelper.SendOutput(output);
+                HttpHelper.SendOutput(account, output);
             }
         }
     }
