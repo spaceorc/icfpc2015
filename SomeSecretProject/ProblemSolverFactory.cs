@@ -6,7 +6,7 @@ namespace SomeSecretProject
     {
         public static IProblemSolver GetSolver()
         {
-            throw new Exception();
+            return new SimpleProblemSolver();
         }
     }
 }
