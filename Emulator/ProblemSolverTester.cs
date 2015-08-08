@@ -70,7 +70,7 @@ namespace Emulator
 
 			long sum = 0;
 		    var agg = new StringBuilder();
-		    for (int i = 0; i < 25; ++i)
+		    for (int i = 0; i < 24; ++i)
 			{
 				var problem = ProblemsSet.GetProblem(i);
 				WriteMessage(agg, "Problem: {0}, w:{1}, h:{2}, seeds:{3}", i, problem.width, problem.height, problem.sourceSeeds.Length);
