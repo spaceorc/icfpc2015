@@ -22,6 +22,11 @@ namespace SomeSecretProject.Algorithm
 			this.map = map;
 			this.powerPhrases = powerPhrases;
 		}
+		
+		public IEnumerable<Tuple<Unit, IList<MoveType>>> SingleEndPositions(Unit currentUnit)
+		{
+			return EndPositions(currentUnit).GroupBy(t => t.Item1).Select(g => g.First());
+		}
 
 		public IList<Tuple<Unit, IList<MoveType>>> EndPositions(Unit currentUnit)
 		{

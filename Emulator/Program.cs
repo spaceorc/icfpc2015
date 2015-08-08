@@ -22,6 +22,7 @@ namespace Emulator
 			int seed = 0;
 			int problem = 0;
 			int delay = 0;
+			bool visualize = true;
 			var options = new OptionSet
 			{
 				{ "show|play|solve|solveall|debug|help", v => action = v },
@@ -31,6 +32,7 @@ namespace Emulator
 				{ "powerfile=", v => powerPhrases = PowerDatas.GetPowerPhrases(v) },
 				{ "seed=", (int v) => seed = v },
 				{ "problem=", (int v) => problem = v },
+				{ "fast", v => visualize = false },
 			};
 			try
 			{
@@ -57,7 +59,7 @@ namespace Emulator
 						PlayAuto(problem, solution, seed, powerPhrases, delay);
 					break;
 				case "solve":
-					Solve(problem, seed, powerPhrases, delay);
+					Solve(problem, seed, powerPhrases, delay, visualize);
 					break;
 				case "solveall":
 					SolveAll(powerPhrases);
@@ -124,21 +126,35 @@ namespace Emulator
 			tester.ScoreOverAllProblems(solver, powerPhrases);
 		}
 
-		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay)
+		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
 		{
             var problem = ProblemsSet.GetProblem(problemnum);
 //			var muggleProblemSolver = new MuggleProblemSolver();
-			var muggleProblemSolver = new MuggleProblemSolver_MultiUnit(0);
+			//var muggleProblemSolver = new MagicProblemSolver();
+			var muggleProblemSolver = new MuggleProblemSolver_MultiUnit(1);
 			var solution = muggleProblemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
 			var game = new Game(problem, new Output { seed = problem.sourceSeeds[seed], solution = solution }, magicSpells);
-			var emulator = new Emulator(game, delay);
-			emulator.Run();
+			if (visualize)
+			{
+				var emulator = new Emulator(game, delay);
+				emulator.Run();
+			}
+			else
+			{
+				while (game.state == GameBase.State.UnitInGame || game.state == GameBase.State.WaitUnit)
+				{
+					game.Step();
+				}
+				Console.Write("Score=" + game.CurrentScore);
+				Console.ReadKey();
+			}
 		}
 
 		public static void DebugSolve(int problemnum, int seed, string[] magicSpells, int delay)
 		{
             var problem = ProblemsSet.GetProblem(problemnum);
-			var problemSolver = new MagicProblemSolver();
+			//var problemSolver = new MagicProblemSolver();
+			var problemSolver = new MuggleProblemSolver_MultiUnit(1);
 			var fastConsole = new FastConsole();
 			problemSolver.SolutionAdded += (g, s) =>
 			{

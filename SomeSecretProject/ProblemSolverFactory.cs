@@ -6,7 +6,7 @@ namespace SomeSecretProject
     {
         public static IProblemSolver GetSolver()
         {
-            return new MuggleProblemSolver();
+            return new MuggleProblemSolver_MultiUnit(1);
         }
     }
 }

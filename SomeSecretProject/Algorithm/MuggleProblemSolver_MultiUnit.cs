@@ -18,7 +18,8 @@ namespace SomeSecretProject.Algorithm
 
 		public override string Solve(Problem problem, int seed, string[] powerPhrases)
 		{
-			var solution = "";
+			var finalPowerPhraseBuilder = new SimplePowerPhraseBuilder(powerPhrases);
+			var solution = new List<MoveType>();
 			var game = new SolverGame(problem, seed, powerPhrases);
 			while (true)
 			{
@@ -31,7 +32,7 @@ namespace SomeSecretProject.Algorithm
 						if (nextUnitsPositions == null || !nextUnitsPositions.Any())
 						{
 							var bestPositions = FindBestPositions_Recursive(unitsAhead, game.map.Clone(),
-								new[] {game.currentUnit}.Concat(game.GetAllRestUnits()).ToArray(), 0);
+								new[] {game.currentUnit}.Concat(game.GetAllRestUnits()).ToArray(), 0, powerPhrases);
 							nextUnitsPositions = bestPositions.Item2.ToList();
 						}
 						var wayToBestPosition = nextUnitsPositions.First();
@@ -40,27 +41,27 @@ namespace SomeSecretProject.Algorithm
 						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition.Item2);
 						CallEvent(game, unitSolution);
 						game.ApplyUnitSolution(unitSolution);
-						solution += unitSolution;
+						solution.AddRange(wayToBestPosition.Item2);
 						break;
 					case GameBase.State.EndInvalidCommand:
 					case GameBase.State.EndPositionRepeated:
 						throw new InvalidOperationException(string.Format("Invalid state: {0}", game.state));
 					case GameBase.State.End:
-						return solution;
+						return finalPowerPhraseBuilder.Build(solution);
 					default:
 						throw new ArgumentOutOfRangeException();
 				}
 			}
 		}
 
-		private static Tuple<double, Tuple<Unit, IList<MoveType>>[]> FindBestPositions_Recursive(int unitsAhead, Map map,
-			Unit[] units, int unitIndex)
+		private static Tuple<double, Tuple<Unit, IList<MoveType>>[]> FindBestPositions_Recursive(int unitsAhead, Map map, Unit[] units, int unitIndex, string[] powerPhrases)
 		{
 			if (unitsAhead < 0 || unitIndex >= units.Length)
 			{
 				return Tuple.Create(0.0, new Tuple<Unit, IList<MoveType>>[0]);
 			}
-			var reachablePositions = new ReachablePositions(map);
+			var reachablePositions = new ReachablePositionsWithWords(map, powerPhrases);
+			//var reachablePositions = new ReachablePositions(map);
 			var evaluatePositions = new EvaluatePositions2(map);
 			var unit = units[unitIndex];
 			var endPositions = reachablePositions.SingleEndPositions(unit);
@@ -98,7 +99,7 @@ namespace SomeSecretProject.Algorithm
 				newMap.LockUnit(position.Item2.Item1);
 				newMap.RemoveLines();
 
-				var nextPositions = FindBestPositions_Recursive(unitsAhead - 1, newMap, units, unitIndex + 1);
+				var nextPositions = FindBestPositions_Recursive(unitsAhead - 1, newMap, units, unitIndex + 1, powerPhrases);
 
 				var score = position.Item1 + nextPositions.Item1;
 				if (bestPosistions.Item1 < score)
