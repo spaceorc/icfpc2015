@@ -41,6 +41,7 @@ namespace Emulator
                 }
                 game.Step();
             }
+			Console.SetCursorPosition(0, game.map.Height * 3 + 5);
             Console.Write("GAME OVER");
             Console.WriteLine(game.state);
             Console.Write("Score="+game.CurrentScore);

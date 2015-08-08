@@ -68,7 +68,7 @@ namespace SomeSecretProject.Algorithm
             int scoreDropped = dropped.Select((isDrop, i) => isDrop ? 100+10*i : 0).Sum();
 			int scorePosHeigh = unit.GetSurroundingRectangle().Item1.y;
             var score = scoreDropped  + scorePosHeigh 
-				//- 10*byCountFree[0] - 5*byCountFree[1] - 2*byCountFree[2] - 1*byCountFree[3]
+				//- 3*byCountFree[0] - 1*byCountFree[1] /* -2*byCountFree[2] - 1*byCountFree[3]*/
 				;
 	        return score;
         }

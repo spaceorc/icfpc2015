@@ -69,7 +69,7 @@ namespace Emulator
 		    var muggleProblemSolver = new MuggleProblemSolver();
 			var solution = muggleProblemSolver.Solve(problem, seed, magicSpells);
 			var game = new Game(problem, new Output { seed = seed, solution = solution });
-			var emulator = new Emulator(game, 20);
+			var emulator = new Emulator(game, 10);
 			emulator.Run();
 	    }
 		
@@ -98,7 +98,7 @@ namespace Emulator
 							drawer.DrawMap(g.map, unit, locked: true);
 						unit = newUnit;
 					}
-					Thread.Sleep(20);
+					Thread.Sleep(10);
 				}
 				Console.ReadKey(true);
 			};
