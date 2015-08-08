@@ -31,9 +31,10 @@ namespace Emulator
 				scores.Add(game.CurrentScore);
 				states.Add(game.state);
 				outputs.Add(output);
+				SaveOutput("output\\output" + problem.id, output);
 			}
 			var result = new Result { Outputs = outputs.ToArray(), EndStates = states.ToArray(), Scores = scores.ToArray() };
-			SaveResult(result, "output\\output" + problem.id);
+			//SaveResult(result, "output\\output" + problem.id);
 			return result;
 		}
 
@@ -51,14 +52,19 @@ namespace Emulator
 
 		public static void SaveResult(Result result, string directory)
 		{
-			if (!Directory.Exists(directory))
-				Directory.CreateDirectory(directory);
 			for (int i = 0; i < result.Outputs.Length; ++i)
 			{
 				var output = result.Outputs[i];
-				var path = Path.Combine(directory, "" + output.seed);
-				File.WriteAllLines(path, new[] { "score=" + result.Scores[i], "state=" + result.EndStates, output.ToJson() });
+				SaveOutput(directory, output);
 			}
+		}
+
+		private static void SaveOutput(string directory, Output output)
+		{
+			if (!Directory.Exists(directory))
+				Directory.CreateDirectory(directory);
+			var path = Path.Combine(directory, "" + output.seed);
+			File.WriteAllText(path, output.ToJson());
 		}
 
 		public static void SendResult(Result result)
