@@ -56,7 +56,7 @@ namespace Emulator
 	    private static void SaveResult(string directory, Result result)
 		{
 		    var score = result.TotalScore;
-            File.WriteAllText(Path.Combine(directory,"score"+score) + ".txt", result.Scores.Select((s,i) => string.Format("{0} {1}\r\n", i, s)).Aggregate((s,a) => s + a));
+            File.WriteAllText(Path.Combine(directory,"score"+score) + ".txt", result.Scores.Select((s,i) => string.Format("{0} {1}\r\n", result.Outputs[i].seed, s)).Aggregate((s,a) => s + a));
 		}
 
 		private static void SaveOutput(string directory, Output output)
