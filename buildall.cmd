@@ -9,7 +9,7 @@ FOR /F "usebackq skip=2 tokens=1-3" %%A IN (`reg.exe query "HKLM\SOFTWARE\Micros
 )
 if not defined ValueValue (
 	echo Need framework 4.5! Ei!
-	goto :EOF
+	goto qwer
 )
 
 %ValueValue%\msbuild.exe /m SomeSecretProjectCore.sln /property:Configuration=Release
@@ -17,4 +17,6 @@ if not defined ValueValue (
 echo Run SomeSecretProject/bin/release/play_icfp2015.exe
 
 popd
+
+:qwer
 pause
