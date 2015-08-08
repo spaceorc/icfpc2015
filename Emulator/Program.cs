@@ -72,7 +72,8 @@ namespace Emulator
 		public static void ShowProblems()
 		{
 			var console = new FastConsole();
-			for (int p = 0; p < 25;)
+			var p = 0;
+			while(true)
 			{
 				var problem = ProblemsSet.GetProblem(p);
 				var game = new Game(problem, new Output() { solution = "" }, new string[0]);
@@ -94,8 +95,8 @@ namespace Emulator
 					++p;
 				if (p < 0)
 					p = 0;
-				if (p > 23)
-					p = 23;
+				if (p > 24)
+					p = 24;
 			}
 		}
 
