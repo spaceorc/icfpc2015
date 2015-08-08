@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NUnit.Framework;
 using Poster.Posting;
 using SomeSecretProject.IO;
@@ -34,9 +35,10 @@ namespace SomeSecretProject.Tests
         [Test]
         public void LoadAllProblems()
         {
-            for (var i = 0; i < 24; ++i)
+            for (var i = 0; i < 25; ++i)
             {
-                ProblemsSet.GetProblem(i);
+                var pr = HttpHelper.GetProblem(i);
+                File.WriteAllText(@"..\..\..\data\problems\problem" + i + ".txt", pr.ToJson());
             }
         }
     }
