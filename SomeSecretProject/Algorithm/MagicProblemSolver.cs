@@ -59,6 +59,7 @@ namespace SomeSecretProject.Algorithm
 		public string Solve(Problem problem, int seed, string[] powerPhrases)
 		{
 			var finalPowerPhraseBuilder = new SimplePowerPhraseBuilder(powerPhrases);
+			var spelledPhrases = new bool[powerPhrases.Length];
 			var solution = new List<MoveType>();
 			var game = new SolverGame(problem, seed, powerPhrases);
 			while (true)
@@ -69,7 +70,7 @@ namespace SomeSecretProject.Algorithm
 						game.Step();
 						break;
 					case GameBase.State.UnitInGame:
-						var reachablePositions = new ReachablePositionsWithWords(game.map, powerPhrases);
+						var reachablePositions = new ReachablePositionsWithWords(game.map, powerPhrases, spelledPhrases);
 						var evaluatePositions = new EvaluatePositions2(game.map);
 						var endPositions = reachablePositions.EndPositions(game.currentUnit);
 						var estimated = new Dictionary<Unit, double>();
@@ -82,10 +83,11 @@ namespace SomeSecretProject.Algorithm
 						});
 						var score = evaluatePositions.Evaluate(bestPosition.Item1);
 						var wayToBestPosition = bestPosition.Item2;
-						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition);
+						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition.path);
 						SolutionAdded(game, unitSolution);
 						game.ApplyUnitSolution(unitSolution);
-						solution.AddRange(wayToBestPosition);
+						spelledPhrases = wayToBestPosition.spelledWords;
+						solution.AddRange(wayToBestPosition.path);
 						break;
 					case GameBase.State.EndInvalidCommand:
 					case GameBase.State.EndPositionRepeated:
