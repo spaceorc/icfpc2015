@@ -10,20 +10,6 @@ namespace SomeSecretProject.Logic
 {
     public abstract class GameBase
 	{
-		private static readonly MoveType[][] forbiddenSequences =
-		{
-			new[] { MoveType.E, MoveType.W },
-			new[] { MoveType.W, MoveType.E },
-			new[] { MoveType.RotateCCW, MoveType.RotateCW },
-			new[] { MoveType.RotateCW, MoveType.RotateCCW },
-			new[] { MoveType.RotateCW, MoveType.RotateCW, MoveType.RotateCW, MoveType.RotateCW, MoveType.RotateCW, MoveType.RotateCW },
-			new[] { MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW, MoveType.RotateCCW }
-		};
-
-		private readonly int[] forbiddenSequencePositions = {
-			0, 0, 0, 0, 0, 0
-		};
-
 		public enum State
 		{
 			WaitUnit,
@@ -48,8 +34,10 @@ namespace SomeSecretProject.Logic
         private List<string> enteredMagicSpells;
         private LinearCongruentalGenerator randomGenerator;
         protected int step = 0;
+	    private ForbiddenSequenceChecker forbiddenSequenceChecker;
+	    private List<MoveType> moves;
 
-        public int CurrentScore
+	    public int CurrentScore
         {
             get { return currentMovesScore + currentSpellsScore; }
         }
@@ -77,6 +65,9 @@ namespace SomeSecretProject.Logic
             randomGenerator = new LinearCongruentalGenerator(problem.sourceSeeds[seed]);
             state = State.WaitUnit;
             step = 0;
+	        currentUnit = null;
+	        forbiddenSequenceChecker = null;
+	        moves = null;
             currentUnitIndex = 0;
 		    currentMovesScore = 0;
 		    currentSpellsScore = 0;
@@ -119,6 +110,8 @@ namespace SomeSecretProject.Logic
 						return;
 					}
 					currentUnit = spawnedUnit;
+					forbiddenSequenceChecker = new ForbiddenSequenceChecker(currentUnit);
+					moves = new List<MoveType>();
 					state = State.UnitInGame;
 					return;
 				case State.UnitInGame:
@@ -143,24 +136,12 @@ namespace SomeSecretProject.Logic
 						state = State.WaitUnit;
 						return;
 					}
-					for (int forbiddenIndex = 0; forbiddenIndex < forbiddenSequences.Length; forbiddenIndex++)
+					if (!forbiddenSequenceChecker.CheckLastMove(moves, moveType.Value))
 					{
-						var forbiddenSequence = forbiddenSequences[forbiddenIndex];
-						if (moveType != forbiddenSequence[forbiddenSequencePositions[forbiddenIndex]])
-							forbiddenSequencePositions[forbiddenIndex] = 0;
+						state = State.EndPositionRepeated;
+						return;
 					}
-					for (int forbiddenIndex = 0; forbiddenIndex < forbiddenSequences.Length; forbiddenIndex++)
-					{
-						var forbiddenSequence = forbiddenSequences[forbiddenIndex];
-						if (moveType == forbiddenSequence[forbiddenSequencePositions[forbiddenIndex]])
-						{
-							if (++forbiddenSequencePositions[forbiddenIndex] >= forbiddenSequence.Length)
-							{
-								state = State.EndPositionRepeated;
-								return;
-							}
-						}
-					}
+					moves.Add(moveType.Value);
 					currentUnit = movedUnit;
 					return;
 				case State.EndInvalidCommand:

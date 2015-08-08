@@ -83,6 +83,13 @@ namespace SomeSecretProject.Tests
 		}
 
 		[Test]
+		public void AssymmetricUnit_E_RotateCW_W_RotateCCW_Forbidden()
+		{
+			var checker = new ForbiddenSequenceChecker("{pivot: {x: 1, y: 1}, members: [{x: 0, y: 1}]}".ParseAsJson<Unit>());
+			Assert.IsFalse(checker.CheckLastMove(new[] { MoveType.E, MoveType.RotateCW, MoveType.W }, MoveType.RotateCCW));
+		}
+
+		[Test]
 		public void SinglePointUnit_EW_Forbidden()
 		{
 			var checker = new ForbiddenSequenceChecker("{pivot: {x: 0, y: 0}, members: [{x: 0, y: 0}]}".ParseAsJson<Unit>());
