@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SomeSecretProject.IO;
 
 namespace SomeSecretProject.Tests
 {
@@ -8,7 +9,7 @@ namespace SomeSecretProject.Tests
         [Test]
         public void RunAll()
         {
-            Emulator.Program.SolveAll(null); //todo
+            Emulator.Program.SolveAll(PowerDatas.GetPowerPhrases());
         }
     }
 }

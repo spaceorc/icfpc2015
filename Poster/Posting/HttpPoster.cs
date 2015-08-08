@@ -16,7 +16,7 @@ namespace Emulator.Posting
 
         public void PostAll(DavarAccount account, string tag = null)
         {
-			string[] powerPhrases = File.ReadAllLines(Path.Combine(@"..\..\..\data\power", "default.txt"));
+            string[] powerPhrases = PowerDatas.GetPowerPhrases();
             var outputs = Enumerable.Range(0, 24)
                 .Select(ProblemServer.GetProblem)
                 .SelectMany(problem => problem.sourceSeeds

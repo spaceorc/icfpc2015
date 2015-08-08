@@ -19,7 +19,7 @@ namespace Emulator
 		{
 			string action = "help";
 			string solution = "";
-			string[] powerPhrases = File.ReadAllLines(Path.Combine(@"..\..\..\data\power", "default.txt"));
+		    string[] powerPhrases = PowerDatas.GetPowerPhrases();
 			int seed = 0;
 			int problem = 0;
 			int delay = 0;
@@ -29,7 +29,7 @@ namespace Emulator
 				{ "solution=", v => solution = v },
 				{ "delay=", (int v) => delay = v },
 				{ "power=", v => powerPhrases = v.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries) },
-				{ "powerfile=", v => powerPhrases = File.ReadAllLines(Path.Combine(@"..\..\..\data\power", v)) },
+				{ "powerfile=", v => powerPhrases = PowerDatas.GetPowerPhrases(v) },
 				{ "seed=", (int v) => seed = v },
 				{ "problem=", (int v) => problem = v },
 			};
