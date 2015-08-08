@@ -23,18 +23,18 @@ namespace SomeSecretProject.Algorithm
             }
         }
 
-        private int NDroppedLines(Unit unit)
+        private bool[] DroppedLines(Unit unit)
         {
-            int ndropped = 0;
+            bool[] dropped = emptyCellsInLines.Select(c => false).ToArray();
             var rect = unit.GetSurroundingRectangle();
             for (int l = rect.Item1.y; l < rect.Item2.y; ++l)
             {
                 var emptyCellsInLine = emptyCellsInLines[l];
                 if (emptyCellsInLine.Count > unit.members.Count) continue;
                 if (emptyCellsInLine.TrueForAll(c => unit.members.Contains(c)))
-                    ndropped++;
+                    dropped[l] = true;
             }
-            return ndropped;
+            return dropped;
         }
 
         private MoveType[] up = new[] {MoveType.E, MoveType.NE, MoveType.NW, MoveType.W,};
@@ -60,12 +60,14 @@ namespace SomeSecretProject.Algorithm
 
         public double Evaluate(Unit unit)
         {
-            var dropped = NDroppedLines(unit);
+            var dropped = DroppedLines(unit);
             int[] freedomInts = CountFreeInputsForSurroundingPoints(unit);
             int[] byCountFree = new int[5];
             foreach (var nfree in freedomInts)
                 byCountFree[nfree]++;
-            var score = 100*dropped - 10*byCountFree[0] - 5*byCountFree[1] - 2*byCountFree[2] - 1*byCountFree[3];
+            int scoreDropped = dropped.Select((isDrop, i) => isDrop ? 100+i : 0).Sum();
+            int scorePosHeigh = unit.GetSurroundingRectangle().Item1.y;
+            var score = scoreDropped  + scorePosHeigh - 10*byCountFree[0] - 5*byCountFree[1] - 2*byCountFree[2] - 1*byCountFree[3];
 	        return score;
         }
 
