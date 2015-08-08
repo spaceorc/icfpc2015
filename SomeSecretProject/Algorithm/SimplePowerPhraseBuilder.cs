@@ -47,7 +47,12 @@ namespace SomeSecretProject.Algorithm
 					.SelectMany(phrase => FindAllPositions(moves, phrase))
 					.Where(pos => pos.Index >= 0)
 					.OrderBy(pos => pos.Index)
-					.Where(pos => !PhrasePosition.Intersected(cur, cur = pos));
+					.Where(pos =>
+					{
+						var result = !PhrasePosition.Intersected(cur, pos);
+						if(result) cur = pos;
+						return result;
+					});
 		}
 
 		private IEnumerable<PhrasePosition> FindAllPositions(IList<MoveType> moves, string phrase)

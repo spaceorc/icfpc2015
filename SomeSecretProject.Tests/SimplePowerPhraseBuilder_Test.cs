@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using SomeSecretProject.Algorithm;
@@ -43,6 +45,18 @@ namespace SomeSecretProject.Tests
 			var builder = new SimplePowerPhraseBuilder(new[] {"Ei!", "hi", "hi hi"});
 			var result = builder.Build(new[] {MoveType.E, MoveType.SW, MoveType.SW, MoveType.SW, MoveType.SE, MoveType.SW, MoveType.SW, MoveType.SE, MoveType.SW, MoveType.SW});
 			Assert.IsTrue(Regex.IsMatch(result, @".hi..hi hi", RegexOptions.IgnoreCase));
+		}
+
+		[Test]
+		public void Test6()
+		{
+			var builder = new SimplePowerPhraseBuilder(new[] {"hi", "hihi", "hihihi", "hihihihi", "hihihihihi", "hihihihihihi", "hihihihihihihi", "hihihihihihihihi", "hihihihihihihihihi", "hihihihihihihihihihi" });
+			var moves = Enumerable.Range(0, 10000).Select(i => MoveType.SW).ToArray();
+			var sw = Stopwatch.StartNew();
+			var result = builder.Build(moves);
+			sw.Stop();
+			Console.WriteLine(sw.Elapsed);
+			Assert.IsTrue(Regex.IsMatch(result, @"(hi)+", RegexOptions.IgnoreCase));
 		}
 	}
 }
