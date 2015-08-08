@@ -19,7 +19,7 @@ namespace SomeSecretProject.Tests
         [Test]
         public void PostAll()
         {
-            httpPoster.PostAll(DavarAccount.MainTeam, "1_Muddle_7cbff25c");
+            httpPoster.PostAll(DavarAccount.MainTeam, "3_magic_2015-08-09_00_00_45");
         }
     }
 }

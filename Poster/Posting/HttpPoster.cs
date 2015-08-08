@@ -15,6 +15,7 @@ namespace Poster.Posting
             var problems = Directory.EnumerateDirectories(directoryMain);
             foreach (var p in problems.Select(Path.GetFileName))
             {
+                Console.WriteLine("Problemm{0}", p);
                 foreach (var f in Directory.EnumerateFiles(Path.Combine(directoryMain, p)).Select(Path.GetFileName))
                 {
                     if (f.StartsWith("score"))
