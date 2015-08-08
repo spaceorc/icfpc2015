@@ -1,5 +1,6 @@
 ﻿using System;
 using Emulator.Drawing;
+using Emulator.Posting;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
 

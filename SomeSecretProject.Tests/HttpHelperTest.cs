@@ -1,38 +1,50 @@
 ﻿using System;
-using JetBrains.Annotations;
+using Emulator.Posting;
 using NUnit.Framework;
+using SomeSecretProject.IO;
 
-namespace SomeSecretProject.IO
+namespace SomeSecretProject.Tests
 {
     [TestFixture]
-    public class IOTest
+    [Ignore]
+    public class HttpHelperTest
     {
+        private HttpHelper httpHelper;
+
+        [SetUp]
+        public void SetUp()
+        {
+            httpHelper = new HttpHelper(DavarAccounts.TEST_TEAM_TOKEN, DavarAccounts.TEST_TEAM_ID);
+        }
+
         [TestCase]
         public void TestLoadProblem()
         {
-            var problem = HttpHelper.GetProblem(0);
+            var problem = httpHelper.GetProblem(0);
             Console.WriteLine(problem.width +" x "+problem.height);
         }
 
         [TestCase]
         public void TestSendSolution()
         {
-            var solution = new Output()
+            var solution = new Output
             {
                 problemId = 0,
                 seed = 0,
                 tag = "re",
                 solution = "Ei!Ei!"
             };
-            bool result = HttpHelper.SendOutput2(solution);
+            var result = httpHelper.SendOutput(solution);
             Assert.IsTrue(result);
         }
 
         [TestCase]
         public void LoadAllProblems()
         {
-            for (int i=0; i<24; ++i)
+            for (var i = 0; i < 24; ++i)
+            {
                 ProblemServer.GetProblem(i);
+            }
         }
     }
 }
