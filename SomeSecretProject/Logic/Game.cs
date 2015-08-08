@@ -26,7 +26,7 @@ namespace SomeSecretProject.Logic
 		public Unit[] units;
         private readonly string[] knownMagicSpells;
         public Unit currentUnit;
-        private int currentUnitIndex;
+	    public int currentUnitIndex;
         private int currentMovesScore;
         private int currentSpellsScore;
         private int previouslyExplodedLines;
@@ -36,6 +36,7 @@ namespace SomeSecretProject.Logic
         protected int step = 0;
 	    private ForbiddenSequenceChecker forbiddenSequenceChecker;
 	    private List<MoveType> moves;
+	    public int spawnedUnitIndex;
 
 	    public int CurrentScore
         {
@@ -103,8 +104,8 @@ namespace SomeSecretProject.Logic
 						state = State.End;
 						return;
 					}
-					var unitIndex = randomGenerator.GetNext() % units.Length;
-					var spawnedUnit = SpawnUnit(units[unitIndex], problem);
+					spawnedUnitIndex = randomGenerator.GetNext() % units.Length;
+					var spawnedUnit = SpawnUnit(units[spawnedUnitIndex], problem);
 					if (!spawnedUnit.IsCorrect(map))
 					{
 						state = State.End;

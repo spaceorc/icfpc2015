@@ -29,6 +29,7 @@ namespace SomeSecretProject.Logic
 
         public static MoveType? Convert(char c)
         {
+	        c = char.ToLower(c);
             MoveType? moveType = null;
             if (moveW.IndexOf(c) >= 0)
                 moveType = MoveType.W;

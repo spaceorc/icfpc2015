@@ -54,7 +54,7 @@ namespace Emulator
 					if (string.IsNullOrEmpty(solution))
 						PlayManual(problem, seed, powerPhrases, delay);
 					else
-						PlayAuto(problem, solution, problem, powerPhrases, delay);
+						PlayAuto(problem, solution, seed, powerPhrases, delay);
 					break;
 				case "solve":
 					Solve(problem, seed, powerPhrases, delay);
@@ -86,11 +86,15 @@ namespace Emulator
 					}
 				}
 				Console.SetWindowPosition(0, 0);
-				var key = Console.ReadKey();
+				var key = Console.ReadKey(false);
 				if (key.Key == ConsoleKey.LeftArrow)
 					--p;
 				else
 					++p;
+				if (p < 0)
+					p = 0;
+				if (p > 23)
+					p = 23;
 			}
 		}
 

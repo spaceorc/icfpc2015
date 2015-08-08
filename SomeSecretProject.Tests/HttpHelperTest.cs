@@ -22,10 +22,10 @@ namespace SomeSecretProject.Tests
         {
             var solution = new Output
             {
-                problemId = 0,
-                seed = 0,
-                tag = "reg" + " " + DateTime.Now.ToString("O"),
-                solution = "Ei!"
+                problemId = 2,
+                seed = 5,
+                tag = "new_reg" + " " + DateTime.Now.ToString("O"),
+				solution = "dananananananananananananananpppppplaEi!"
             };
             
             var result = HttpHelper.SendOutput(DavarAccount.TestTeam, solution);
