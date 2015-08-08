@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Posting\DavarAccount.cs" />
-    <Compile Include="Posting\DavarMagicSpells.cs" />
     <Compile Include="Posting\HttpHelper.cs" />
     <Compile Include="Posting\HttpPoster.cs" />
     <Compile Include="Posting\ProblemServer.cs" />

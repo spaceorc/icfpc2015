@@ -1,4 +1,4 @@
-namespace Emulator.Posting
+namespace SomeSecretProject
 {
     public static class DavarMagicSpells
     {

@@ -6,6 +6,7 @@ using System.Threading;
 using Emulator.Drawing;
 using Emulator.Posting;
 using NDesk.Options;
+using SomeSecretProject;
 using SomeSecretProject.Algorithm;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -18,13 +19,13 @@ namespace Emulator
 		{
 			string action = "help";
 			string solution = "";
-			string[] powerPhrases = new string[0];
+			string[] powerPhrases = DavarMagicSpells.Items;
 			int seed = 0;
 			int problem = 0;
 			int delay = 0;
 			var options = new OptionSet
 			{
-				{ "show|play|solve|debug|help", v => action = v },
+				{ "show|play|solve|solveall|debug|help", v => action = v },
 				{ "solution=", v => solution = v },
 				{ "delay=", (int v) => delay = v },
 				{ "power=", v => powerPhrases = v.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries) },
@@ -58,6 +59,9 @@ namespace Emulator
 					break;
 				case "solve":
 					Solve(problem, seed, powerPhrases, delay);
+					break;
+				case "solveall":
+					SolveAll(powerPhrases);
 					break;
 				case "debug":
 					DebugSolve(problem, seed, powerPhrases, delay);
