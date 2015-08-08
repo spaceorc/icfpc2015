@@ -18,7 +18,7 @@ namespace Emulator
                 if (args.Length > 2) PlayAuto(int.Parse(args[1]), args[2]);
                 else PlayManual(int.Parse(args[1]));
 			if (args[0] == "--solve")
-				DebugSolve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
+				Solve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
 			//Console.SetCursorPosition(0, map.Height * 3 + 1);
 		}
 
@@ -69,7 +69,7 @@ namespace Emulator
 		    var muggleProblemSolver = new MuggleProblemSolver();
 			var solution = muggleProblemSolver.Solve(problem, seed, magicSpells);
 			var game = new Game(problem, new Output { seed = seed, solution = solution });
-			var emulator = new Emulator(game, -1);
+			var emulator = new Emulator(game, 20);
 			emulator.Run();
 	    }
 		
@@ -98,7 +98,7 @@ namespace Emulator
 							drawer.DrawMap(g.map, unit, locked: true);
 						unit = newUnit;
 					}
-					Thread.Sleep(500);
+					Thread.Sleep(20);
 				}
 				Console.ReadKey(true);
 			};

@@ -12,7 +12,7 @@ namespace SomeSecretProject.Algorithm
         public EvaluatePositions(Map map)
         {
             this.map = map;
-            for (int y = 0; y < map.Height - 1; ++y)
+            for (int y = 0; y < map.Height; ++y)
             {
                 var emptyCellsInLine = new List<Cell>();
                 for (int x=0; x<map.Width; ++x)
@@ -27,7 +27,7 @@ namespace SomeSecretProject.Algorithm
         {
             bool[] dropped = emptyCellsInLines.Select(c => false).ToArray();
             var rect = unit.GetSurroundingRectangle();
-            for (int l = rect.Item1.y; l < rect.Item2.y; ++l)
+            for (int l = rect.Item1.y; l <= rect.Item2.y; ++l)
             {
                 var emptyCellsInLine = emptyCellsInLines[l];
                 if (emptyCellsInLine.Count > unit.members.Count) continue;
@@ -65,9 +65,11 @@ namespace SomeSecretProject.Algorithm
             int[] byCountFree = new int[5];
             foreach (var nfree in freedomInts)
                 byCountFree[nfree]++;
-            int scoreDropped = dropped.Select((isDrop, i) => isDrop ? 100+i : 0).Sum();
-            int scorePosHeigh = unit.GetSurroundingRectangle().Item1.y;
-            var score = scoreDropped  + scorePosHeigh - 10*byCountFree[0] - 5*byCountFree[1] - 2*byCountFree[2] - 1*byCountFree[3];
+            int scoreDropped = dropped.Select((isDrop, i) => isDrop ? 100+10*i : 0).Sum();
+			int scorePosHeigh = unit.GetSurroundingRectangle().Item1.y;
+            var score = scoreDropped  + scorePosHeigh 
+				//- 10*byCountFree[0] - 5*byCountFree[1] - 2*byCountFree[2] - 1*byCountFree[3]
+				;
 	        return score;
         }
 
