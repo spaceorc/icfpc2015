@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace SomeSecretProject.Logic
 {
-	class HexagonalVector
+	public class HexagonalVector
 	{
 		public int X;
 		public int Y;
 
 		public static HexagonalVector GetHexagonalVectorFromInGameCoords(int x, int y)
 		{
-			return new HexagonalVector {Y = y, X = x - y/2};
+			return new HexagonalVector {Y = y, X = x - Div2(y)};
 		}
 
 		public void GetInGameCoords(out int x, out int y)
 		{
 			y = Y;
-			x = X + y/2;
+			x = X + Div2(y);
 		}
 
 		public void RotateCW()
@@ -28,12 +28,19 @@ namespace SomeSecretProject.Logic
 			X = -Y;
 			Y = newY;
 		}
-		
+
 		public void RotateCCW()
 		{
 			var newX = X + Y;
 			Y = -X;
 			X = newX;
 		}
+
+	    public static int Div2(int number)
+	    {
+	        if (number < 0)
+	            number--;
+	        return number/2;
+	    }
 	}
 }
