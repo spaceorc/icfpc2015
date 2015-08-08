@@ -9,7 +9,7 @@ namespace SomeSecretProject.Tests
     [Ignore]
     public class HttpHelperTest
     {
-        [TestCase]
+        [Test]
         public void TestLoadProblem()
         {
             var problem = HttpHelper.GetProblem(0);
@@ -21,7 +21,7 @@ namespace SomeSecretProject.Tests
         {
             var solution = new Output
             {
-                problemId = 1,
+                problemId = 0,
                 seed = 0,
                 tag = "re",
                 solution = "Ei!"
@@ -30,7 +30,7 @@ namespace SomeSecretProject.Tests
             Assert.IsTrue(result);
         }
 
-        [TestCase]
+        [Test]
         public void LoadAllProblems()
         {
             for (var i = 0; i < 24; ++i)
