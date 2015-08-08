@@ -51,7 +51,7 @@ namespace SomeSecretProject.Algorithm
                     {
                         var c = cell.Move(move);
                         if (c.x < 0 || c.y < 0 || c.x >= map.Width || c.y >= map.Height) continue;
-                        if (!map[c].filled) nfree++;
+                        if (!map[c].filled && !unit.members.Contains(c)) nfree++;
                     }
                     countOfInputs.Add(nfree);
                 }
@@ -65,7 +65,8 @@ namespace SomeSecretProject.Algorithm
             int[] byCountFree = new int[5];
             foreach (var nfree in freedomInts)
                 byCountFree[nfree]++;
-            return 100*dropped - 10*byCountFree[0] - 5*byCountFree[1] - 2*byCountFree[2] - 1*byCountFree[3];
+            var score = 100*dropped - 10*byCountFree[0] - 5*byCountFree[1] - 2*byCountFree[2] - 1*byCountFree[3];
+	        return score;
         }
 
 

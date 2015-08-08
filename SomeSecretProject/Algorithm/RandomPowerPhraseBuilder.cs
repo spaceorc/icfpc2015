@@ -22,7 +22,8 @@ namespace SomeSecretProject.Algorithm
 
 		public string Build(IList<MoveType> moveTypes)
 		{
-			return new string(moveTypes.Select(GetMoveString).Select(x => x[random.Next(x.Length)]).ToArray());
+			//return new string(moveTypes.Select(GetMoveString).Select(x => x[random.Next(x.Length)]).ToArray());
+			return new string(moveTypes.Select(GetMoveString).Select(x => x[0]).ToArray());
 		}
 
 		private static string GetMoveString(MoveType moveType)

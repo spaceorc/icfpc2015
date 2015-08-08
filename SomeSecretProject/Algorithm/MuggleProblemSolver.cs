@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -68,11 +69,18 @@ namespace SomeSecretProject.Algorithm
 						var reachablePositions = new ReachablePositions(game.map);
 						var evaluatePositions = new EvaluatePositions(game.map);
 						var endPositions = reachablePositions.EndPositions(game.currentUnit);
-						var bestPosition = endPositions.ArgMax(p => evaluatePositions.Evaluate(p.Item1));
+						var estimated = new Dictionary<Unit, double>();
+						var bestPosition = endPositions.ArgMax(p =>
+						{
+							double value;
+							if (estimated.TryGetValue(p.Item1, out value))
+								return value;
+							return estimated[p.Item1] = evaluatePositions.Evaluate(p.Item1);
+						});
 						var wayToBestPosition = bestPosition.Item2;
 						var unitSolution = powerPhraseBuilder.Build(wayToBestPosition);
 						game.ApplyUnitSolution(unitSolution);
-						solution += unitSolution;
+						solution += unitSolution + "\r\n";
 						break;
 					case GameBase.State.EndInvalidCommand:
 					case GameBase.State.EndPositionRepeated:

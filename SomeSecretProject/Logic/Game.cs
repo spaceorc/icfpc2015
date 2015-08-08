@@ -209,6 +209,7 @@ namespace SomeSecretProject.Logic
                     continue;
                 }
                 move = output.solution[currentCommand];
+				currentCommand++;
                 return true;
             }
             return false;
