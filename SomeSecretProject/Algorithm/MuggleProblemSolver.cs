@@ -17,8 +17,8 @@ namespace SomeSecretProject.Algorithm
 
 		public class SolverGame : GameBase
 		{
-			public SolverGame([NotNull] Problem problem, int seed)
-				: base(problem, seed)
+			public SolverGame([NotNull] Problem problem, int seed, string[] magicSpells)
+                : base(problem, seed, magicSpells)
 			{
 			}
 
@@ -54,10 +54,10 @@ namespace SomeSecretProject.Algorithm
 			}
 		}
 
-		public string Solve(Problem problem, int seed)
+		public string Solve(Problem problem, int seed, string[] magicSpells)
 		{
 			var solution = "";
-			var game = new SolverGame(problem, seed);
+            var game = new SolverGame(problem, seed, magicSpells);
 			while (true)
 			{
 				switch (game.state)

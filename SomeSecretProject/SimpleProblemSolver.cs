@@ -4,9 +4,9 @@ namespace SomeSecretProject
 {
     public class SimpleProblemSolver : IProblemSolver
     {
-        public string Solve(Problem problem, int seed)
+        public string Solve(Problem problem, int seed, string[] magicSpells)
         {
-            return "Ei!";
+            return magicSpells[0];
         }
     }
 }

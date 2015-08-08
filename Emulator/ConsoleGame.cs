@@ -8,7 +8,7 @@ namespace Emulator
     class ConsoleGame : GameBase
     {
         public ConsoleGame(Problem problem, int seed)
-            :base(problem,seed)
+            :base(problem, seed, new string[0])
         {}
 
         public string Solution { get{return new string(solutionChars.ToArray());} }

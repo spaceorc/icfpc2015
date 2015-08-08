@@ -22,7 +22,7 @@ namespace Emulator.Posting
                     {
                         problemId = problem.id,
                         seed = seed,
-                        solution = problemSolver.Solve(problem, seed),
+                        solution = problemSolver.Solve(problem, seed, DavarMagicSpells.Items),
                         tag = tag
                     }));
 
