@@ -82,7 +82,7 @@ namespace Emulator
 				{
 					drawer.console.WriteLine(string.Format("problem {0}", p));
 					drawer.DrawMap(map, null);
-					foreach (var unit in game.units)
+					foreach (var unit in game.problem.units)
 					{
 						drawer.DrawUnit(unit);
 					}
@@ -127,7 +127,8 @@ namespace Emulator
 		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay)
 		{
             var problem = ProblemsSet.GetProblem(problemnum);
-			var muggleProblemSolver = new MuggleProblemSolver();
+//			var muggleProblemSolver = new MuggleProblemSolver();
+			var muggleProblemSolver = new MuggleProblemSolver_MultiUnit(0);
 			var solution = muggleProblemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
 			var game = new Game(problem, new Output { seed = problem.sourceSeeds[seed], solution = solution }, magicSpells);
 			var emulator = new Emulator(game, delay);

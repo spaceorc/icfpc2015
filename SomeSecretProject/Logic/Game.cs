@@ -19,7 +19,7 @@ namespace SomeSecretProject.Logic
 			End
 		}
 
-		private readonly Problem problem;
+	    public readonly Problem problem;
         private readonly int seed;
 		public Map map;
 		public State state { get; private set; }
@@ -37,6 +37,7 @@ namespace SomeSecretProject.Logic
 	    private ForbiddenSequenceChecker forbiddenSequenceChecker;
 	    private List<MoveType> moves;
 	    public int spawnedUnitIndex;
+	    public int[] UnitIndeces;
 
 	    public int CurrentScore
         {
@@ -65,7 +66,16 @@ namespace SomeSecretProject.Logic
                         map[x, y] = new Cell { x = x, y = y };
                 }
             units = problem.units;
-            randomGenerator = new LinearCongruentalGenerator(seed);
+			for (int i = 0; i < units.Length; i++)
+			{
+				units[i] = SpawnUnit(units[i], problem);
+			}
+			randomGenerator = new LinearCongruentalGenerator(seed);
+			UnitIndeces = new int[problem.sourceLength];
+	        for (int i = 0; i < problem.sourceLength; i++)
+	        {
+		        UnitIndeces[i] = randomGenerator.GetNext()%units.Length;
+	        }
             state = State.WaitUnit;
             step = 0;
 	        currentUnit = null;
@@ -104,8 +114,8 @@ namespace SomeSecretProject.Logic
 						state = State.End;
 						return;
 					}
-					spawnedUnitIndex = randomGenerator.GetNext() % units.Length;
-					var spawnedUnit = SpawnUnit(units[spawnedUnitIndex], problem);
+					spawnedUnitIndex = UnitIndeces[currentUnitIndex - 1];
+					var spawnedUnit = units[spawnedUnitIndex];
 					if (!spawnedUnit.IsCorrect(map))
 					{
 						state = State.End;
@@ -188,6 +198,12 @@ namespace SomeSecretProject.Logic
 
             return upped.Move(MoveType.E, leftShift);
 		}
+
+	    public IEnumerable<Unit> GetAllRestUnits()
+	    {
+			return Enumerable.Range(currentUnitIndex, problem.sourceLength - currentUnitIndex)
+				.Select(i => units[UnitIndeces[i]]);
+	    }
 	}
 
     public class Game : GameBase

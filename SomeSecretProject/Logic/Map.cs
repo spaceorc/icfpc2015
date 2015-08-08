@@ -43,6 +43,11 @@ namespace SomeSecretProject.Logic
 			RefineMap();
 		}
 
+		public Map Clone()
+		{
+			return new Map(this.ToString());
+		}
+
 		private void RefineMap()
 		{
 			while(cells.Count < Height)

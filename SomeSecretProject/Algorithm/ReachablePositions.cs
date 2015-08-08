@@ -21,10 +21,17 @@ namespace SomeSecretProject.Algorithm
 			this.map = map;
 		}
 
-		public IList<Tuple<Unit, IList<MoveType>>> EndPositions(Unit currentUnit)
+		public IEnumerable<Tuple<Unit, IList<MoveType>>> SingleEndPositions(Unit currentUnit)
+		{
+			return EndPositions(currentUnit).GroupBy(t => t.Item1).Select(g => g.First());
+		}
+
+		public IEnumerable<Tuple<Unit, IList<MoveType>>> EndPositions(Unit currentUnit)
 		{
 			return AllPositions(currentUnit)
-				.SelectMany(p => FinalMoves(p.Item1).Select(f => Tuple.Create(p.Item1, (IList<MoveType>)p.Item2.Concat(new[] { f }).ToList()))).ToList();
+				.SelectMany(p => FinalMoves(p.Item1)
+					.Select(f => Tuple.Create(p.Item1, (IList<MoveType>)p.Item2.Concat(new[] { f })
+						.ToList())));
 		}
 
 		private List<MoveType> FinalMoves(Unit unit)

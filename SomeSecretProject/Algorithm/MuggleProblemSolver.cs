@@ -8,7 +8,7 @@ namespace SomeSecretProject.Algorithm
 {
 	public class MuggleProblemSolver : IProblemSolver
 	{
-		private readonly IPowerPhraseBuilder staticPowerPhraseBuilder;
+		protected readonly IPowerPhraseBuilder staticPowerPhraseBuilder;
 		
 		public MuggleProblemSolver()
 		{
@@ -56,7 +56,12 @@ namespace SomeSecretProject.Algorithm
 			}
 		}
 
-		public string Solve(Problem problem, int seed, string[] powerPhrases)
+		protected void CallEvent(GameBase game, string unitSolution)
+		{
+			SolutionAdded(game, unitSolution);
+		}
+
+		public virtual string Solve(Problem problem, int seed, string[] powerPhrases)
 		{
 			var finalPowerPhraseBuilder = new SimplePowerPhraseBuilder(powerPhrases);
 			var solution = new List<MoveType>();
@@ -83,7 +88,7 @@ namespace SomeSecretProject.Algorithm
                         var score = evaluatePositions.Evaluate(bestPosition.Item1);
 						var wayToBestPosition = bestPosition.Item2;
 						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition);
-						SolutionAdded(game, unitSolution);
+						CallEvent(game, unitSolution);
 						game.ApplyUnitSolution(unitSolution);
 						solution.AddRange(wayToBestPosition);
 						break;
