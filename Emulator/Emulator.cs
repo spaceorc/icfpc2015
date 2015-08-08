@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 using Emulator.Drawing;
+using SomeSecretProject;
+using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
 
 namespace Emulator
@@ -45,4 +47,18 @@ namespace Emulator
             Console.ReadKey();
         }
     }
+
+    public class EmulatorProblemSolver : IProblemSolver
+    {
+		public string Solve(Problem problem, int seed, string[] magicSpells)
+        {
+            var game = new ConsoleGame(problem, seed);
+            var emulator = new Emulator(game, -1);
+            emulator.Run();
+            var solution = game.Solution;
+            return solution;
+        }
+    }
+
+    
 }

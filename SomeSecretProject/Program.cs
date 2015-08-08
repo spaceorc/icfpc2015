@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SomeSecretProject.IO;
 
 namespace SomeSecretProject
@@ -40,7 +41,7 @@ namespace SomeSecretProject
 		    var problemSolver = ProblemSolverFactory.GetSolver();
 		    foreach (var seed in problem.sourceSeeds)
 		    {
-		        var answer = problemSolver.Solve(problem, seed);
+		        var answer = problemSolver.Solve(problem, seed, inputParameters.PowerPhrases.ToArray());
 		        outputs.Add(new Output
 		        {
 		            problemId = problem.id,

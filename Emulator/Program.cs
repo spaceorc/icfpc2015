@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using Emulator.Drawing;
 using Emulator.Posting;
+using SomeSecretProject.Algorithm;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
 
@@ -14,7 +17,8 @@ namespace Emulator
             if (args[0]=="--play") 
                 if (args.Length > 2) PlayAuto(int.Parse(args[1]), args[2]);
                 else PlayManual(int.Parse(args[1]));
-		        
+			if (args[0] == "--solve")
+				DebugSolve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
 			//Console.SetCursorPosition(0, map.Height * 3 + 1);
 		}
 
@@ -30,7 +34,12 @@ namespace Emulator
 		        {
                     drawer.console.WriteLine(string.Format("problem {0}", p));
 		            drawer.DrawMap(map, null);
+			        foreach (var unit in game.units)
+			        {
+				        drawer.DrawUnit(unit);
+			        }
 		        }
+				Console.SetWindowPosition(0, 0);
                 var key = Console.ReadKey();
 		        if (key.Key == ConsoleKey.LeftArrow) --p;
 		        else ++p;
@@ -54,6 +63,46 @@ namespace Emulator
             emulator.Run();
 	    }
 
-
+		public static void Solve(int problemnum, int seed, string[] magicSpells)
+	    {
+			var problem = ProblemServer.GetProblem(problemnum);
+		    var muggleProblemSolver = new MuggleProblemSolver();
+			var solution = muggleProblemSolver.Solve(problem, seed, magicSpells);
+			var game = new Game(problem, new Output { seed = seed, solution = solution });
+			var emulator = new Emulator(game, -1);
+			emulator.Run();
+	    }
+		
+		public static void DebugSolve(int problemnum, int seed, string[] magicSpells)
+	    {
+			var problem = ProblemServer.GetProblem(problemnum);
+		    var muggleProblemSolver = new MuggleProblemSolver();
+			var fastConsole = new FastConsole();
+			muggleProblemSolver.SolutionAdded += (g, s) =>
+			{
+				using (var drawer = new Drawer(fastConsole))
+					drawer.DrawMap(g.map, g.currentUnit);
+				Console.ReadKey(true);
+				var unit = g.currentUnit;
+				foreach (var c in s.Where(x => !MoveTypeExt.IsIgnored(x)))
+				{
+					var moveType = MoveTypeExt.Convert(c);
+					if (!moveType.HasValue)
+						throw new InvalidOperationException(string.Format("Invalid char in solution: {0}. Char: '{1}'", s, c));
+					var newUnit = unit.Move(moveType.Value);
+					using (var drawer = new Drawer(fastConsole))
+					{
+						if (newUnit.IsCorrect(g.map))
+							drawer.DrawMap(g.map, newUnit);
+						else
+							drawer.DrawMap(g.map, unit, locked: true);
+						unit = newUnit;
+					}
+					Thread.Sleep(500);
+				}
+				Console.ReadKey(true);
+			};
+			muggleProblemSolver.Solve(problem, seed, magicSpells);
+	    }
 	}
 }

@@ -81,8 +81,15 @@ namespace SomeSecretProject.Tests
 	    {
             var cell = new Cell { x = fX, y = fY, filled = false };
 	        var actual = cell.Move(new Vector(moveType, cell.y, length));
+	        
             Assert.AreEqual(actual.x, tX);
             Assert.AreEqual(actual.y, tY);
+	        if (length == 1)
+	        {
+                var actual2 = cell.Move(moveType);
+                Assert.AreEqual(actual2.x, tX);
+                Assert.AreEqual(actual2.y, tY);
+	        }
 	    }
 
 		[Test]
