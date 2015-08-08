@@ -24,8 +24,8 @@ namespace SomeSecretProject.Tests
             {
                 problemId = 2,
                 seed = 5,
-                tag = "new_reg" + " " + DateTime.Now.ToString("O"),
-				solution = "dananananananananananananananpppppplaEi!"
+                tag = "new6_reg" + " " + DateTime.Now.ToString("O"),
+				solution = "dananananananananananananananpppppplaYeh!"
             };
             
             var result = HttpHelper.SendOutput(DavarAccount.TestTeam, solution);
