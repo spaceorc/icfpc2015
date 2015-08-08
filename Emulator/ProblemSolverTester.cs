@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Emulator
             {
                 var seed = problem.sourceSeeds[seedInd];
                 var solution = solver.Solve(problem, seed);
-                var output = new Output() {seed = seed, solution = solution};
+                var output = new Output() {problemId = problem.id, seed = seed, solution = solution};
                 var game = new Game(problem, output);
                 var emulator = new Emulator(game, 0);
                 emulator.Run();
@@ -47,8 +48,29 @@ namespace Emulator
             {
                 var output = result.Outputs[i];
                 var path = Path.Combine(directory, "" + output.seed);
-                File.WriteAllLines(path, new []{"score="+result.Scores[i], "state="+result.EndStates, "seed="+output.seed, output.solution});
+                File.WriteAllLines(path, new []{"score="+result.Scores[i], "state="+result.EndStates,output.ToJson()});
             }
         }
+
+        public static void SendResult(Result result)
+        {
+            HttpHelper.SendOutput(result.Outputs.ToArray());
+        }
+
+        public int ScoreOverAllProblems(IProblemSolver solver)
+        {
+            long sum = 0;
+            for (int i = 0; i < 24; ++i)
+            {
+                var problem = ProblemServer.GetProblem(i);
+                var results = CountScore(problem, solver);
+                sum += results.TotalScore;
+                for (int k=0; k<results.EndStates.Length; ++k)
+                    if (results.EndStates[k] != GameBase.State.End)
+                        Console.WriteLine("Problem: {0}  seed: {1}  End state: {2} Score: {3}", results.Outputs[k].problemId, results.Outputs[k].seed, results.EndStates[k].ToString(), results.Scores[k]);
+            }
+            return (int)(sum/24);
+        }
+
     }
 }
