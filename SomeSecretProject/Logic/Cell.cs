@@ -25,6 +25,11 @@ namespace SomeSecretProject.Logic
 			return new Cell { x = x + vector.X, y = y + vector.Y, filled = filled };
 		}
 
+	    public Cell Move(MoveType move)
+	    {
+	        return Move(new Vector(move, y));
+	    }
+
 		public Cell RotateCW(Cell pivot)
 		{
 			var hexCoords = HexagonalVector.GetHexagonalVectorFromInGameCoords(x, y);

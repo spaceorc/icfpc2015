@@ -14,6 +14,7 @@ namespace SomeSecretProject.Logic
 
     public static class MoveTypeExt
     {
+        public static MoveType[] LinearMoves = new MoveType[]{MoveType.E, MoveType.NE, MoveType.NW, MoveType.SE, MoveType.SW, MoveType.W};
         private const string moveW = "p'!.03";
         private const string moveE = "bcefy2";
         private const string moveSW = "aghij4";

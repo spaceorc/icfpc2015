@@ -54,6 +54,16 @@ namespace SomeSecretProject.Logic
 			return Tuple.Create(tl, br);
 		}
 
+	    public Cell[] GetSurroundingCells()
+	    {
+            HashSet<Cell> surrounding = new HashSet<Cell>();
+	        foreach (var member in members)
+	            foreach (var move in MoveTypeExt.LinearMoves)
+	                surrounding.Add(member.Move(move));
+	        surrounding.ExceptWith(members);
+	        return surrounding.ToArray();
+	    }
+
 #region overrides
 		public bool Equals(Unit other)
 		{
