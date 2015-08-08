@@ -138,9 +138,9 @@ namespace Emulator
 		public static void DebugSolve(int problemnum, int seed, string[] magicSpells, int delay)
 		{
             var problem = ProblemsSet.GetProblem(problemnum);
-			var muggleProblemSolver = new MuggleProblemSolver();
+			var problemSolver = new MagicProblemSolver();
 			var fastConsole = new FastConsole();
-			muggleProblemSolver.SolutionAdded += (g, s) =>
+			problemSolver.SolutionAdded += (g, s) =>
 			{
 			    using (var drawer = new Drawer(fastConsole))
 			    {
@@ -168,7 +168,7 @@ namespace Emulator
 				}
 				Console.ReadKey(true);
 			};
-			muggleProblemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
+			problemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             { }
 		}

@@ -14,8 +14,7 @@ namespace SomeSecretProject.Tests
 		[Test]
 		public void Test()
 		{
-			string word = "Yeh!";
-			//R'lYeh!
+			string word = "Trolls!";
 			var problemnum = 2;
 			int unitIndex = 2;
 			int seedIndex = 5;
