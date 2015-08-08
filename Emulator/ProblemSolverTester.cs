@@ -11,7 +11,7 @@ namespace Emulator
 {
 	public class ProblemSolverTester
 	{
-		public Result CountScore(Problem problem, IProblemSolver solver)
+		public Result CountScore(Problem problem, IProblemSolver solver, string[] powerPhrases)
 		{
 			long sum = 0;
 			List<Output> outputs = new List<Output>();
@@ -20,9 +20,9 @@ namespace Emulator
 			for (int seedInd = 0; seedInd < problem.sourceSeeds.Length; ++seedInd)
 			{
 				var seed = problem.sourceSeeds[seedInd];
-				var solution = solver.Solve(problem, seed, DavarMagicSpells.Items);
+				var solution = solver.Solve(problem, seed, powerPhrases);
 				var output = new Output() { problemId = problem.id, seed = seed, solution = solution };
-				var game = new Game(problem, output);
+				var game = new Game(problem, output, powerPhrases);
 				while (game.state == GameBase.State.UnitInGame || game.state == GameBase.State.WaitUnit)
 				{
 					game.Step();
@@ -72,14 +72,14 @@ namespace Emulator
 			HttpHelper.SendOutput(DavarAccount.MainTeam, result.Outputs.ToArray());
 		}
 
-		public int ScoreOverAllProblems(IProblemSolver solver)
+		public int ScoreOverAllProblems(IProblemSolver solver, string[] powerPhrases)
 		{
 			long sum = 0;
 			for (int i = 0; i < 24; ++i)
 			{
 				var problem = ProblemServer.GetProblem(i);
 				Console.WriteLine("Problem: {0}, w:{1}, h:{2}, seeds:{3}", i, problem.width, problem.height, problem.sourceSeeds.Length);
-				var results = CountScore(problem, solver);
+				var results = CountScore(problem, solver, powerPhrases);
 				sum += results.TotalScore;
 				for (int k = 0; k < results.EndStates.Length; ++k)
 				{

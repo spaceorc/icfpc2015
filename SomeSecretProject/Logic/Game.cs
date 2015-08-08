@@ -193,8 +193,8 @@ namespace SomeSecretProject.Logic
         private readonly Output output;
         private int currentCommand;
 
-        public Game([NotNull] Problem problem, [NotNull] Output output)
-            :base(problem, output.seed, new string[0])
+		public Game([NotNull] Problem problem, [NotNull] Output output, string[] magicSpells)
+            :base(problem, output.seed, magicSpells)
 		{
 			this.output = output;
             currentCommand = 0;

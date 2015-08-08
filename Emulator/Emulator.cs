@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading;
 using Emulator.Drawing;
 using SomeSecretProject;
@@ -58,7 +57,7 @@ namespace Emulator
     {
 		public string Solve(Problem problem, int seed, string[] magicSpells)
         {
-            var game = new ConsoleGame(problem, seed);
+            var game = new ConsoleGame(problem, seed, magicSpells);
             var emulator = new Emulator(game, -1);
             emulator.Run();
             var solution = game.Solution;

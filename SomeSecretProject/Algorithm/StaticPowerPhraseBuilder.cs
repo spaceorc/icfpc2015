@@ -5,9 +5,8 @@ using SomeSecretProject.Logic;
 
 namespace SomeSecretProject.Algorithm
 {
-	public class RandomPowerPhraseBuilder : IPowerPhraseBuilder
+	public class StaticPowerPhraseBuilder : IPowerPhraseBuilder
 	{
-		private readonly Random random;
 		private const string moveW = "p'!.03";
 		private const string moveE = "bcefy2";
 		private const string moveSW = "aghij4";
@@ -15,14 +14,9 @@ namespace SomeSecretProject.Algorithm
 		private const string rotateCW = "dqrvz1";
 		private const string rotateCCW = "kstuwx";
 
-		public RandomPowerPhraseBuilder(Random random)
-		{
-			this.random = random;
-		}
-
 		public string Build(IList<MoveType> moveTypes)
 		{
-			return new string(moveTypes.Select(GetMoveString).Select(x => x[random.Next(x.Length)]).ToArray());
+			return new string(moveTypes.Select(GetMoveString).Select(x => x[0]).ToArray());
 		}
 
 		private static string GetMoveString(MoveType moveType)

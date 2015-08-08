@@ -8,11 +8,11 @@ namespace SomeSecretProject.Algorithm
 {
 	public class MuggleProblemSolver : IProblemSolver
 	{
-		private readonly IPowerPhraseBuilder powerPhraseBuilder;
-
+		private readonly IPowerPhraseBuilder staticPowerPhraseBuilder;
+		
 		public MuggleProblemSolver()
 		{
-			powerPhraseBuilder = new RandomPowerPhraseBuilder(new Random(12345));
+			staticPowerPhraseBuilder = new StaticPowerPhraseBuilder();
 		}
 
 		public event Action<GameBase, string> SolutionAdded = (g, s) => { }; 
@@ -56,10 +56,11 @@ namespace SomeSecretProject.Algorithm
 			}
 		}
 
-		public string Solve(Problem problem, int seed, string[] magicSpells)
+		public string Solve(Problem problem, int seed, string[] powerPhrases)
 		{
-			var solution = "";
-            var game = new SolverGame(problem, seed, magicSpells);
+			var finalPowerPhraseBuilder = new SimplePowerPhraseBuilder(powerPhrases);
+			var solution = new List<MoveType>();
+            var game = new SolverGame(problem, seed, powerPhrases);
 			while (true)
 			{
 				switch (game.state)
@@ -80,16 +81,16 @@ namespace SomeSecretProject.Algorithm
 							return estimated[p.Item1] = evaluatePositions.Evaluate(p.Item1);
 						});
 						var wayToBestPosition = bestPosition.Item2;
-						var unitSolution = powerPhraseBuilder.Build(wayToBestPosition);
+						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition);
 						SolutionAdded(game, unitSolution);
 						game.ApplyUnitSolution(unitSolution);
-						solution += unitSolution;
+						solution.AddRange(wayToBestPosition);
 						break;
 					case GameBase.State.EndInvalidCommand:
 					case GameBase.State.EndPositionRepeated:
 						throw new InvalidOperationException(string.Format("Invalid state: {0}", game.state));
 					case GameBase.State.End:
-						return solution;
+						return finalPowerPhraseBuilder.Build(solution);
 					default:
 						throw new ArgumentOutOfRangeException();
 				}

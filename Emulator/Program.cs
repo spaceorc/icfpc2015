@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using Emulator.Drawing;
 using Emulator.Posting;
+using NDesk.Options;
 using SomeSecretProject.Algorithm;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -13,81 +16,119 @@ namespace Emulator
 	{
 		private static void Main(string[] args)
 		{
-			if (args[0]=="--show") ShowProblems();
-            if (args[0]=="--play")
-                if (args.Length > 3) PlayAuto(int.Parse(args[1]), args[2].ToLower(), int.Parse(args[3]));
-                else PlayManual(int.Parse(args[1]));
-			if (args[0] == "--solve")
-				Solve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
-			if (args[0] == "--debugsolve")
-				DebugSolve(int.Parse(args[1]), args.Length > 2 ? int.Parse(args[2]) : 0, new string[0]);
-			if (args[0] == "--solveall")
-				SolveAll();
-			//Console.SetCursorPosition(0, map.Height * 3 + 1);
+			string action = "help";
+			string solution = "";
+			string[] powerPhrases = new string[0];
+			int seed = 0;
+			int problem = 0;
+			int delay = 0;
+			var options = new OptionSet
+			{
+				{ "show|play|solve|debug|help", v => action = v },
+				{ "solution=", v => solution = v },
+				{ "delay=", (int v) => delay = v },
+				{ "power=", v => powerPhrases = v.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries) },
+				{ "powerfile=", v => powerPhrases = File.ReadAllLines(Path.Combine(@"..\..\..\data\power", v)) },
+				{ "seed=", (int v) => seed = v },
+				{ "problem=", (int v) => problem = v },
+			};
+			try
+			{
+				options.Parse(args);
+			}
+			catch (OptionException e)
+			{
+				Console.Error.WriteLine("Option '{0}' value is invalid: {1}", e.OptionName, e.Message);
+				Console.Error.WriteLine();
+			}
+			switch (action)
+			{
+				case "help":
+					Console.WriteLine("USAGE:");
+					options.WriteOptionDescriptions(Console.Out);
+					break;
+				case "show":
+					ShowProblems();
+					break;
+				case "play":
+					if (string.IsNullOrEmpty(solution))
+						PlayManual(problem, seed, powerPhrases, delay);
+					else
+						PlayAuto(problem, solution, problem, powerPhrases, delay);
+					break;
+				case "solve":
+					Solve(problem, seed, powerPhrases, delay);
+					break;
+				case "debug":
+					DebugSolve(problem, seed, powerPhrases, delay);
+					break;
+			}
 		}
 
-	    public static void ShowProblems()
-	    {
-	        var console = new FastConsole();
-		    for (int p = 0; p < 24; )
-		    {
-		        var problem = ProblemServer.GetProblem(p);
-		        var game = new Game(problem, new Output() {solution = ""});
-		        var map = game.map;
-		        using (var drawer = new Drawer(console))
-		        {
-                    drawer.console.WriteLine(string.Format("problem {0}", p));
-		            drawer.DrawMap(map, null);
-			        foreach (var unit in game.units)
-			        {
-				        drawer.DrawUnit(unit);
-			        }
-		        }
+		public static void ShowProblems()
+		{
+			var console = new FastConsole();
+			for (int p = 0; p < 24;)
+			{
+				var problem = ProblemServer.GetProblem(p);
+				var game = new Game(problem, new Output() { solution = "" }, new string[0]);
+				var map = game.map;
+				using (var drawer = new Drawer(console))
+				{
+					drawer.console.WriteLine(string.Format("problem {0}", p));
+					drawer.DrawMap(map, null);
+					foreach (var unit in game.units)
+					{
+						drawer.DrawUnit(unit);
+					}
+				}
 				Console.SetWindowPosition(0, 0);
-                var key = Console.ReadKey();
-		        if (key.Key == ConsoleKey.LeftArrow) --p;
-		        else ++p;
-		    }
-	    }
+				var key = Console.ReadKey();
+				if (key.Key == ConsoleKey.LeftArrow)
+					--p;
+				else
+					++p;
+			}
+		}
 
 
-	    public static void PlayManual(int problemnum, int seed = 0)
-	    {
-            var problem = ProblemServer.GetProblem(problemnum);
-            var game = new ConsoleGame(problem, problem.sourceSeeds[0]);
-            var emulator = new Emulator(game, 0);
-            emulator.Run();
-	    }
+		public static void PlayManual(int problemnum, int seed, string[] powerPhrases, int delay)
+		{
+			var problem = ProblemServer.GetProblem(problemnum);
+			var game = new ConsoleGame(problem, problem.sourceSeeds[seed], powerPhrases);
+			var emulator = new Emulator(game, delay);
+			emulator.Run();
+		}
 
-	    public static void PlayAuto(int problemnum, string solution, int seed = 0)
-	    {
-	        var problem = ProblemServer.GetProblem(problemnum);
-            var game = new Game(problem, new Output(){solution = solution});
-            var emulator = new Emulator(game, -1);
-            emulator.Run();
-	    }
+		public static void PlayAuto(int problemnum, string solution, int seed, string[] powerPhrases, int delay)
+		{
+			var problem = ProblemServer.GetProblem(problemnum);
+			var game = new Game(problem, new Output() { solution = solution, seed = problem.sourceSeeds[seed] }, powerPhrases);
+			var emulator = new Emulator(game, delay);
+			emulator.Run();
+		}
 
-		public static void SolveAll()
+		public static void SolveAll(string[] powerPhrases)
 		{
 			var tester = new ProblemSolverTester();
 			var solver = new MuggleProblemSolver();
-			tester.ScoreOverAllProblems(solver);
+			tester.ScoreOverAllProblems(solver, powerPhrases);
 		}
 
-		public static void Solve(int problemnum, int seed, string[] magicSpells)
-	    {
+		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay)
+		{
 			var problem = ProblemServer.GetProblem(problemnum);
-		    var muggleProblemSolver = new MuggleProblemSolver();
-			var solution = muggleProblemSolver.Solve(problem, seed, magicSpells);
-			var game = new Game(problem, new Output { seed = seed, solution = solution });
-			var emulator = new Emulator(game, 10);
+			var muggleProblemSolver = new MuggleProblemSolver();
+			var solution = muggleProblemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
+			var game = new Game(problem, new Output { seed = problem.sourceSeeds[seed], solution = solution }, magicSpells);
+			var emulator = new Emulator(game, delay);
 			emulator.Run();
-	    }
-		
-		public static void DebugSolve(int problemnum, int seed, string[] magicSpells)
-	    {
+		}
+
+		public static void DebugSolve(int problemnum, int seed, string[] magicSpells, int delay)
+		{
 			var problem = ProblemServer.GetProblem(problemnum);
-		    var muggleProblemSolver = new MuggleProblemSolver();
+			var muggleProblemSolver = new MuggleProblemSolver();
 			var fastConsole = new FastConsole();
 			muggleProblemSolver.SolutionAdded += (g, s) =>
 			{
@@ -109,11 +150,11 @@ namespace Emulator
 							drawer.DrawMap(g.map, unit, locked: true);
 						unit = newUnit;
 					}
-					Thread.Sleep(10);
+					Thread.Sleep(delay < 0 ? 0 : delay);
 				}
 				Console.ReadKey(true);
 			};
-			muggleProblemSolver.Solve(problem, seed, magicSpells);
-	    }
+			muggleProblemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
+		}
 	}
 }
