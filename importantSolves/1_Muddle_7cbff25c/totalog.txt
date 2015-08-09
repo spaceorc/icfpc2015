@@ -1,0 +1,49 @@
+Problem: 0, w:10, h:10, seeds:1
+Problem score: 2649
+Problem: 1, w:15, h:15, seeds:1
+Problem score: 700
+Problem: 2, w:15, h:30, seeds:10
+Problem score: 548
+Problem: 3, w:30, h:20, seeds:5
+Problem score: 478
+Problem: 4, w:10, h:15, seeds:50
+Problem score: 720
+Problem: 5, w:30, h:20, seeds:10
+Problem score: 338
+Problem: 6, w:10, h:10, seeds:50
+Problem score: 3456
+Problem: 7, w:40, h:20, seeds:5
+Problem score: 405
+Problem: 8, w:10, h:8, seeds:10
+Problem score: 5948
+Problem: 9, w:10, h:8, seeds:5
+Problem score: 692
+Problem: 10, w:10, h:7, seeds:1
+Problem score: 1900
+Problem: 11, w:10, h:10, seeds:5
+Problem score: 592
+Problem: 12, w:15, h:20, seeds:10
+Problem score: 1222
+Problem: 13, w:15, h:20, seeds:1
+Problem score: 170
+Problem: 14, w:50, h:50, seeds:1
+Problem score: 992
+Problem: 15, w:15, h:20, seeds:1
+Problem score: 744
+Problem: 16, w:15, h:20, seeds:1
+Problem score: 1034
+Problem: 17, w:15, h:15, seeds:1
+Problem score: 1400
+Problem: 18, w:30, h:30, seeds:1
+Problem score: 853
+Problem: 19, w:15, h:15, seeds:1
+Problem score: 1300
+Problem: 20, w:15, h:15, seeds:1
+Problem score: 1744
+Problem: 21, w:10, h:8, seeds:1
+Problem score: 620
+Problem: 22, w:10, h:8, seeds:1
+Problem score: 2200
+Problem: 23, w:10, h:9, seeds:1
+Problem score: 21
+Total score: 30726
