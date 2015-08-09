@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using SomeSecretProject.IO;
 
 namespace SomeSecretProject
@@ -41,9 +42,10 @@ namespace SomeSecretProject
 		    foreach (var fn in inputParameters.InputFilenames)
 		    {
 		        var problem = File.ReadAllText(fn).ParseAsJson<Problem>();
-		        var problemSolver = ProblemSolverFactory.GetSolver();
-		        foreach (var seed in problem.sourceSeeds)
+		        Parallel.For(0, problem.sourceSeeds.Length, new ParallelOptions() {MaxDegreeOfParallelism = Math.Max(1, inputParameters.Cores / 2) }, seedInd =>
 		        {
+		            var problemSolver = ProblemSolverFactory.GetSolver();
+		            var seed = problem.sourceSeeds[seedInd];
 		            var answer = problemSolver.Solve(problem, seed, inputParameters.PowerPhrases.ToArray());
 		            outputs.Add(new Output
 		            {
@@ -52,7 +54,7 @@ namespace SomeSecretProject
 		                tag = DateTime.Now.ToString("O"),
 		                solution = answer
 		            });
-		        }
+		        });
 		    }
 		    Console.Write(outputs.ToJson()); //too big strng?
 		}
