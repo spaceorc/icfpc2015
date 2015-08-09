@@ -1,0 +1,49 @@
+Problem 0: w:10, h:10, seeds:1
+Problem 0: score 10103
+Problem 1: w:15, h:15, seeds:1
+Problem 1: score 5528
+Problem 2: w:15, h:30, seeds:10
+Problem 2: score 14978
+Problem 3: w:30, h:20, seeds:5
+Problem 3: score 12927
+Problem 4: w:10, h:15, seeds:50
+Problem 4: score 11250
+Problem 5: w:30, h:20, seeds:10
+Problem 5: score 10254
+Problem 6: w:10, h:10, seeds:50
+Problem 6: score 13750
+Problem 7: w:40, h:20, seeds:5
+Problem 7: score 7270
+Problem 8: w:10, h:8, seeds:10
+Problem 8: score 17521
+Problem 9: w:10, h:8, seeds:5
+Problem 9: score 5180
+Problem 10: w:10, h:7, seeds:1
+Problem 10: score 7724
+Problem 11: w:10, h:10, seeds:5
+Problem 11: score 5487
+Problem 12: w:15, h:20, seeds:10
+Problem 12: score 14001
+Problem 13: w:15, h:20, seeds:1
+Problem 13: score 3494
+Problem 14: w:50, h:50, seeds:1
+Problem 14: score 102646
+Problem 15: w:15, h:20, seeds:1
+Problem 15: score 6276
+Problem 16: w:15, h:20, seeds:1
+Problem 16: score 13490
+Problem 17: w:15, h:15, seeds:1
+Problem 17: score 6200
+Problem 18: w:30, h:30, seeds:1
+Problem 18: score 15998
+Problem 19: w:15, h:15, seeds:1
+Problem 19: score 6088
+Problem 20: w:15, h:15, seeds:1
+Problem 20: score 9570
+Problem 21: w:10, h:8, seeds:1
+Problem 21: score 1512
+Problem 22: w:10, h:8, seeds:1
+Problem 22: score 8892
+Problem 23: w:10, h:9, seeds:1
+Problem 23: score 850
+Total score: 310989
