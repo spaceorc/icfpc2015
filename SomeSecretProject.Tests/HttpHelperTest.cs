@@ -25,9 +25,9 @@ namespace SomeSecretProject.Tests
                 problemId = 2,
                 seed = 5,
                 tag = "new10_reg" + " " + DateTime.Now.ToString("O"),
-				solution = "dananananananananananananananpppppplaExcellent!"
+                solution = "dananananananananananananananpppppplaBuckaroo Banzai!"
             };
-            
+
             var result = HttpHelper.SendOutput(DavarAccount.TestTeam, solution);
             Assert.IsTrue(result);
         }
