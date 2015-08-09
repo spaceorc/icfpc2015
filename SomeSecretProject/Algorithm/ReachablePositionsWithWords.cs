@@ -27,19 +27,31 @@ namespace SomeSecretProject.Algorithm
 
 		public IEnumerable<Tuple<Unit, VisitedInfo>> SingleEndPositions(Unit currentUnit)
 		{
-			return EndPositions(currentUnit).GroupBy(t => t.Item1).Select(g => g.First());
+			var positions = new FastPositions(map, currentUnit, powerPhrases, powerPhrasesSpelled);
+			positions.BuildAllPositions();
+			return positions.endPositions.Values
+				.Select(x => new Tuple<Unit, VisitedInfo>(x.item.unit, new VisitedInfo
+				{
+					path = x.item.way.Add(x.finalMoves[0]).ToList(),
+					score = x.item.score,
+					spelledWords = x.item.spelledWords
+				}));
+			//return EndPositions(currentUnit).GroupBy(t => t.Item1).Select(g => g.First());
 		}
 
 		public IList<Tuple<Unit, VisitedInfo>> EndPositions(Unit currentUnit)
 		{
-			return AllPositions(currentUnit)
-				.SelectMany(p => FinalMoves(p.Item1).Select(f => Tuple.Create(p.Item1, 
-					new VisitedInfo
-					{
-						path = p.Item2.path.Concat(new[] { f }).ToList(),
-						score = p.Item2.score,
-						spelledWords = p.Item2.spelledWords
-					}))).ToList();
+			var positions = new FastPositions(map, currentUnit, powerPhrases, powerPhrasesSpelled);
+			positions.BuildAllPositions();
+			return positions.endPositions.Values
+				.SelectMany(p => p.finalMoves.Select(f => Tuple.Create(p.item.unit, new VisitedInfo
+				{
+					path = p.item.way.Add(f).ToList(),
+					score = p.item.score,
+					spelledWords = p.item.spelledWords
+				}))).ToList();
+//			return AllPositions(currentUnit)
+//				.SelectMany(p => FinalMoves(p.Item1).Select(f => Tuple.Create(p.Item1, (IList<MoveType>)p.Item2.Concat(new[] { f }).ToList()))).ToList();
 		}
 
 		private List<MoveType> FinalMoves(Unit unit)
@@ -49,7 +61,7 @@ namespace SomeSecretProject.Algorithm
 
 		public class VisitedInfo
 		{
-			public List<MoveType> path;
+			public IList<MoveType> path;
 			public bool[] spelledWords;
 			public int score;
 		}

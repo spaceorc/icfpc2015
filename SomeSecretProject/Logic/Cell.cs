@@ -93,5 +93,10 @@ namespace SomeSecretProject.Logic
 				return hashCode;
 			}
 		}
+
+		public Cell Clone()
+		{
+			return new Cell{x = x, y = y, filled = filled};
+		}
 	}
 }
