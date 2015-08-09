@@ -89,7 +89,7 @@ namespace SomeSecretProject.Algorithm
 							break;
 						}
 						next = next.Move(move);
-						if (!next.IsCorrect(map) || visited.ContainsKey(next))
+						if (!next.IsCorrect(map) /*|| visited.ContainsKey(next)*/)
 						{
 							invalid = true;
 							break;
