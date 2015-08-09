@@ -68,11 +68,15 @@ namespace SomeSecretProject.Algorithm
 
         public double Evaluate(Unit unit)
         {
+            return Evaluate(unit);
+        }
+
+        public Tuple<double,int> _Evaluate(Unit unit)
+        {
             // Уничтожаемые линии это хорошо
-            
-            
             var dropped = DroppedLines(unit);
             double scoreDropped = Math.Pow(dropped.Count(isDrop => isDrop)-1, 2) + dropped.Select((isDrop, i) => isDrop ? 1.0 +  ((double)i)/map.Height : 0.0).Sum();
+            var droppedLines = dropped.Count(isDrop => isDrop);
             // Занимаем полезные клетки - это хорошо
             var usabilities = unit.members.Select(m => UsabilityForCells[m]).ToArray();
             double scoreOccupied = unit.members.Sum(m => UsabilityForCells[m]);
@@ -92,7 +96,7 @@ namespace SomeSecretProject.Algorithm
                         0.2*scoreCompact +
                         0.1*scorePosHeigh+
                         0;
-            return score;
+            return Tuple.Create(score, droppedLines);
         }
 
 

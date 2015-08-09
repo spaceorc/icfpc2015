@@ -181,10 +181,10 @@ namespace SomeSecretProject.Algorithm
             double scorePosHeigh = unit.members.Average(m => GoodnessOfPosition(m));
 
 
-            var score = 0.1*scoreDropped +
+            var score = 0.2*scoreDropped +
                         scoreOccupied +
-                        //0.1*scoreClosed +
-                        0.8* scoreCompact +
+                        0.5*scoreClosed +
+                        0.8*scoreCompact +
                         0.1*scorePosHeigh+
                         0;
             return score;
