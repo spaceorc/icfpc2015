@@ -22,7 +22,7 @@ namespace Emulator
 			List<GameBase.State> states = new List<GameBase.State>();
 			List<int> scores = new List<int>();
 
-            Parallel.For(0, problem.sourceSeeds.Length, new ParallelOptions() { MaxDegreeOfParallelism = Math.Max(1, Environment.ProcessorCount / 2) }, seedInd =>
+            Parallel.For(0, problem.sourceSeeds.Length, new ParallelOptions() { MaxDegreeOfParallelism = Math.Max(1, Environment.ProcessorCount - 2) }, seedInd =>
             {
                 var solver = solverFactory();
                 var seed = problem.sourceSeeds[seedInd];
