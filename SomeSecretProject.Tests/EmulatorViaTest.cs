@@ -15,6 +15,7 @@ namespace SomeSecretProject.Tests
         private const string idealSolvesFolder = @"..\..\..\importantSolves";
 
         [Test]
+		[Explicit]
         public void RunAll()
         {
             Emulator.Program.SolveAll(PowerDatas.GetPowerPhrases());
@@ -109,6 +110,7 @@ namespace SomeSecretProject.Tests
         }
 
         [Test]
+		[Explicit]
         public void RecountScores()
         {
             var groupBy = GetSolves();
