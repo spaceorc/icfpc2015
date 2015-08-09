@@ -129,7 +129,6 @@ namespace Emulator
 		{
 			var problem = ProblemsSet.GetProblem(problemnum);
 //			var muggleProblemSolver = new MuggleProblemSolver();
-			//var muggleProblemSolver = new MagicProblemSolver();
 			var solver = new MuggleProblemSolver_MultiUnit(1);
 
 			var stopwatch = Stopwatch.StartNew();
