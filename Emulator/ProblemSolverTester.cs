@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,9 @@ namespace Emulator
 		    for (var seedInd = 0; seedInd < problem.sourceSeeds.Length; ++seedInd)
 			{
 				var seed = problem.sourceSeeds[seedInd];
+				var stopwatch = Stopwatch.StartNew();
 				var solution = solver.Solve(problem, seed, powerPhrases);
+				stopwatch.Stop();
 				var output = new Output() { problemId = problem.id, seed = seed, solution = solution };
 				var game = new Game(problem, output, powerPhrases);
 				while (game.state == GameBase.State.UnitInGame || game.state == GameBase.State.WaitUnit)
@@ -30,7 +33,7 @@ namespace Emulator
 				scores.Add(game.CurrentScore);
 				states.Add(game.state);
 				outputs.Add(output);
-				Console.WriteLine("seed: {0}, score: {1}", seedInd, game.CurrentScore);
+				Console.WriteLine("seed: {0}, score: {1}, time: {2}", seedInd, game.CurrentScore, stopwatch.Elapsed);
 			    SaveOutput(folder + problem.id, output);
 			}
 			var result = new Result { Outputs = outputs.ToArray(), EndStates = states.ToArray(), Scores = scores.ToArray() };

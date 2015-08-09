@@ -87,7 +87,7 @@ namespace SomeSecretProject.Logic
 		{
 			if (hashcode != null)
 				return hashcode.Value;
-			hashcode = members.OrderBy(m => m.y).ThenBy(m => m.x).Aggregate(pivot.GetHashCode(), (s, n) => (n.GetHashCode() * 397) & s);
+			hashcode = members.OrderBy(m => m.y).ThenBy(m => m.x).Aggregate(pivot.GetHashCode(), (s, n) => unchecked(n.GetHashCode() * 397) ^ s);
 			return hashcode.Value;
 		}
 
