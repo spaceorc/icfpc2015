@@ -9,11 +9,11 @@ namespace SomeSecretProject.Algorithm
 {
 	public class WaterMagicProblemSolver : MuggleProblemSolver
 	{
-		private readonly int unitsAhead;
+		private readonly int unitsToEvaluate;
 
-		public WaterMagicProblemSolver(int unitsAhead)
+		public WaterMagicProblemSolver(int unitsToEvaluate)
 		{
-			this.unitsAhead = unitsAhead;
+			this.unitsToEvaluate = unitsToEvaluate;
 		}
 
 		private class QueueItem
@@ -48,7 +48,7 @@ namespace SomeSecretProject.Algorithm
 
 					case GameBase.State.UnitInGame:
 						var units = new[] { game.currentUnit }.Concat(game.GetAllRestUnits()).ToArray();
-						while (unitsFastPositions.Count < unitsAhead)
+						while (unitsFastPositions.Count < unitsToEvaluate)
 						{
 							var fastPositions = new FastPositions(game.map, units[unitsFastPositions.Count], powerPhrases, spelledPhrases);
 							fastPositions.BuildAllPositions();
@@ -73,7 +73,7 @@ namespace SomeSecretProject.Algorithm
 							foreach (var endPosition in item.fastPositions[item.unitIndex].endPositions)
 							{
 								var evaluation = item.parentEvaluation + evaluatePositions.Evaluate(endPosition.Value.item.unit);
-								if (item.unitIndex >= unitsAhead - 1)
+								if (item.unitIndex >= unitsToEvaluate - 1)
 								{
 									var solutionCandidate = item.solutionEndItem ?? endPosition.Value;
 									if (bestSolution == null
