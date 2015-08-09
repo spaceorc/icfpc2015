@@ -25,11 +25,11 @@ namespace SomeSecretProject.Logic
 				case MoveType.SE:
 				case MoveType.NE:
 				case MoveType.NW:
-					return new Unit { pivot = pivot.Move(new Vector(move, pivot.y, steps)), members = new HashSet<Cell>(members.Select(cell => cell.Move(new Vector(move, cell.y, steps))).ToArray()) };
+					return new Unit { pivot = pivot.Move(new Vector(move, pivot.y, steps)), members = new HashSet<Cell>(members.Select(cell => cell.Move(new Vector(move, cell.y, steps)))) };
 				case MoveType.RotateCW:
-					return new Unit { pivot = pivot, members = new HashSet<Cell>(members.Select(cell => cell.RotateCW(pivot)).ToArray()) };
+					return new Unit { pivot = pivot, members = new HashSet<Cell>(members.Select(cell => cell.RotateCW(pivot))) };
 				case MoveType.RotateCCW:
-					return new Unit { pivot = pivot, members = new HashSet<Cell>(members.Select(cell => cell.RotateCCW(pivot)).ToArray()) };
+					return new Unit { pivot = pivot, members = new HashSet<Cell>(members.Select(cell => cell.RotateCCW(pivot))) };
 				default:
 					throw new ArgumentOutOfRangeException(move.ToString(), move, null);
 			}
