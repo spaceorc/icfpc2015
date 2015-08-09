@@ -24,11 +24,15 @@ namespace SomeSecretProject.Tests
         public void CompareSolves()
         {
             var groupBy = GetSolves();
+            var bests = new List<Tuple<string, int>>();
             foreach (var result in groupBy)
             {
                 var grouByName = result.GroupBy(r => r.Item1);
                 Console.WriteLine("Problem" + result.Key);
-                foreach (var res in grouByName.OrderByDescending(r => r.Sum(k => k.Item4)))
+                var solves = grouByName.OrderByDescending(r => r.Sum(k => k.Item4));
+                var bsolve = solves.First();
+                bests.Add(Tuple.Create(bsolve.Key, int.Parse(result.Key)));
+                foreach (var res in solves)
                 {
                     Console.WriteLine("{0}: {1}", res.Key, res.Sum(K => K.Item4));
                 }
@@ -42,6 +46,13 @@ namespace SomeSecretProject.Tests
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
+            Console.WriteLine("Who's BEST?");
+            foreach (var taskresult in bests.GroupBy(b => b.Item1))
+            {
+                Console.WriteLine("{0}: {1}%", taskresult.Key, taskresult.Count() * 100 / bests.Count);
+            }
+           
         }
 
         [Test]
