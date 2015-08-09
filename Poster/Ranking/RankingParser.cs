@@ -20,8 +20,8 @@ namespace Poster.Ranking
                 .Select(setting =>
                 {
                     var rankingRanking = setting.rankings.First(e => e.teamId == teamId);
-                    return string.Format("Problem: {0}, Score: {1}, PowerScore: {2}, Rank: {3}", setting.setting,
-                        rankingRanking.score, rankingRanking.power_score, rankingRanking.rank);
+                    return string.Format("Problem: {0}, Score: {1} (max: {2}), PowerScore: {3}, Rank: {4}", setting.setting,
+                        rankingRanking.score, setting.rankings.First(r => r.rank < 2).score, rankingRanking.power_score, rankingRanking.rank);
                 })
                 .ToList();
             var content = string.Join("\r\n", stringsList);
