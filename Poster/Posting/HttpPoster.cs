@@ -2,19 +2,19 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
-using SomeSecretProject;
 using SomeSecretProject.IO;
 
 namespace Poster.Posting
 {
-    public class HttpPoster
+    public static class HttpPoster
     {
-        public void PostAll(DavarAccount account, string solveName, string tag = null)
+        public static void PostAll(DavarAccount account, string solveName, string tag = null)
         {
             var directoryMain = @"..\..\..\importantSolves\" + solveName;
             var problems = Directory.EnumerateDirectories(directoryMain);
             foreach (var p in problems.Select(Path.GetFileName))
             {
+                Console.WriteLine("Problemm{0}", p);
                 foreach (var f in Directory.EnumerateFiles(Path.Combine(directoryMain, p)).Select(Path.GetFileName))
                 {
                     if (f.StartsWith("score"))

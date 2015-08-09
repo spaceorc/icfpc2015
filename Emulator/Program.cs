@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -129,11 +130,15 @@ namespace Emulator
 
 		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
 		{
-            var problem = ProblemsSet.GetProblem(problemnum);
+			var problem = ProblemsSet.GetProblem(problemnum);
 //			var muggleProblemSolver = new MuggleProblemSolver();
 			//var muggleProblemSolver = new MagicProblemSolver();
 			var solver = new MuggleProblemSolver_MultiUnit(1);
+
+			var stopwatch = Stopwatch.StartNew();
 			var solution = solver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
+			stopwatch.Stop();
+
 			var game = new Game(problem, new Output { seed = problem.sourceSeeds[seed], solution = solution }, magicSpells);
 			if (visualize)
 			{
@@ -146,7 +151,8 @@ namespace Emulator
 				{
 					game.Step();
 				}
-				Console.Write("Score=" + game.CurrentScore);
+				Console.WriteLine("Score=" + game.CurrentScore);
+				Console.WriteLine("Time=" + stopwatch.Elapsed);
 				Console.ReadKey();
 			}
 		}

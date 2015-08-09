@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using Poster.Posting;
-using SomeSecretProject.Algorithm;
 
 namespace SomeSecretProject.Tests
 {
@@ -8,18 +7,10 @@ namespace SomeSecretProject.Tests
     [Ignore]
     public class HttpPosterTest
     {
-        private HttpPoster httpPoster;
-
-        [SetUp]
-        public void SetUp()
-        {
-            httpPoster = new HttpPoster();
-        }
-
         [Test]
         public void PostAll()
         {
-            httpPoster.PostAll(DavarAccount.MainTeam, "1_Muddle_7cbff25c");
+            HttpPoster.PostAll(DavarAccount.MainTeam, "bestBySeeds_2015-08-09_14_54");
         }
     }
 }

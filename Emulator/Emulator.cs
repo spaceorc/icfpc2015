@@ -48,7 +48,9 @@ namespace Emulator
 			Console.SetCursorPosition(0, game.map.Height * 3 + 5);
             Console.Write("GAME OVER");
             Console.WriteLine(game.state);
-            Console.Write("Score="+game.CurrentScore);
+            Console.WriteLine("Score="+game.CurrentScore);
+            Console.WriteLine("PowerWords="+string.Join(",", game.EnteredMagicSpells));
+            Console.WriteLine("String=" + game.enteredString);
             Console.ReadKey();
         }
     }
