@@ -2,14 +2,13 @@
 using System.IO;
 using System.Linq;
 using System.Threading;
-using SomeSecretProject;
 using SomeSecretProject.IO;
 
 namespace Poster.Posting
 {
-    public class HttpPoster
+    public static class HttpPoster
     {
-        public void PostAll(DavarAccount account, string solveName, string tag = null)
+        public static void PostAll(DavarAccount account, string solveName, string tag = null)
         {
             var directoryMain = @"..\..\..\importantSolves\" + solveName;
             var problems = Directory.EnumerateDirectories(directoryMain);
