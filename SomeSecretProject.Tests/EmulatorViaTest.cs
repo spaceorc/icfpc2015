@@ -51,7 +51,7 @@ namespace SomeSecretProject.Tests
             Console.WriteLine("Who's BEST?");
             foreach (var taskresult in bests.GroupBy(b => b.Item1))
             {
-                Console.WriteLine("{0}: {1}%", taskresult.Key, taskresult.Count() * 100 / bests.Count);
+                Console.WriteLine("{0}: {1}% ({2})", taskresult.Key, taskresult.Count() * 100 / bests.Count, string.Join(".", taskresult.Take(5).Select(b => b.Item2)));
             }
            
         }
