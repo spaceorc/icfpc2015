@@ -8,15 +8,22 @@ namespace SomeSecretProject.Algorithm
 {
 	public class FastPositionsPatch : FastPositionsBase
 	{
-		public readonly FastPositionsBase previousPositions;
+		public readonly FastPositions previousPositions;
 		public readonly Dictionary<Key, Item> patchedPositions = new Dictionary<Key, Item>();
-		public readonly Dictionary<Key, PatchItem> patchedKeys = new Dictionary<Key, PatchItem>();
+		public readonly Dictionary<Key, bool> patchedKeys = new Dictionary<Key, bool>();
 
-		public FastPositionsPatch([NotNull] Map updatedMap, [NotNull] FastPositionsBase previousPositions)
+		public FastPositionsPatch([NotNull] Map updatedMap, [NotNull] FastPositions previousPositions)
 			: base(updatedMap, previousPositions.originalUnit, previousPositions.powerPhrases)
 		{
 			this.previousPositions = previousPositions;
 		}
+		
+		private readonly MoveType[] allowedAntiMoves =
+		{
+			MoveType.E, MoveType.W,
+			MoveType.NE, MoveType.NW,
+			MoveType.RotateCW, MoveType.RotateCCW,
+		};
 
 		public override void InitQueue([NotNull] Queue<KeyValuePair<Key, Item>> queue)
 		{
@@ -29,62 +36,92 @@ namespace SomeSecretProject.Algorithm
 				var keys = new List<Key>();
 				while (true)
 				{
-					PatchItem patchItem;
-					if (patchedKeys.TryGetValue(key, out patchItem))
+					bool good;
+					if (patchedKeys.TryGetValue(key, out good))
 					{
-						foreach (var passedKey in keys)
-						{
-							patchedKeys.Add(passedKey, patchItem);
-							newQueueItems.Remove(passedKey);
-						}
+						if (good)
+							AddGoodWay(keys);
+						else
+							AddBadWay(keys, newQueueItems);
 						break;
 					}
 					keys.Add(key);
-					bool parentIsCandidate = false;
 					if (!unit.IsCorrect(map))
-					{
-						patchItem = new PatchItem { good = false };
-						foreach (var passedKey in keys)
-						{
-							patchedKeys.Add(passedKey, patchItem);
-							newQueueItems.Remove(passedKey);
-						}
-						parentIsCandidate = true;
-						keys.Clear();
-					}
+						AddBadWay(keys, newQueueItems);
 					if (way == null)
 					{
-						patchItem = new PatchItem { good = true };
 						foreach (var passedKey in keys)
-							patchedKeys.Add(passedKey, patchItem);
+							patchedKeys.Add(passedKey, true);
 						break;
 					}
 					var antiMoveType = MoveTypeExt.AntiMove(way.moveType);
-					unit = unit.Move(antiMoveType);
-					key = new Key(unit, Way.GetNewRotation(key.rotation, previousPositions.symmetric, antiMoveType));
+					key = MoveKey(key, antiMoveType);
+					Item item;
+					if (!previousPositions.TryGetVisited(key, out item))
+						throw new InvalidOperationException(string.Format("!previousPositions.TryGetVisited(key:{0}, out item)", key));
+					unit = item.unit;
 					way = way.parent;
-					if (parentIsCandidate)
-					{
-						if (!newQueueItems.ContainsKey(key))
-						{
-							Item item;
-							if (!previousPositions.TryGetVisited(key, out item))
-								throw new InvalidOperationException(string.Format("!previousPositions.TryGetVisited(key:{0}, out item)", key));
-							newQueueItems.Add(key, item);
-						}
-					}
 				}
 			}
 			foreach (var newQueueItem in newQueueItems)
 				queue.Enqueue(newQueueItem);
 		}
 
+		private void AddGoodWay([NotNull] List<Key> keys)
+		{
+			foreach (var passedKey in keys)
+				patchedKeys.Add(passedKey, true);
+			keys.Clear();
+		}
+
+		private void AddBadWay([NotNull] List<Key> keys, [NotNull] Dictionary<Key, Item> newQueueItems)
+		{
+			foreach (var passedKey in keys)
+			{
+				patchedKeys.Add(passedKey, false);
+				newQueueItems.Remove(passedKey);
+			}
+			foreach (var passedKey in keys)
+			{
+				foreach (var allowedAntiMove in allowedAntiMoves)
+				{
+					var antiKey = MoveKey(passedKey, allowedAntiMove);
+					bool antiGood;
+					if (!patchedKeys.TryGetValue(antiKey, out antiGood) || antiGood)
+					{
+						Item antiItem;
+						if (previousPositions.TryGetVisited(antiKey, out antiItem) && !newQueueItems.ContainsKey(antiKey))
+							newQueueItems.Add(antiKey, antiItem);
+					}
+				}
+			}
+			keys.Clear();
+		}
+
+		[NotNull]
+		private Key MoveKey([NotNull] Key key, MoveType moveType)
+		{
+			var pivot = key.pivot;
+			switch (moveType)
+			{
+				case MoveType.E:
+				case MoveType.W:
+				case MoveType.SW:
+				case MoveType.SE:
+				case MoveType.NW:
+				case MoveType.NE:
+					pivot = pivot.Move(moveType);
+					break;
+			}
+			return new Key(pivot, Way.GetNewRotation(key.rotation, symmetric, moveType));
+		}
+
 		public override bool TryGetVisited([NotNull] Key key, out Item result)
 		{
 			if (patchedPositions.TryGetValue(key, out result))
 				return true;
-			PatchItem patchItem;
-			if (patchedKeys.TryGetValue(key, out patchItem) && !patchItem.good)
+			bool good;
+			if (patchedKeys.TryGetValue(key, out good) && !good)
 				return false;
 			return previousPositions.TryGetVisited(key, out result);
 		}
@@ -101,20 +138,15 @@ namespace SomeSecretProject.Algorithm
 			return patchedPositions
 				.Concat(previousPositions.EnumerateAllPositions().Where(p =>
 				{
-					PatchItem patchItem;
-					return !patchedKeys.TryGetValue(p.Key, out patchItem) || patchItem.good;
+					bool good;
+					return !patchedKeys.TryGetValue(p.Key, out good) || good;
 				}));
 		}
 
 		protected override void DoUpdatePositionItem([NotNull] Key key, [NotNull] Item item)
 		{
 			patchedPositions[key] = item;
-			patchedKeys.Remove(key);
-		}
-
-		public class PatchItem
-		{
-			public bool good;
+			patchedKeys[key] = false;
 		}
 	}
 }

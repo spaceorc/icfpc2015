@@ -128,12 +128,13 @@ namespace SomeSecretProject.Logic
 					return;
 				case State.UnitInGame:
                     char move;
-			        if (!TryGetNextMove(out move))
+			yo:
+					if (!TryGetNextMove(out move))
 			        {
 			            state = State.End;
 			            return;
 			        }
-			        var moveType = MoveTypeExt.Convert(move);
+					var moveType = move == '#' ? MoveType.NW : move == '$' ?  MoveType.NE : MoveTypeExt.Convert(move);
 			        if (moveType == null)
 			        {
 			            state = State.EndInvalidCommand;
@@ -144,16 +145,19 @@ namespace SomeSecretProject.Logic
 			        var movedUnit = currentUnit.Move(moveType.Value);
 					if (!movedUnit.IsCorrect(map))
 					{
+						Console.Beep();
+						if (Console.ReadKey(true).Key != ConsoleKey.Enter)
+							goto yo;
 						LockUnit(currentUnit);
 						currentUnit = null;
 						state = State.WaitUnit;
 						return;
 					}
-					if (!forbiddenSequenceChecker.CheckLastMove(moves, moveType.Value))
-					{
-						state = State.EndPositionRepeated;
-						return;
-					}
+//					if (!forbiddenSequenceChecker.CheckLastMove(moves, moveType.Value))
+//					{
+//						state = State.EndPositionRepeated;
+//						return;
+//					}
 					moves.Add(moveType.Value);
 					currentUnit = movedUnit;
 					return;

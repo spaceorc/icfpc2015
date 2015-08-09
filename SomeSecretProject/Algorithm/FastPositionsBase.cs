@@ -105,6 +105,18 @@ namespace SomeSecretProject.Algorithm
 						}));
 				}
 			}
+			foreach (var position in EnumerateAllPositions())
+			{
+				var finalMoves = FinalMoves(position.Value.unit);
+				if (finalMoves.Any())
+				{
+					endPositions[position.Key] = new EndItem
+					{
+						item = position.Value,
+						finalMoves = finalMoves
+					};
+				}	
+			}
 		}
 
 		public abstract void InitQueue([NotNull] Queue<KeyValuePair<Key, Item>> queue);
@@ -120,15 +132,6 @@ namespace SomeSecretProject.Algorithm
 		public KeyValuePair<Key, Item> UpdatePositionItem([NotNull] Key key, [NotNull] Item item)
 		{
 			DoUpdatePositionItem(key, item);
-			var finalMoves = FinalMoves(item.unit);
-			if (finalMoves.Any())
-			{
-				endPositions[key] = new EndItem
-				{
-					item = item,
-					finalMoves = finalMoves
-				};
-			}
 			return new KeyValuePair<Key, Item>(key, item);
 		}
 
@@ -144,6 +147,12 @@ namespace SomeSecretProject.Algorithm
 			public readonly Cell pivot;
 
 			public readonly int rotation;
+
+			public Key(Cell pivot, int rotation)
+			{
+				this.pivot = pivot;
+				this.rotation = rotation;
+			}
 
 			public Key(Unit unit, int rotation)
 			{

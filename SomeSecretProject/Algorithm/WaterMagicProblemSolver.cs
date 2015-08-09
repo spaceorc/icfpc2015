@@ -48,7 +48,8 @@ namespace SomeSecretProject.Algorithm
 
 					case GameBase.State.UnitInGame:
 						var units = new[] { game.currentUnit }.Concat(game.GetAllRestUnits()).ToArray();
-						while (unitsFastPositions.Count < unitsToEvaluate)
+						unitsFastPositions.Clear();
+						while (unitsFastPositions.Count < 1/*unitsToEvaluate*/)
 						{
 							var fastPositions = new FastPositions(game.map, units[unitsFastPositions.Count], powerPhrases, spelledPhrases);
 							fastPositions.BuildAllPositions();
@@ -93,13 +94,19 @@ namespace SomeSecretProject.Algorithm
 									var newFastPositions = item.fastPositions.ToList();
 									if (newFastPositions.Count != item.unitIndex + 1)
 										throw new InvalidOperationException("newFastPositions.Count != item.unitIndex + 1");
-									newFastPositions.Add(new FastPositionsPatch(childMap, unitsFastPositions[item.unitIndex + 1]));
+
+//									var patch = new FastPositionsPatch(childMap, unitsFastPositions[item.unitIndex + 1]);
+//									patch.BuildAllPositions();
+									var patch = new FastPositions(childMap, units[item.unitIndex + 1], powerPhrases, endPosition.Value.item.spelledWords);
+									patch.BuildAllPositions();
+
+									newFastPositions.Add(patch);
 									evaluationQueue.Enqueue(new QueueItem
 									{
 										map = childMap,
 										unitIndex = item.unitIndex + 1,
 										parentEvaluation = evaluation,
-										solutionEndItem = item.solutionEndItem,
+										solutionEndItem = item.solutionEndItem ?? endPosition.Value,
 										fastPositions = newFastPositions
 									});
 								}
@@ -109,17 +116,17 @@ namespace SomeSecretProject.Algorithm
 						if (bestSolution == null)
 							throw new InvalidOperationException("bestSolution == null");
 
-						if (bestFastPositions.Count != unitsFastPositions.Count)
-							throw new InvalidOperationException("bestFastPositions.Count != unitsFastPositions.Count");
-						for (int i = 0; i < bestFastPositions.Count; i++)
-							unitsFastPositions[i] = bestFastPositions[i].Apply();
+//						if (bestFastPositions.Count != unitsFastPositions.Count)
+//							throw new InvalidOperationException("bestFastPositions.Count != unitsFastPositions.Count");
+//						for (int i = 0; i < bestFastPositions.Count; i++)
+//							unitsFastPositions[i] = bestFastPositions[i].Apply();
 
 						var wayToBestPosition = bestSolution.item.way.Add(bestSolution.finalMoves[0]).ToList();
 						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition);
 						CallEvent(game, unitSolution);
 						game.ApplyUnitSolution(unitSolution);
 						solution.AddRange(wayToBestPosition);
-						unitsFastPositions.RemoveAt(0);
+						//unitsFastPositions.RemoveAt(0);
 						break;
 
 					case GameBase.State.EndInvalidCommand:

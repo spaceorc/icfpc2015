@@ -31,12 +31,14 @@ namespace Emulator
                 else if (key.Key == ConsoleKey.Escape) return false;
                 if (!ins)
                 {
-                    if (key.Key == ConsoleKey.A) move = 'p';
-                    else if (key.Key == ConsoleKey.D) move = 'b';
-                    else if (key.Key == ConsoleKey.Z) move = 'a';
-                    else if (key.Key == ConsoleKey.X) move = 'l';
-                    else if (key.Key == ConsoleKey.Q) move = 'd';
-                    else if (key.Key == ConsoleKey.E) move = 'k';
+                    if (key.Key == ConsoleKey.LeftArrow) move = 'p';
+                    else if (key.Key == ConsoleKey.RightArrow) move = 'b';
+                    else if (key.Key == ConsoleKey.End) move = 'a';
+                    else if (key.Key == ConsoleKey.PageDown) move = 'l';
+                    else if (key.Key == ConsoleKey.W) move = 'd';
+                    else if (key.Key == ConsoleKey.Q) move = 'k';
+                    else if (key.Key == ConsoleKey.Home) move = '#';
+                    else if (key.Key == ConsoleKey.PageUp) move = '$';
                 }
                 else
                 {

@@ -130,8 +130,8 @@ namespace Emulator
 			var problem = ProblemsSet.GetProblem(problemnum);
 //			var muggleProblemSolver = new MuggleProblemSolver();
 			//var muggleProblemSolver = new MagicProblemSolver();
-			var solver = new MuggleProblemSolver_MultiUnit(1);
-			//var solver = new WaterMagicProblemSolver(2);
+			//var solver = new MuggleProblemSolver_MultiUnit(1);
+			var solver = new WaterMagicProblemSolver(2);
 
 			var stopwatch = Stopwatch.StartNew();
 			var solution = solver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
