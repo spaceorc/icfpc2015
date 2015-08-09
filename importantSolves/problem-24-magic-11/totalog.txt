@@ -1,0 +1,3 @@
+Problem 24: w:100, h:40, seeds:1
+Problem 24: score 241048
+Total score: 241048
