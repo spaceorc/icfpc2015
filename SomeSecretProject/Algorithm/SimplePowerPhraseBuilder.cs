@@ -32,7 +32,7 @@ namespace SomeSecretProject.Algorithm
 						cur = positions.Current;
 					continue;
 				}
-				var move = GetMoveString(moves[i]);
+				var move = SelectMove(moves[i]);
 				builder.Append(move.First());
 				i++;
 			}
@@ -70,7 +70,7 @@ namespace SomeSecretProject.Algorithm
 				for(int j = 0; j < phrase.Length; j++)
 				{
 					var c = phrase[j];
-					var move = GetMoveString(moves[i + j]);
+					var move = SelectMove(moves[i + j]);
 					if(!move.Contains(c))
 					{
 						found = false;
@@ -83,9 +83,9 @@ namespace SomeSecretProject.Algorithm
 			return -1;
 		}
 
-		private static HashSet<char> GetMoveString(MoveType moveType)
+		private static HashSet<char> SelectMove(MoveType move)
 		{
-			switch(moveType)
+			switch(move)
 			{
 				case MoveType.E:
 					return MoveE;
@@ -100,7 +100,7 @@ namespace SomeSecretProject.Algorithm
 				case MoveType.RotateCCW:
 					return RotateCCW;
 				default:
-					throw new ArgumentOutOfRangeException("moveType", moveType, null);
+					throw new ArgumentOutOfRangeException("move", move, null);
 			}
 		}
 
