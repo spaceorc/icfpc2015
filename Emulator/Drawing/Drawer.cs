@@ -58,7 +58,7 @@ namespace Emulator.Drawing
 			return new CellViewInfo
 			{
 				Char = '·',
-				ForegroundColor = ConsoleColor.DarkGray,
+				ForegroundColor = cell.y % 2 == 0 ? ConsoleColor.DarkGray : ConsoleColor.DarkBlue,
 				BackgroundColor = ConsoleColor.Black
 			};
 		}

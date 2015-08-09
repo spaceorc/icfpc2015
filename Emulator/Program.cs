@@ -58,7 +58,7 @@ namespace Emulator
 						PlayAuto(problem, solution, seed, powerPhrases, delay);
 					break;
 				case "solve":
-					Solve(problem, seed, powerPhrases, delay, visualize);
+					Solve(new MuggleProblemSolver_MultiUnit(1), problem, seed, powerPhrases, delay, visualize);
 					break;
 				case "solveall":
 					SolveAll(powerPhrases);
@@ -125,7 +125,7 @@ namespace Emulator
 			tester.ScoreOverAllProblems(() => new MuggleProblemSolver_MultiUnit(1), powerPhrases);
 		}
 
-		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
+		public static void Solve(IProblemSolver solver, int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
 		{
 			var problem = ProblemsSet.GetProblem(problemnum);
 //			var muggleProblemSolver = new MuggleProblemSolver();
@@ -157,9 +157,9 @@ namespace Emulator
 		{
             var problem = ProblemsSet.GetProblem(problemnum);
 			//var problemSolver = new MagicProblemSolver();
-			var problemSolver = new MuggleProblemSolver_MultiUnit(1);
+			var solver = new MuggleProblemSolver();
 			var fastConsole = new FastConsole();
-			problemSolver.SolutionAdded += (g, s) =>
+			solver.SolutionAdded += (g, s) =>
 			{
 			    using (var drawer = new Drawer(fastConsole))
 			    {
@@ -187,7 +187,7 @@ namespace Emulator
 				}
 				Console.ReadKey(true);
 			};
-			problemSolver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
+			solver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
             while (Console.ReadKey(true).Key != ConsoleKey.Escape)
             { }
 		}
