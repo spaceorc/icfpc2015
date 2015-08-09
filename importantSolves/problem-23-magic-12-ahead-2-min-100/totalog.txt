@@ -1,0 +1,3 @@
+Problem 23: w:10, h:9, seeds:1
+Problem 23: score 1871
+Total score: 1871
