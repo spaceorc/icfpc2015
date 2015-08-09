@@ -10,7 +10,7 @@ namespace SomeSecretProject.Tests
         [Test]
         public void PostAll()
         {
-            HttpPoster.PostAll(DavarAccount.MainTeam, "bestBySeeds_2015-08-09_14_54");
+            HttpPoster.PostAll(DavarAccount.MainTeam, "5_fire_magic_2015-08-09_15_38_39");
         }
     }
 }
