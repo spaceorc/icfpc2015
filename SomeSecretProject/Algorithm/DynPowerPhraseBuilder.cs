@@ -31,9 +31,14 @@ namespace SomeSecretProject.Algorithm
 			var phrases = new string[moves.Count];
 			for(int idx = 0; idx < moves.Count; idx++)
 			{
-				var item = PowerPhrases
+				var items = PowerPhrases
 					.Where(phrase => EndsWithPhrase(moves, phrase, idx))
-					.Select(phrase => new {Phrase = phrase, Score = idx < phrase.Length ? new Score() : scores[idx - phrase.Length]})
+					.Select(phrase => new {Phrase = phrase, Score = idx < phrase.Length ? new Score() : scores[idx - phrase.Length]});
+
+				if(idx > 0)
+					items = items.Concat(new[] {new {Phrase = (string)null, Score = scores[idx - 1]}});
+
+				var item = items
 					.MaxOrDefault(elem => elem.Score.CountNewScore(elem.Phrase));
 
 				scores[idx] = item == null ? (idx == 0 ? new Score() : scores[idx - 1]) : item.Score.GetUpdatedScore(item.Phrase);
@@ -108,7 +113,7 @@ namespace SomeSecretProject.Algorithm
 	{
 		public int CountNewScore(string phrase)
 		{
-			return TotalScore + (PhraseCounts != null && PhraseCounts.ContainsKey(phrase) ? 0 : 300) + 2 * phrase.Length;
+			return phrase == null ? TotalScore : TotalScore + (PhraseCounts != null && PhraseCounts.ContainsKey(phrase) ? 0 : 300) + 2 * phrase.Length;
 		}
 
 		public Score GetUpdatedScore(string phrase)
@@ -116,18 +121,21 @@ namespace SomeSecretProject.Algorithm
 			var score = new Score
 			{
 				PhraseCounts = PhraseCounts == null ? new Dictionary<string, int>() : new Dictionary<string, int>(PhraseCounts),
-				TotalScore = CountNewScore(phrase),
+				TotalScore = CountNewScore(phrase)
 			};
 
-			if(!score.PhraseCounts.ContainsKey(phrase))
-				score.PhraseCounts[phrase] = 0;
-			score.PhraseCounts[phrase]++;
+			if(phrase != null)
+			{
+				if(!score.PhraseCounts.ContainsKey(phrase))
+					score.PhraseCounts[phrase] = 0;
+				score.PhraseCounts[phrase]++;
+			}
 
 			return score;
 		}
 
-		private Dictionary<string, int> PhraseCounts;
-
 		public int TotalScore;
+
+		private Dictionary<string, int> PhraseCounts;
 	}
 }

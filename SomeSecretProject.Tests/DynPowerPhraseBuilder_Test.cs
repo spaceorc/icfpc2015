@@ -88,6 +88,32 @@ namespace SomeSecretProject.Tests
 			Assert.AreEqual(662, score);
 		}
 
+		[Test]
+		public void Test9()
+		{
+			var phrases = new[] {"aa", "!hi!"};
+			var builder = new DynPowerPhraseBuilder(phrases);
+
+			int score;
+			var result = builder.Build(ToMoves("!hi!zz!hi!"), out score);
+			Console.WriteLine(result);
+
+			Assert.IsTrue(Regex.IsMatch(result, @"!hi!...aa.", RegexOptions.IgnoreCase));
+			Assert.AreEqual(612, score);
+		}
+
+		[Test]
+		public void Test10()
+		{
+			var phrases = new[] {"hi", "ei hi ei"};
+			var builder = new DynPowerPhraseBuilder(phrases);
+
+			int score;
+			var result = builder.Build(ToMoves("ei hi ei"), out score);
+			Console.WriteLine(result);
+			Console.WriteLine(score);
+		}
+
 		private static List<MoveType> ToMoves(string s)
 		{
 			return s.Select(c => MoveTypeExt.Convert(c).Value).ToList();
