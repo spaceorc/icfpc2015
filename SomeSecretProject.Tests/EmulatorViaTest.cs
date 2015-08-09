@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using NUnit.Framework;
 using SomeSecretProject.IO;
+using SomeSecretProject.Logic;
 
 namespace SomeSecretProject.Tests
 {
@@ -92,6 +94,33 @@ namespace SomeSecretProject.Tests
                     var path = Path.Combine(idealSolvesFolder, best.Item2, problemGroup.Key, best.Item1);
                     File.Copy(path, Path.Combine(newPAth, Path.GetFileName(path)));
                 }
+            }
+        }
+
+        [Test]
+        public void RecountScores()
+        {
+            var groupBy = GetSolves();
+            var ungroup = groupBy.SelectMany(g => g);
+            var groupByProblemAndName = ungroup.GroupBy(g => g.Item1 + "<->" + g.Item2);
+            foreach (var g in groupByProblemAndName)
+            {
+                var problFolder = Path.Combine(idealSolvesFolder, g.First().Item1, g.First().Item2);
+                var cb = new StringBuilder();
+                var sum = 0;
+                foreach (var seedTuple in g)
+                {
+                    var seed = seedTuple.Item3;
+                    var solution = File.ReadAllText(problFolder + @"\" + seed).ParseAsJson<Output>().solution;
+                    var game = new Game(ProblemsSet.GetProblem(int.Parse(seedTuple.Item2)), new Output() { solution = solution, seed = int.Parse(seed) }, PowerDatas.GetPowerPhrases());
+                    while (game.state == GameBase.State.UnitInGame || game.state == GameBase.State.WaitUnit)
+                        game.Step();
+                    var resultingScoring = game.CurrentScore;
+                    sum += game.CurrentScore;
+                    cb.AppendLine(seed + " " + resultingScoring);
+                }
+                var result = cb.ToString();
+                File.WriteAllText(problFolder + @"\" + "score" + (sum / g.Count()) + ".txt", result);
             }
         }
     }
