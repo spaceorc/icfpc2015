@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using SomeSecretProject.Logic;
 
@@ -20,10 +21,9 @@ namespace SomeSecretProject.Algorithm
 		public FastPositions([NotNull] FastPositionsBase source)
 			: base(source.map, source.originalUnit, source.powerPhrases)
 		{
-			foreach (var position in source.EnumerateAllPositions())
-			{
-				position
-			}
+			allPositions = source.EnumerateAllPositions().ToDictionary(x => x.Key, x => x.Value);
+			foreach (var endPosition in source.endPositions)
+				endPositions.Add(endPosition.Key, endPosition.Value);
 		}
 
 		public override void InitQueue([NotNull] Queue<KeyValuePair<Key, Item>> queue)

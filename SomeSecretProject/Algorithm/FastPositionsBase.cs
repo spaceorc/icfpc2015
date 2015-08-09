@@ -178,6 +178,11 @@ namespace SomeSecretProject.Algorithm
 					return ((pivot != null ? pivot.GetHashCode() : 0) * 397) ^ rotation;
 				}
 			}
+
+			public override string ToString()
+			{
+				return string.Format("Pivot: {0}, Rotation: {1}", pivot, rotation);
+			}
 		}
 
 		public class Item

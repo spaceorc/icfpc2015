@@ -112,15 +112,14 @@ namespace SomeSecretProject.Algorithm
 						if (bestFastPositions.Count != unitsFastPositions.Count)
 							throw new InvalidOperationException("bestFastPositions.Count != unitsFastPositions.Count");
 						for (int i = 0; i < bestFastPositions.Count; i++)
-						{
 							unitsFastPositions[i] = bestFastPositions[i].Apply();
-						}
 
 						var wayToBestPosition = bestSolution.item.way.Add(bestSolution.finalMoves[0]).ToList();
 						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition);
 						CallEvent(game, unitSolution);
 						game.ApplyUnitSolution(unitSolution);
 						solution.AddRange(wayToBestPosition);
+						unitsFastPositions.RemoveAt(0);
 						break;
 
 					case GameBase.State.EndInvalidCommand:

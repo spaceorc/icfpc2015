@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -65,12 +66,12 @@ namespace SomeSecretProject.Algorithm
 					if (parentIsCandidate)
 					{
 						if (!newQueueItems.ContainsKey(key))
-							newQueueItems.Add(key, new Item
-							{
-								unit = unit,
-								way = way,
-								???
-							});
+						{
+							Item item;
+							if (!previousPositions.TryGetVisited(key, out item))
+								throw new InvalidOperationException(string.Format("!previousPositions.TryGetVisited(key:{0}, out item)", key));
+							newQueueItems.Add(key, item);
+						}
 					}
 				}
 			}
