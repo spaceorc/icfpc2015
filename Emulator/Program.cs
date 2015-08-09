@@ -5,6 +5,7 @@ using System.Runtime;
 using System.Threading;
 using Emulator.Drawing;
 using NDesk.Options;
+using SomeSecretProject;
 using SomeSecretProject.Algorithm;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -58,7 +59,7 @@ namespace Emulator
 						PlayAuto(problem, solution, seed, powerPhrases, delay);
 					break;
 				case "solve":
-					Solve(new MuggleProblemSolver_MultiUnit(1), problem, seed, powerPhrases, delay, visualize);
+					Solve(problem, seed, powerPhrases, delay, visualize);
 					break;
 				case "solveall":
 					SolveAll(powerPhrases);
@@ -125,7 +126,7 @@ namespace Emulator
 			tester.ScoreOverAllProblems(() => new MuggleProblemSolver_MultiUnit(1), powerPhrases);
 		}
 
-		public static void Solve(IProblemSolver solver, int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
+		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
 		{
 			var problem = ProblemsSet.GetProblem(problemnum);
 //			var muggleProblemSolver = new MuggleProblemSolver();
