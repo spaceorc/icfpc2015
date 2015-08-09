@@ -49,6 +49,7 @@ namespace Emulator
             Console.Write("GAME OVER");
             Console.WriteLine(game.state);
             Console.WriteLine("Score="+game.CurrentScore);
+            Console.WriteLine("PowerWords="+string.Join(",", game.EnteredMagicSpells));
             Console.WriteLine("String=" + game.enteredString);
             Console.ReadKey();
         }

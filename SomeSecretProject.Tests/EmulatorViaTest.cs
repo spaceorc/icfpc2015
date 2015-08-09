@@ -42,9 +42,23 @@ namespace SomeSecretProject.Tests
             }
         }
 
+        [Test]
+        public void PrintBestSolves()
+        {
+            var groupBy = GetSolves();
+            foreach (var result in groupBy.OrderBy(k => int.Parse(k.Key)))
+            {
+                var grouByName = result.GroupBy(r => r.Item1);
+                Console.Write("Problem: " + result.Key + ", ");
+                var best = grouByName.OrderByDescending(r => r.Sum(k => k.Item4)).First();
+                Console.Write("Score: {0}", best.Sum(K => K.Item4) / best.Count());
+                Console.WriteLine();
+            }
+        }
+
         private static IEnumerable<IGrouping<string, Tuple<string, string, string, int>>> GetSolves()
         {
-            var dirs = Directory.EnumerateDirectories(idealSolvesFolder).Select(s => Path.GetFileName(s));
+            var dirs = Directory.EnumerateDirectories(idealSolvesFolder).Select(s => Path.GetFileName(s)).Where(s => !s.StartsWith("best")); //ignore solanka
             var groupBy = dirs.SelectMany(
                 d =>
                     Directory.EnumerateDirectories(Path.Combine(idealSolvesFolder, d))

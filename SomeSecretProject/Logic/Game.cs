@@ -31,7 +31,7 @@ namespace SomeSecretProject.Logic
         private int currentSpellsScore;
         private int previouslyExplodedLines;
         public StringBuilder enteredString;
-        private List<string> enteredMagicSpells;
+        public List<string> EnteredMagicSpells;
         private LinearCongruentalGenerator randomGenerator;
         protected int step = 0;
 	    private ForbiddenSequenceChecker forbiddenSequenceChecker;
@@ -48,7 +48,7 @@ namespace SomeSecretProject.Logic
         {
             this.problem = problem;
             this.seed = seed;
-            this.knownMagicSpells = knownMagicSpells;
+            this.knownMagicSpells = knownMagicSpells.Select(s => s.ToLower()).ToArray();
             ReStart();
         }
 
@@ -86,7 +86,7 @@ namespace SomeSecretProject.Logic
 		    currentSpellsScore = 0;
             previouslyExplodedLines = 0;
             enteredString = new StringBuilder();
-            enteredMagicSpells = new List<string>();
+            EnteredMagicSpells = new List<string>();
         }
 
         public void StepBack(int backSteps)
@@ -166,15 +166,14 @@ namespace SomeSecretProject.Logic
 			}
 		}
 
-
         private void ParseNewMagicSpells()
         {
             foreach (var magicSpell in knownMagicSpells)
             {
                 if (enteredString.ToString().EndsWith(magicSpell)) //performance slow to use tostring
-                    enteredMagicSpells.Add(magicSpell);
+                    EnteredMagicSpells.Add(magicSpell);
             }
-            currentSpellsScore = ScoreCounter.GetPowerScores(enteredMagicSpells);
+            currentSpellsScore = ScoreCounter.GetPowerScores(EnteredMagicSpells);
         }
 
 		private void LockUnit([NotNull] Unit unit)
