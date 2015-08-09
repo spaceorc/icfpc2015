@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using SomeSecretProject.Algorithm;
 
 namespace SomeSecretProject.Logic
 {
@@ -11,18 +12,18 @@ namespace SomeSecretProject.Logic
 		
 		public ForbiddenSequenceChecker([NotNull] Unit unit)
 		{
-			var newUnit = unit;
-			for (int i = 1; i <= 3; i++)
+			symmetric = Unit.GetSymmetric(unit);
+		}
+		
+		public bool CheckLastMove_ForWayTest([NotNull] IList<MoveType> moves, MoveType lastMove)
+		{
+			Way way = null;
+			foreach (var moveType in moves)
 			{
-				newUnit = newUnit.Move(MoveType.RotateCCW);
-				var newMembersSet = new HashSet<Cell>(newUnit.members);
-				newMembersSet.ExceptWith(unit.members);
-				if (newMembersSet.Count == 0)
-				{
-					symmetric = i;
-					break;
-				}
+				way = new Way(way, moveType);
 			}
+			way = new Way(way, lastMove);
+			return way.CheckSequence(symmetric);
 		}
 
 		public bool CheckLastMove([NotNull] IList<MoveType> moves, MoveType lastMove)

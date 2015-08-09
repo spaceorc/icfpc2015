@@ -45,7 +45,14 @@ namespace SomeSecretProject.Logic
 
 		public Map Clone()
 		{
-			return new Map(this.ToString());
+			var clone = new Map(Width, Height);
+			for (int r = 0; r < clone.cells.Count; r++)
+			{
+				var row = clone.cells[r];
+				for (int c = 0; c < row.Length; c++)
+					row[c] = cells[r][c].Clone();
+			}
+			return clone;
 		}
 
 		private void RefineMap()

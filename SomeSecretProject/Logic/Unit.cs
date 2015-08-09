@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 
 namespace SomeSecretProject.Logic
@@ -65,6 +65,22 @@ namespace SomeSecretProject.Logic
 	        return surrounding.ToArray();
 	    }
 
+		public static int GetSymmetric([NotNull] Unit unit)
+		{
+			var newUnit = unit;
+			for (var i = 1; i <= 3; i++)
+			{
+				newUnit = newUnit.Move(MoveType.RotateCCW);
+				var newMembersSet = new HashSet<Cell>(newUnit.members);
+				newMembersSet.ExceptWith(unit.members);
+				if (newMembersSet.Count == 0)
+				{
+					return i;
+				}
+			}
+			return 6;
+		}
+
 #region overrides
 		public bool Equals(Unit other)
 		{
@@ -93,7 +109,7 @@ namespace SomeSecretProject.Logic
 
 		public override string ToString()
 		{
-			return string.Format("Pivot: {0}, Members: [{1}]", pivot, string.Join(", ", members.Select(m => m.ToString())));
+			return String.Format("Pivot: {0}, Members: [{1}]", pivot, String.Join(", ", members.Select(m => m.ToString())));
 		}
 #endregion
 	}

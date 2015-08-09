@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -29,7 +30,7 @@ namespace SomeSecretProject.Logic
 
         public static MoveType? Convert(char c)
         {
-	        c = char.ToLower(c);
+	        c = Char.ToLower(c);
             MoveType? moveType = null;
             if (moveW.IndexOf(c) >= 0)
                 moveType = MoveType.W;
@@ -45,10 +46,42 @@ namespace SomeSecretProject.Logic
                 moveType = MoveType.RotateCCW;
             return moveType;
         }
+		
+		public static MoveType AntiMove(MoveType moveType)
+        {
+			switch (moveType)
+			{
+				case MoveType.E:
+					return MoveType.W;
+				case MoveType.W:
+					return MoveType.E;
+				case MoveType.SW:
+					return MoveType.NE;
+				case MoveType.SE:
+					return MoveType.NW;
+				case MoveType.NW:
+					return MoveType.SE;
+				case MoveType.NE:
+					return MoveType.SW;
+				case MoveType.RotateCW:
+					return MoveType.RotateCCW;
+				case MoveType.RotateCCW:
+					return MoveType.RotateCW;
+				default:
+					throw new ArgumentOutOfRangeException("moveType", moveType, null);
+			}
+        }
 
         public static bool IsIgnored(char c)
         {
             return ignored.IndexOf(c) >= 0;
         }
+
+	    public static readonly MoveType[] allowedMoves =
+	    {
+		    MoveType.E, MoveType.W,
+		    MoveType.SE, MoveType.SW,
+		    MoveType.RotateCW, MoveType.RotateCCW,
+	    };
     }
 }
