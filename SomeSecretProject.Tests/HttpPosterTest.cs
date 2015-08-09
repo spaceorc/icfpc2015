@@ -8,9 +8,10 @@ namespace SomeSecretProject.Tests
     public class HttpPosterTest
     {
         [Test]
+		[Explicit]
         public void PostAll()
         {
-            HttpPoster.PostAll(DavarAccount.MainTeam, "5_fire_magic_2015-08-09_15_38_39");
+			HttpPoster.PostAll(DavarAccount.MainTeam, "best-2015-08-09T23_12_50");
         }
     }
 }

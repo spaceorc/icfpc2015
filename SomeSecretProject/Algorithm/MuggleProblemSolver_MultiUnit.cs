@@ -10,6 +10,7 @@ namespace SomeSecretProject.Algorithm
 	{
 		private readonly int unitsAhead;
 		private List<Tuple<Unit, ReachablePositionsWithWords.VisitedInfo>> nextUnitsPositions;
+		private static int minTopUnitCount = 1;
 
 		public MuggleProblemSolver_MultiUnit(int unitsAhead)
 		{
@@ -64,11 +65,11 @@ namespace SomeSecretProject.Algorithm
 			}
 			var reachablePositions = new ReachablePositionsWithWords(map, powerPhrases, spelledPhrases);
 			//var reachablePositions = new ReachablePositions(map);
+//			var evaluatePositions = new EvaluatePositions(map);
 			var evaluatePositions = new EvaluatePositions2(map);
 			var unit = units[unitIndex];
 			var endPositions = reachablePositions.SingleEndPositions(unit);
 			var estimated = new Dictionary<Unit, double>();
-			double? bestScore = null;
 			var topOrderedPositions = endPositions
 				.Select(p =>
 				        {
@@ -79,25 +80,19 @@ namespace SomeSecretProject.Algorithm
 					        return Tuple.Create(score, p);
 				        })
 				//.OrderByDescending(t => t.Item1)
-				.OrderByDescending(t => (int)Math.Round(t.Item1 * 100))
-				.ThenByDescending(t => t.Item2.Item2.score)
-				.TakeWhile(tt =>
-				           {
-					           if (!bestScore.HasValue)
-					           {
-						           bestScore = tt.Item1;
-						           return true;
-					           }
-					           return Math.Abs(tt.Item1 - bestScore.Value) < 1e-6;
-				           }).ToList();
+				.OrderByDescending(t => (int)Math.Round(t.Item1 * 100) + t.Item2.Item2.score)
+				.ToList();
 
-			if (!topOrderedPositions.Any())
+			var equallyTop = GetEquallyGoodTop(topOrderedPositions);
+			var positionsForLookingAhead = topOrderedPositions.Take(Math.Max(equallyTop, minTopUnitCount)).ToList();
+
+			if (!positionsForLookingAhead.Any())
 			{
 				return Tuple.Create(-1e3, new Tuple<Unit, ReachablePositionsWithWords.VisitedInfo>[0]);
 			}
 
 			var bestPosistions = Tuple.Create(double.MinValue, new Tuple<Unit, ReachablePositionsWithWords.VisitedInfo>[0]);
-			foreach (var position in topOrderedPositions)
+			foreach (var position in positionsForLookingAhead)
 			{
 				var newMap = map.Clone();
 				newMap.LockUnit(position.Item2.Item1);
@@ -113,6 +108,31 @@ namespace SomeSecretProject.Algorithm
 			}
 
 			return bestPosistions;
+		}
+
+		private static int GetEquallyGoodTop(List<Tuple<double, Tuple<Unit, ReachablePositionsWithWords.VisitedInfo>>> topOrderedPositions)
+		{
+			double? bestScore = null;
+			var topCount = 1;
+			for (int i = 0; i < topOrderedPositions.Count; i++)
+			{
+				var position = topOrderedPositions[i];
+				if (!bestScore.HasValue)
+				{
+					bestScore = position.Item1;
+					continue;
+				}
+
+				if (Math.Abs(position.Item1 - bestScore.Value) < 1e-6)
+				{
+					topCount++;
+				}
+				else
+				{
+					break;
+				}
+			}
+			return topCount;
 		}
 	}
 }
