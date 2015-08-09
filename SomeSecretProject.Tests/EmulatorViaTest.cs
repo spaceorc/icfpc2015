@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using NUnit.Framework;
 using SomeSecretProject.IO;
@@ -18,7 +20,10 @@ namespace SomeSecretProject.Tests
 		[Explicit]
         public void RunAll()
         {
+            var time = Stopwatch.StartNew();
             Emulator.Program.SolveAll(PowerDatas.GetPowerPhrases());
+            time.Stop();
+            Console.WriteLine("Total Elapsed: {0}", time);
         }
 
         [Test]

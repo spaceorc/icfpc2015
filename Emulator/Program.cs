@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
+using System.Runtime;
 using System.Threading;
 using Emulator.Drawing;
 using NDesk.Options;
-using SomeSecretProject;
 using SomeSecretProject.Algorithm;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -124,8 +122,7 @@ namespace Emulator
 		{
 			var tester = new ProblemSolverTester();
 			//var problemSolver = new MuggleProblemSolver();
-			var problemSolver = new MuggleProblemSolver_MultiUnit(1);
-			tester.ScoreOverAllProblems(problemSolver, powerPhrases);
+			tester.ScoreOverAllProblems(() => new MuggleProblemSolver_MultiUnit(1), powerPhrases);
 		}
 
 		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
