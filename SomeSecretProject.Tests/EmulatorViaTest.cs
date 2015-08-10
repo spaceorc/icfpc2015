@@ -29,18 +29,19 @@ namespace SomeSecretProject.Tests
         [Test]
         public void CompareSolves()
         {
-            var groupBy = GetSolves();
+            var groupBy = GetSolves().ToArray();
             var bests = new List<Tuple<string, int>>();
             foreach (var result in groupBy)
             {
                 var grouByName = result.GroupBy(r => r.Item1);
                 Console.WriteLine("Problem" + result.Key);
                 var solves = grouByName.OrderByDescending(r => r.Sum(k => k.Item4));
-                var bsolve = solves.First();
-                bests.Add(Tuple.Create(bsolve.Key, int.Parse(result.Key)));
+                var bsolves = solves.Where(s => s.Sum(r => r.Item4) == solves.First().Sum(r => r.Item4));
+                foreach (var bsolve in bsolves)
+                    bests.Add(Tuple.Create(bsolve.Key, int.Parse(result.Key)));
                 foreach (var res in solves)
                 {
-                    Console.WriteLine("{0}: {1}", res.Key, res.Sum(K => K.Item4));
+                    Console.WriteLine("{0}: {1}", res.Key, res.Sum(K => K.Item4) / res.Count());
                 }
                 foreach (var byS in result.GroupBy(r => r.Item3))
                 {
@@ -54,9 +55,9 @@ namespace SomeSecretProject.Tests
             }
             Console.WriteLine();
             Console.WriteLine("Who's BEST?");
-            foreach (var taskresult in bests.GroupBy(b => b.Item1))
+            foreach (var taskresult in bests.GroupBy(b => b.Item1).OrderByDescending(b => b.Count()))
             {
-                Console.WriteLine("{0}: {1}% ({2})", taskresult.Key, taskresult.Count() * 100 / bests.Count, string.Join(".", taskresult.Take(5).Select(b => b.Item2)));
+                Console.WriteLine("{0}: {1}% ({2})", taskresult.Key, taskresult.Count() * 100 / groupBy.Count(), string.Join(".", taskresult.Take(15).Select(b => b.Item2)));
             }
            
         }
