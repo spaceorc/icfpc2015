@@ -1,0 +1,399 @@
+Problem 0: w:10, h:10, seeds:1
+Problem 0: seed 0 started counting
+Problem 0: seed: 0, score: 10333, time: 00:00:05.5930479
+Problem 0: score 10333
+Problem 1: w:15, h:15, seeds:1
+Problem 1: seed 0 started counting
+Problem 1: seed: 0, score: 5564, time: 00:00:01.2218738
+Problem 1: score 5564
+Problem 2: w:15, h:30, seeds:10
+Problem 2: seed 0 started counting
+Problem 2: seed 679 started counting
+Problem 2: seed 13639 started counting
+Problem 2: seed 13948 started counting
+Problem 2: seed 29639 started counting
+Problem 2: seed 15385 started counting
+Problem 2: seed: 13948, score: 14944, time: 00:02:21.2264679
+Problem 2: seed 16783 started counting
+Problem 2: seed: 13639, score: 16928, time: 00:02:42.6613907
+Problem 2: seed 23862 started counting
+Problem 2: seed: 29639, score: 16804, time: 00:02:44.9302318
+Problem 2: seed 25221 started counting
+Problem 2: seed: 0, score: 16436, time: 00:02:56.3534850
+Problem 2: seed 23027 started counting
+Problem 2: seed: 15385, score: 17356, time: 00:02:56.3484046
+Problem 2: seed: 679, score: 17216, time: 00:03:06.3900534
+Problem 2: seed: 16783, score: 14942, time: 00:01:36.7982883
+Problem 2: seed: 23027, score: 13579, time: 00:01:16.8864280
+Problem 2: seed: 23862, score: 16646, time: 00:01:48.9837473
+Problem 2: seed: 25221, score: 16872, time: 00:01:52.9154503
+Problem 2: score 16172
+Problem 3: w:30, h:20, seeds:5
+Problem 3: seed 0 started counting
+Problem 3: seed 6876 started counting
+Problem 3: seed 29060 started counting
+Problem 3: seed 31960 started counting
+Problem 3: seed 6094 started counting
+Problem 3: seed: 31960, score: 13374, time: 00:01:49.8746833
+Problem 3: seed: 29060, score: 13076, time: 00:01:50.7537437
+Problem 3: seed: 0, score: 13594, time: 00:01:51.0970744
+Problem 3: seed: 6876, score: 13754, time: 00:01:58.0858603
+Problem 3: seed: 6094, score: 13963, time: 00:02:00.8446111
+Problem 3: score 13552
+Problem 4: w:10, h:15, seeds:50
+Problem 4: seed 0 started counting
+Problem 4: seed 16520 started counting
+Problem 4: seed 12140 started counting
+Problem 4: seed 21791 started counting
+Problem 4: seed 8466 started counting
+Problem 4: seed 22290 started counting
+Problem 4: seed: 0, score: 9926, time: 00:00:15.3524265
+Problem 4: seed 16868 started counting
+Problem 4: seed: 16520, score: 9664, time: 00:00:16.8814026
+Problem 4: seed 22345 started counting
+Problem 4: seed: 21791, score: 9522, time: 00:00:18.1401459
+Problem 4: seed 18451 started counting
+Problem 4: seed: 12140, score: 11144, time: 00:00:19.6918359
+Problem 4: seed 26930 started counting
+Problem 4: seed: 8466, score: 10904, time: 00:00:20.0923939
+Problem 4: seed 17014 started counting
+Problem 4: seed: 22290, score: 12650, time: 00:00:22.7983828
+Problem 4: seed 2586 started counting
+Problem 4: seed: 22345, score: 6620, time: 00:00:08.5584565
+Problem 4: seed 22572 started counting
+Problem 4: seed: 26930, score: 8802, time: 00:00:13.3403702
+Problem 4: seed 28921 started counting
+Problem 4: seed: 2586, score: 8490, time: 00:00:13.6737039
+Problem 4: seed 19530 started counting
+Problem 4: seed: 22572, score: 8996, time: 00:00:17.4405212
+Problem 4: seed 12272 started counting
+Problem 4: seed: 17014, score: 15206, time: 00:00:25.3598732
+Problem 4: seed 23414 started counting
+Problem 4: seed: 16868, score: 16490, time: 00:00:30.1621837
+Problem 4: seed 32001 started counting
+Problem 4: seed: 28921, score: 11934, time: 00:00:14.5580770
+Problem 4: seed 8444 started counting
+Problem 4: seed: 19530, score: 10992, time: 00:00:16.9090396
+Problem 4: seed 11006 started counting
+Problem 4: seed: 12272, score: 8604, time: 00:00:13.8362118
+Problem 4: seed 6532 started counting
+Problem 4: seed: 32001, score: 8964, time: 00:00:12.6797284
+Problem 4: seed 13661 started counting
+Problem 4: seed: 23414, score: 9278, time: 00:00:14.1391907
+Problem 4: seed 23008 started counting
+Problem 4: seed: 11006, score: 6876, time: 00:00:08.4223903
+Problem 4: seed 8700 started counting
+Problem 4: seed: 8444, score: 9698, time: 00:00:15.0884601
+Problem 4: seed 29697 started counting
+Problem 4: seed: 18451, score: 20232, time: 00:00:45.7352881
+Problem 4: seed 17818 started counting
+Problem 4: seed: 29697, score: 10664, time: 00:00:14.6841918
+Problem 4: seed 8269 started counting
+Problem 4: seed: 23008, score: 11838, time: 00:00:20.8937855
+Problem 4: seed 15766 started counting
+Problem 4: seed: 6532, score: 14116, time: 00:00:25.9309106
+Problem 4: seed 2148 started counting
+Problem 4: seed: 8700, score: 11476, time: 00:00:21.4747815
+Problem 4: seed 30014 started counting
+Problem 4: seed: 13661, score: 16384, time: 00:00:28.0282615
+Problem 4: seed 12352 started counting
+Problem 4: seed: 15766, score: 6846, time: 00:00:07.0478142
+Problem 4: seed 6045 started counting
+Problem 4: seed: 2148, score: 6752, time: 00:00:11.3606701
+Problem 4: seed 23344 started counting
+Problem 4: seed: 12352, score: 10460, time: 00:00:10.5269612
+Problem 4: seed 29707 started counting
+Problem 4: seed: 8269, score: 12928, time: 00:00:22.0024751
+Problem 4: seed 12976 started counting
+Problem 4: seed: 30014, score: 11020, time: 00:00:18.8277139
+Problem 4: seed 21695 started counting
+Problem 4: seed: 23344, score: 7186, time: 00:00:09.8183261
+Problem 4: seed 19542 started counting
+Problem 4: seed: 6045, score: 9892, time: 00:00:17.2847938
+Problem 4: seed 13537 started counting
+Problem 4: seed: 12976, score: 6982, time: 00:00:07.7953737
+Problem 4: seed 28635 started counting
+Problem 4: seed: 17818, score: 22084, time: 00:00:45.7805524
+Problem 4: seed 26137 started counting
+Problem 4: seed: 21695, score: 12016, time: 00:00:14.4459293
+Problem 4: seed 26153 started counting
+Problem 4: seed: 13537, score: 13990, time: 00:00:19.2477656
+Problem 4: seed 31051 started counting
+Problem 4: seed: 26137, score: 8566, time: 00:00:13.9880209
+Problem 4: seed 7533 started counting
+Problem 4: seed: 28635, score: 10588, time: 00:00:19.7662854
+Problem 4: seed 13694 started counting
+Problem 4: seed: 19542, score: 14272, time: 00:00:24.3023902
+Problem 4: seed 2584 started counting
+Problem 4: seed: 7533, score: 5870, time: 00:00:05.7162968
+Problem 4: seed 29971 started counting
+Problem 4: seed: 29707, score: 16722, time: 00:00:34.3329367
+Problem 4: seed 19957 started counting
+Problem 4: seed: 31051, score: 6966, time: 00:00:08.6512036
+Problem 4: seed 177 started counting
+Problem 4: seed: 19957, score: 8136, time: 00:00:10.4374218
+Problem 4: seed: 2584, score: 9552, time: 00:00:15.6232782
+Problem 4: seed: 13694, score: 12664, time: 00:00:18.4177675
+Problem 4: seed 20701 started counting
+Problem 4: seed: 29971, score: 13478, time: 00:00:16.4258701
+Problem 4: seed 2895 started counting
+Problem 4: seed: 26153, score: 16968, time: 00:00:34.5212570
+Problem 4: seed: 20701, score: 10226, time: 00:00:09.0935750
+Problem 4: seed: 2895, score: 10556, time: 00:00:09.0369522
+Problem 4: seed: 177, score: 19634, time: 00:00:29.6539864
+Problem 4: score 11276
+Problem 5: w:30, h:20, seeds:10
+Problem 5: seed 0 started counting
+Problem 5: seed 15215 started counting
+Problem 5: seed 24851 started counting
+Problem 5: seed 11460 started counting
+Problem 5: seed 22837 started counting
+Problem 5: seed 22837 started counting
+Problem 5: seed: 15215, score: 10905, time: 00:01:13.4778523
+Problem 5: seed 14027 started counting
+Problem 5: seed: 24851, score: 10995, time: 00:01:20.8846905
+Problem 5: seed 32620 started counting
+Problem 5: seed: 22837, score: 11884, time: 00:01:22.3272849
+Problem 5: seed 32719 started counting
+Problem 5: seed: 22837, score: 11884, time: 00:01:23.5274325
+Problem 5: seed 15577 started counting
+Problem 5: seed: 0, score: 11860, time: 00:01:24.9523603
+Problem 5: seed: 11460, score: 11828, time: 00:01:27.6662888
+Problem 5: seed: 15577, score: 10586, time: 00:00:44.7629648
+Problem 5: seed: 14027, score: 11391, time: 00:00:57.9669169
+Problem 5: seed: 32719, score: 11352, time: 00:00:54.2066218
+Problem 5: seed: 32620, score: 11482, time: 00:00:57.8073868
+Problem 5: score 11416
+Problem 6: w:10, h:10, seeds:50
+Problem 6: seed 0 started counting
+Problem 6: seed 10919 started counting
+Problem 6: seed 25536 started counting
+Problem 6: seed 24524 started counting
+Problem 6: seed 24334 started counting
+Problem 6: seed 15671 started counting
+Problem 6: seed: 10919, score: 14233, time: 00:00:25.3420355
+Problem 6: seed 7082 started counting
+Problem 6: seed: 25536, score: 14126, time: 00:00:26.0201958
+Problem 6: seed 629 started counting
+Problem 6: seed: 15671, score: 14215, time: 00:00:26.5320609
+Problem 6: seed 24732 started counting
+Problem 6: seed: 24334, score: 14339, time: 00:00:28.0171241
+Problem 6: seed 22079 started counting
+Problem 6: seed: 0, score: 14452, time: 00:00:28.7385546
+Problem 6: seed 13120 started counting
+Problem 6: seed: 24524, score: 14336, time: 00:00:30.6741433
+Problem 6: seed 9536 started counting
+Problem 6: seed: 629, score: 14049, time: 00:00:23.9129497
+Problem 6: seed 24513 started counting
+Problem 6: seed: 22079, score: 14048, time: 00:00:27.0940191
+Problem 6: seed 9816 started counting
+Problem 6: seed: 24732, score: 14435, time: 00:00:30.4352401
+Problem 6: seed 16393 started counting
+Problem 6: seed: 9536, score: 14146, time: 00:00:28.3420612
+Problem 6: seed 11993 started counting
+Problem 6: seed: 7082, score: 14351, time: 00:00:34.1520425
+Problem 6: seed 26708 started counting
+Problem 6: seed: 13120, score: 14484, time: 00:00:31.1095230
+Problem 6: seed 18588 started counting
+Problem 6: seed: 24513, score: 14571, time: 00:00:29.3197080
+Problem 6: seed 14118 started counting
+Problem 6: seed: 9816, score: 14236, time: 00:00:28.5453682
+Problem 6: seed 8466 started counting
+Problem 6: seed: 26708, score: 13950, time: 00:00:24.5649283
+Problem 6: seed 8123 started counting
+Problem 6: seed: 16393, score: 14377, time: 00:00:28.7170653
+Problem 6: seed 5343 started counting
+Problem 6: seed: 18588, score: 14246, time: 00:00:27.4880289
+Problem 6: seed 31026 started counting
+Problem 6: seed: 11993, score: 14457, time: 00:00:31.0246191
+Problem 6: seed 21728 started counting
+Problem 6: seed: 14118, score: 14350, time: 00:00:26.7931745
+Problem 6: seed 17013 started counting
+Problem 6: seed: 8123, score: 14084, time: 00:00:28.2207474
+Problem 6: seed 18093 started counting
+Problem 6: seed: 31026, score: 14464, time: 00:00:25.8121483
+Problem 6: seed 7610 started counting
+Problem 6: seed: 8466, score: 14199, time: 00:00:29.8301334
+Problem 6: seed 3703 started counting
+Problem 6: seed: 5343, score: 14469, time: 00:00:29.8636735
+Problem 6: seed 28599 started counting
+Problem 6: seed: 21728, score: 14494, time: 00:00:29.6884226
+Problem 6: seed 2860 started counting
+Problem 6: seed: 17013, score: 14528, time: 00:00:27.5422486
+Problem 6: seed 6839 started counting
+Problem 6: seed: 3703, score: 14314, time: 00:00:25.2814422
+Problem 6: seed 13185 started counting
+Problem 6: seed: 18093, score: 14331, time: 00:00:28.4357378
+Problem 6: seed 26670 started counting
+Problem 6: seed: 7610, score: 14418, time: 00:00:33.0406025
+Problem 6: seed 25460 started counting
+Problem 6: seed: 28599, score: 14417, time: 00:00:31.1549649
+Problem 6: seed 29169 started counting
+Problem 6: seed: 2860, score: 14014, time: 00:00:28.9610097
+Problem 6: seed 13859 started counting
+Problem 6: seed: 6839, score: 14274, time: 00:00:27.8418996
+Problem 6: seed 25499 started counting
+Problem 6: seed: 13185, score: 14172, time: 00:00:29.9289516
+Problem 6: seed 26906 started counting
+Problem 6: seed: 26670, score: 14401, time: 00:00:29.6560244
+Problem 6: seed 16650 started counting
+Problem 6: seed: 25460, score: 14464, time: 00:00:28.5130380
+Problem 6: seed 23256 started counting
+Problem 6: seed: 29169, score: 14293, time: 00:00:29.3801167
+Problem 6: seed 8856 started counting
+Problem 6: seed: 13859, score: 14350, time: 00:00:27.5063894
+Problem 6: seed 21458 started counting
+Problem 6: seed: 25499, score: 14625, time: 00:00:29.7911216
+Problem 6: seed 17114 started counting
+Problem 6: seed: 26906, score: 14670, time: 00:00:30.2190172
+Problem 6: seed 16903 started counting
+Problem 6: seed: 16650, score: 14567, time: 00:00:31.8876480
+Problem 6: seed 1519 started counting
+Problem 6: seed: 8856, score: 14560, time: 00:00:29.5956032
+Problem 6: seed 23220 started counting
+Problem 6: seed: 23256, score: 14535, time: 00:00:33.3897245
+Problem 6: seed 19086 started counting
+Problem 6: seed: 21458, score: 14241, time: 00:00:32.3004753
+Problem 6: seed 15379 started counting
+Problem 6: seed: 17114, score: 14456, time: 00:00:31.9072625
+Problem 6: seed 25267 started counting
+Problem 6: seed: 16903, score: 14422, time: 00:00:32.3225822
+Problem 6: seed: 1519, score: 14515, time: 00:00:31.1362103
+Problem 6: seed: 19086, score: 14064, time: 00:00:27.2936866
+Problem 6: seed: 23220, score: 14610, time: 00:00:31.9700538
+Problem 6: seed: 15379, score: 14476, time: 00:00:29.2912633
+Problem 6: seed: 25267, score: 14575, time: 00:00:21.1865260
+Problem 6: seed 8780 started counting
+Problem 6: seed: 8780, score: 14112, time: 00:00:11.5913917
+Problem 6: score 14350
+Problem 7: w:40, h:20, seeds:5
+Problem 7: seed 0 started counting
+Problem 7: seed 16651 started counting
+Problem 7: seed 22828 started counting
+Problem 7: seed 27669 started counting
+Problem 7: seed 18705 started counting
+Problem 7: seed: 0, score: 9882, time: 00:01:33.8253096
+Problem 7: seed: 18705, score: 9802, time: 00:01:35.4388814
+Problem 7: seed: 22828, score: 9701, time: 00:01:36.3627707
+Problem 7: seed: 27669, score: 11032, time: 00:01:45.7210846
+Problem 7: seed: 16651, score: 10491, time: 00:01:50.6189435
+Problem 7: score 10181
+Problem 8: w:10, h:8, seeds:10
+Problem 8: seed 0 started counting
+Problem 8: seed 8000 started counting
+Problem 8: seed 19012 started counting
+Problem 8: seed 4491 started counting
+Problem 8: seed 28581 started counting
+Problem 8: seed 10596 started counting
+Problem 8: seed: 0, score: 17975, time: 00:00:09.6655480
+Problem 8: seed 14104 started counting
+Problem 8: seed: 10596, score: 17980, time: 00:00:09.7919671
+Problem 8: seed 20240 started counting
+Problem 8: seed: 4491, score: 17856, time: 00:00:09.9363640
+Problem 8: seed 2629 started counting
+Problem 8: seed: 19012, score: 18247, time: 00:00:09.9140126
+Problem 8: seed 5696 started counting
+Problem 8: seed: 8000, score: 18148, time: 00:00:10.2815256
+Problem 8: seed: 28581, score: 18238, time: 00:00:10.4217929
+Problem 8: seed: 2629, score: 17295, time: 00:00:05.6324919
+Problem 8: seed: 20240, score: 17822, time: 00:00:06.4121532
+Problem 8: seed: 5696, score: 18078, time: 00:00:06.7039601
+Problem 8: seed: 14104, score: 18046, time: 00:00:07.4695156
+Problem 8: score 17968
+Problem 9: w:10, h:8, seeds:5
+Problem 9: seed 0 started counting
+Problem 9: seed 23855 started counting
+Problem 9: seed 26637 started counting
+Problem 9: seed 10998 started counting
+Problem 9: seed 4150 started counting
+Problem 9: seed: 23855, score: 4118, time: 00:00:01.0120449
+Problem 9: seed: 10998, score: 5112, time: 00:00:01.3221989
+Problem 9: seed: 0, score: 6539, time: 00:00:01.4554614
+Problem 9: seed: 26637, score: 5930, time: 00:00:01.7427775
+Problem 9: seed: 4150, score: 7779, time: 00:00:02.0385753
+Problem 9: score 5895
+Problem 10: w:10, h:7, seeds:1
+Problem 10: seed 0 started counting
+Problem 10: seed: 0, score: 8540, time: 00:00:05.6529639
+Problem 10: score 8540
+Problem 11: w:10, h:10, seeds:5
+Problem 11: seed 0 started counting
+Problem 11: seed 12877 started counting
+Problem 11: seed 20528 started counting
+Problem 11: seed 19558 started counting
+Problem 11: seed 16526 started counting
+Problem 11: seed: 20528, score: 4881, time: 00:00:03.9125673
+Problem 11: seed: 12877, score: 6229, time: 00:00:06.3857708
+Problem 11: seed: 16526, score: 5850, time: 00:00:06.5687875
+Problem 11: seed: 19558, score: 6778, time: 00:00:06.8576712
+Problem 11: seed: 0, score: 6703, time: 00:00:09.5752690
+Problem 11: score 6088
+Problem 12: w:15, h:20, seeds:10
+Problem 12: seed 0 started counting
+Problem 12: seed 12700 started counting
+Problem 12: seed 24762 started counting
+Problem 12: seed 24103 started counting
+Problem 12: seed 5864 started counting
+Problem 12: seed 1155 started counting
+Problem 12: seed: 0, score: 10698, time: 00:02:02.2432627
+Problem 12: seed 24803 started counting
+Problem 12: seed: 5864, score: 14753, time: 00:02:25.4642752
+Problem 12: seed 29992 started counting
+Problem 12: seed: 24762, score: 16244, time: 00:03:26.6890610
+Problem 12: seed 18660 started counting
+Problem 12: seed: 1155, score: 16015, time: 00:03:36.7162344
+Problem 12: seed 19102 started counting
+Problem 12: seed: 24103, score: 16386, time: 00:03:37.9987132
+Problem 12: seed: 12700, score: 16546, time: 00:03:51.2831560
+Problem 12: seed: 24803, score: 13154, time: 00:01:56.2397086
+Problem 12: seed: 29992, score: 16116, time: 00:02:20.9112484
+Problem 12: seed: 18660, score: 15874, time: 00:01:48.4340933
+Problem 12: seed: 19102, score: 16426, time: 00:01:57.0915180
+Problem 12: score 15221
+Problem 13: w:15, h:20, seeds:1
+Problem 13: seed 0 started counting
+Problem 13: seed: 0, score: 4111, time: 00:00:02.5413180
+Problem 13: score 4111
+Problem 14: w:50, h:50, seeds:1
+Problem 14: seed 0 started counting
+Problem 14: seed: 0, score: 94608, time: 00:11:02.9502726
+Problem 14: score 94608
+Problem 15: w:15, h:20, seeds:1
+Problem 15: seed 0 started counting
+Problem 15: seed: 0, score: 7270, time: 00:00:17.2382961
+Problem 15: score 7270
+Problem 16: w:15, h:20, seeds:1
+Problem 16: seed 0 started counting
+Problem 16: seed: 0, score: 14206, time: 00:00:35.1816823
+Problem 16: score 14206
+Problem 17: w:15, h:15, seeds:1
+Problem 17: seed 0 started counting
+Problem 17: seed: 0, score: 6210, time: 00:00:01.5759217
+Problem 17: score 6210
+Problem 18: w:30, h:30, seeds:1
+Problem 18: seed 0 started counting
+Problem 18: seed: 0, score: 17904, time: 00:01:23.8772067
+Problem 18: score 17904
+Problem 19: w:15, h:15, seeds:1
+Problem 19: seed 0 started counting
+Problem 19: seed: 0, score: 6074, time: 00:00:01.5791300
+Problem 19: score 6074
+Problem 20: w:15, h:15, seeds:1
+Problem 20: seed 0 started counting
+Problem 20: seed: 0, score: 10870, time: 00:00:09.7749605
+Problem 20: score 10870
+Problem 21: w:10, h:8, seeds:1
+Problem 21: seed 0 started counting
+Problem 21: seed: 0, score: 1522, time: 00:00:00.0438198
+Problem 21: score 1522
+Problem 22: w:10, h:8, seeds:1
+Problem 22: seed 0 started counting
+Problem 22: seed: 0, score: 9190, time: 00:00:10.2394333
+Problem 22: score 9190
+Problem 23: w:10, h:9, seeds:1
+Problem 23: seed 0 started counting
+Problem 23: seed: 0, score: 1302, time: 00:00:00.0476712
+Problem 23: score 1302
+Total score: 319823
+Total Elapsed: 00:39:59.3324721
+
