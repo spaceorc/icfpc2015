@@ -76,7 +76,7 @@ namespace SomeSecretProject.Algorithm
 						break;
 					case GameBase.State.UnitInGame:
 						var reachablePositions = new ReachablePositions(game.map);
-						var evaluatePositions = new EvaluatePositions22(game.map);
+						var evaluatePositions = new EvaluatePositions2(game.map);
 						var endPositions = reachablePositions.EndPositions(game.currentUnit);
 						var estimated = new Dictionary<Unit, double>();
 						var bestPosition = endPositions.ArgMax(p =>
@@ -104,7 +104,7 @@ namespace SomeSecretProject.Algorithm
 			}
 		}
 
-	    private void DebugBest(Dictionary<Unit, double> estimated, EvaluatePositions22 evaluator)
+	    private void DebugBest(Dictionary<Unit, double> estimated, EvaluatePositions2 evaluator)
 	    {
 	        var best = estimated.OrderByDescending(kv => kv.Value).Take(10).ToArray();
             

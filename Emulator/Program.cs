@@ -129,7 +129,7 @@ namespace Emulator
 		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
 		{
 			var problem = ProblemsSet.GetProblem(problemnum);
-//			var muggleProblemSolver = new MuggleProblemSolver();
+//			var solver = new MuggleProblemSolver();
 			var solver = new MuggleProblemSolver_MultiUnit(1);
 
 			var stopwatch = Stopwatch.StartNew();

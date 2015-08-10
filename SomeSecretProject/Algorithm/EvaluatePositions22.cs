@@ -48,18 +48,15 @@ namespace SomeSecretProject.Algorithm
                 int countBadAccessedInLine = emptyCellsInLine.Count(c => accessablityOfCell[c].Accessability().Max() < maxLenPath);
                 foreach (var c in emptyCellsInLine)
                 {
-                    usabilityOfCells[c] = 0.1 + 1.0/emptyCellsInLine.Count;// - ((double)countLockedInLine) / map.Width;
+                    usabilityOfCells[c] = 0.1 + 1.0/emptyCellsInLine.Count - ((double)countLockedInLine) / map.Width;
                    
                 }
             }
-           /*
+           
             for (int y = 0; y < map.Height/3; ++y)
                 for (int x = map.Width / 3; x <= map.Width * 3 / 4; ++x)
                     usabilityOfCells[new Cell() { x = x, y = y }] = -map.Height/4 /(1.0 + Math.Min(y, x));
-            * */
-           for (int x = 3; x <= 5; ++x)
-               usabilityOfCells[new Cell() {x = x, y = 0}] = -5;
-
+            
 
         }
 
@@ -147,7 +144,7 @@ namespace SomeSecretProject.Algorithm
             double xp = ((double)c.x) / map.Height;
             if (xp > 0.5) xp = 1.0 - xp;
             xp = 0.5 - xp;
-            return (yp*yp +  xp) / 2;
+	        return yp;
         }
 
         private double AccessabilityScore(Cell cell, Unit unit)
@@ -181,10 +178,10 @@ namespace SomeSecretProject.Algorithm
             double scorePosHeigh = unit.members.Average(m => GoodnessOfPosition(m));
 
 
-            var score = 0.2*scoreDropped +
+            var score = 0.1*scoreDropped +
                         scoreOccupied +
                         0.5*scoreClosed +
-                        0.8*scoreCompact +
+                        0.2*scoreCompact +
                         0.1*scorePosHeigh+
                         0;
             return score;
