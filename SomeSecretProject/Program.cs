@@ -44,7 +44,7 @@ namespace SomeSecretProject
 		        var problem = File.ReadAllText(fn).ParseAsJson<Problem>();
 		        Parallel.For(0, problem.sourceSeeds.Length, new ParallelOptions() {MaxDegreeOfParallelism = Math.Max(1, inputParameters.Cores / 2) }, seedInd =>
 		        {
-		            var problemSolver = ProblemSolverFactory.GetSolver();
+		            var problemSolver = ProblemSolverFactory.GetSolver(problem.width * problem.height > 2500);
 		            var seed = problem.sourceSeeds[seedInd];
 		            var answer = problemSolver.Solve(problem, seed, inputParameters.PowerPhrases.ToArray());
 		            outputs.Add(new Output
