@@ -160,9 +160,9 @@ namespace Emulator
 
 			//NOTE: this checking by now
 			/*var square = problem.height * problem.width;
-			if(square <= 100)
+			if(square < 100)
 				return new MuggleProblemSolver_MultiUnit(2, 4);
-			if(square <= 2000)
+			if(square < 3000)
 				return new MuggleProblemSolver_MultiUnit(1);
 			return new MuggleProblemSolver_MultiUnit(0);*/
 		}
