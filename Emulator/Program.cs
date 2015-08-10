@@ -123,14 +123,14 @@ namespace Emulator
 		{
 			var tester = new ProblemSolverTester();
 			//var problemSolver = new MuggleProblemSolver();
-			tester.ScoreOverAllProblems(() => new MuggleProblemSolver_MultiUnit(1), powerPhrases);
+			tester.ScoreOverAllProblems(SelectSolver, powerPhrases);
 		}
 
 		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
 		{
 			var problem = ProblemsSet.GetProblem(problemnum);
-			var solver = new MuggleProblemSolver();
-//			var solver = new MuggleProblemSolver_MultiUnit(1);
+//			var solver = new MuggleProblemSolver();
+			var solver = SelectSolver(problem);
 
 			var stopwatch = Stopwatch.StartNew();
 			var solution = solver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
@@ -152,6 +152,19 @@ namespace Emulator
 				Console.WriteLine("Time=" + stopwatch.Elapsed);
 				Console.ReadKey();
 			}
+		}
+
+		public static IProblemSolver SelectSolver(Problem problem)
+		{
+			return new MuggleProblemSolver_MultiUnit(1);
+
+			//NOTE: this checking by now
+			/*var square = problem.height * problem.width;
+			if(square <= 100)
+				return new MuggleProblemSolver_MultiUnit(2, 4);
+			if(square <= 2000)
+				return new MuggleProblemSolver_MultiUnit(1);
+			return new MuggleProblemSolver_MultiUnit(0);*/
 		}
 
 		public static void DebugSolve(int problemnum, int seed, string[] magicSpells, int delay)

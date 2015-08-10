@@ -85,7 +85,7 @@ namespace Emulator
 			File.WriteAllText(path, output.ToJson());
 		}
 
-		public void ScoreOverAllProblems(Func<IProblemSolver> solver, string[] powerPhrases)
+		public void ScoreOverAllProblems(Func<Problem, IProblemSolver> solver, string[] powerPhrases)
 		{
 		    var resultingFolder = @"..\..\..\solves\" + DateTime.Now.ToString("O").Replace(":", "_") + @"\";
 
@@ -95,7 +95,7 @@ namespace Emulator
 			{
 				var problem = ProblemsSet.GetProblem(i);
 				WriteMessage(agg, "Problem {0}: w:{1}, h:{2}, seeds:{3}", i, problem.width, problem.height, problem.sourceSeeds.Length);
-				var results = CountScore(problem, solver, powerPhrases, resultingFolder);
+				var results = CountScore(problem, () => solver(problem), powerPhrases, resultingFolder);
 				sum += results.TotalScore;
 				for (int k = 0; k < results.EndStates.Length; ++k)
 				{
