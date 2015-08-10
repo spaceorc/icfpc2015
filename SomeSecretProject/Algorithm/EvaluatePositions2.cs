@@ -68,7 +68,7 @@ namespace SomeSecretProject.Algorithm
 
         public double Evaluate(Unit unit)
         {
-            return Evaluate(unit);
+            return _Evaluate(unit).Item1;
         }
 
         public Tuple<double,int> _Evaluate(Unit unit)

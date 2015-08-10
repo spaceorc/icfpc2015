@@ -66,7 +66,7 @@ namespace SomeSecretProject.Algorithm
 			var reachablePositions = new ReachablePositionsWithWords(map, powerPhrases, spelledPhrases);
 			//var reachablePositions = new ReachablePositions(map);
 //			var evaluatePositions = new EvaluatePositions(map);
-			var evaluatePositions = new EvaluatePositions22(map);
+			var evaluatePositions = new EvaluatePositions2(map);
 			var unit = units[unitIndex];
 			var endPositions = reachablePositions.SingleEndPositions(unit);
 			var estimated = new Dictionary<Unit, double>();
