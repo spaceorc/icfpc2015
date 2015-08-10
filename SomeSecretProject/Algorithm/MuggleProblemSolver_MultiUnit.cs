@@ -10,11 +10,12 @@ namespace SomeSecretProject.Algorithm
 	{
 		private readonly int unitsAhead;
 		private List<Tuple<Unit, ReachablePositionsWithWords.VisitedInfo>> nextUnitsPositions;
-		private static int minTopUnitCount = 1;
+		private readonly int minTopUnitCount;
 
-		public MuggleProblemSolver_MultiUnit(int unitsAhead)
+		public MuggleProblemSolver_MultiUnit(int unitsAhead, int minTopUnitCount = 1)
 		{
 			this.unitsAhead = unitsAhead;
+			this.minTopUnitCount = minTopUnitCount;
 		}
 
 		public override string Solve(Problem problem, int seed, string[] powerPhrases)
@@ -57,7 +58,7 @@ namespace SomeSecretProject.Algorithm
 			}
 		}
 
-		private static Tuple<double, Tuple<Unit, ReachablePositionsWithWords.VisitedInfo>[]> FindBestPositions_Recursive(int unitsAhead, Map map, Unit[] units, int unitIndex, string[] powerPhrases, bool[] spelledPhrases)
+		private Tuple<double, Tuple<Unit, ReachablePositionsWithWords.VisitedInfo>[]> FindBestPositions_Recursive(int unitsAhead, Map map, Unit[] units, int unitIndex, string[] powerPhrases, bool[] spelledPhrases)
 		{
 			if (unitsAhead < 0 || unitIndex >= units.Length)
 			{
