@@ -23,7 +23,7 @@ namespace SomeSecretProject.Tests
             var time = Stopwatch.StartNew();
             Emulator.Program.SolveAll(PowerDatas.GetPowerPhrases());
             time.Stop();
-            Console.WriteLine("Total Elapsed: {0}", time);
+            Console.WriteLine("Total Elapsed: {0}", time.Elapsed);
         }
 
         [Test]
