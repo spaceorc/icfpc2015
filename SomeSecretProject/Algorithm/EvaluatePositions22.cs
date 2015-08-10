@@ -144,13 +144,13 @@ namespace SomeSecretProject.Algorithm
             double xp = ((double)c.x) / map.Height;
             if (xp > 0.5) xp = 1.0 - xp;
             xp = 0.5 - xp;
-	        return yp;
+	        return yp + 0.5*xp;
         }
 
-        private double AccessabilityScore(Cell cell, Unit unit)
+        private double AccessabilityScore(Cell cell, Unit unit=null)
         {
             var access = accessablityOfCell[cell];
-            return (access.Accessability(unit).Average() - access.Accessability().Average() + CountFreeInputs(cell, unit) - CountFreeInputs(cell))/2;
+            return (access.Accessability(unit).Max() - access.Accessability().Max() + CountFreeInputs(cell, unit) - CountFreeInputs(cell))/2.0;
         }
 
         private bool IsLocked(Cell cell, Unit unit)
@@ -161,28 +161,30 @@ namespace SomeSecretProject.Algorithm
         public double Evaluate(Unit unit)
         {
             // Уничтожаемые линии это хорошо
-            
-            
+
+
+            // Уничтожаемые линии это хорошо
             var dropped = DroppedLines(unit);
-            double scoreDropped = Math.Pow(dropped.Count(isDrop => isDrop)-1, 2) + dropped.Select((isDrop, i) => isDrop ? 1.0 +  ((double)i)/map.Height : 0.0).Sum();
+            double scoreDropped = Math.Pow(dropped.Count(isDrop => isDrop) - 1, 2) + dropped.Select((isDrop, i) => isDrop ? 1.0 + ((double)i) / map.Height : 0.0).Sum();
+            var droppedLines = dropped.Count(isDrop => isDrop);
             // Занимаем полезные клетки - это хорошо
-            var usabilities = unit.members.Select(m => usabilityOfCells[m]).ToArray();
+            //var usabilities = unit.members.Select(m => usabilityOfCells[m]).ToArray();
             double scoreOccupied = unit.members.Sum(m => usabilityOfCells[m]);
             // Ухудшаем возможность занять полезные клетки - это плохо
             var freeSurroundingCells = GetFreeSurroundingCells(unit);
             Dictionary<Cell, int> newFreeInputCells = freeSurroundingCells.ToDictionary(c => c, c => CountFreeInputs(c, unit));
-            double scoreClosed = freeSurroundingCells.Select(c => AccessabilityScore(c, unit)*Math.Max(usabilityOfCells[c], 0)).Sum();
+            double scoreClosed = freeSurroundingCells.Select(c => (AccessabilityScore(c, unit) - AccessabilityScore(c)) * Math.Max(usabilityOfCells[c], 0)).Sum();
             // Некомпактность - слишком много свободных клеток вокруг - это плохо
-            double scoreCompact = ((double)-freeSurroundingCells.Length)/unit.GetSurroundingCells().Length;
+            double scoreCompact = ((double)-freeSurroundingCells.Length) / unit.GetSurroundingCells().Length;
             // Чем ниже тем лучше
-            double scorePosHeigh = unit.members.Average(m => GoodnessOfPosition(m));
+            double scorePosHeigh = unit.members.Average(m => ((double)m.y) / map.Height);
 
 
-            var score = 0.1*scoreDropped +
+            var score = 0.3 * scoreDropped +
                         scoreOccupied +
-                        0.5*scoreClosed +
-                        0.2*scoreCompact +
-                        0.1*scorePosHeigh+
+                        0.6 * scoreClosed +
+                        0.2 * scoreCompact +
+                        0.1 * scorePosHeigh +
                         0;
             return score;
         }

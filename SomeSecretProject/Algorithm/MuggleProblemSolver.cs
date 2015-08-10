@@ -86,7 +86,7 @@ namespace SomeSecretProject.Algorithm
 								return value;
 							return estimated[p.Item1] = evaluatePositions.Evaluate(p.Item1);
 						});
-                        DebugBest(estimated, evaluatePositions);
+                        //DebugBest(estimated, evaluatePositions);
 						var wayToBestPosition = bestPosition.Item2;
 						var unitSolution = staticPowerPhraseBuilder.Build(wayToBestPosition);
 						CallEvent(game, unitSolution);

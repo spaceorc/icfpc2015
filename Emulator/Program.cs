@@ -129,8 +129,8 @@ namespace Emulator
 		public static void Solve(int problemnum, int seed, string[] magicSpells, int delay, bool visualize)
 		{
 			var problem = ProblemsSet.GetProblem(problemnum);
-//			var solver = new MuggleProblemSolver();
-			var solver = new MuggleProblemSolver_MultiUnit(1);
+			var solver = new MuggleProblemSolver();
+//			var solver = new MuggleProblemSolver_MultiUnit(1);
 
 			var stopwatch = Stopwatch.StartNew();
 			var solution = solver.Solve(problem, problem.sourceSeeds[seed], magicSpells);
