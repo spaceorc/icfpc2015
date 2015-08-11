@@ -101,7 +101,7 @@ namespace SomeSecretProject.Algorithm
 
 				var nextPositions = FindBestPositions_Recursive(unitsAhead - 1, newMap, units, unitIndex + 1, powerPhrases, position.Item2.Item2.spelledWords);
 
-				var score = position.Item1 + nextPositions.Item1;
+				var score = ((int)Math.Round(position.Item1 * 100) + position.Item2.Item2.score) + nextPositions.Item1;
 				if (bestPosistions.Item1 < score)
 				{
 					bestPosistions = Tuple.Create(score, new[] {position.Item2}.Concat(nextPositions.Item2).ToArray());
