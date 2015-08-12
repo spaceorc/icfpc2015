@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using SomeSecretProject.IO;
 using SomeSecretProject.Logic;
@@ -54,6 +56,25 @@ namespace SomeSecretProject.Algorithm
 				if (state != State.End && state != State.WaitUnit)
 					throw new InvalidOperationException(string.Format("Invalid game state: {0}", state));
 			}
+
+		    public SolverGame Clone()
+		    {
+		        var newgame = new SolverGame(problem, seed, this.knownMagicSpells);
+                newgame.map = map.Clone();
+                newgame.state = state;
+                newgame.currentUnit = currentUnit;
+                newgame.currentUnitIndex = currentUnitIndex;
+                newgame.currentMovesScore = currentMovesScore;
+                newgame.currentSpellsScore = currentSpellsScore;
+                newgame.previouslyExplodedLines = previouslyExplodedLines;
+                newgame.enteredString = new StringBuilder(enteredString.ToString());
+                newgame.EnteredMagicSpells = new List<string>(EnteredMagicSpells);
+                newgame.step = step;
+                newgame.forbiddenSequenceChecker = forbiddenSequenceChecker;
+                newgame.moves = new List<MoveType>(moves);
+                newgame.spawnedUnitIndex = spawnedUnitIndex;
+		        return newgame;
+		    }
 		}
 
 		public string Solve(Problem problem, int seed, string[] powerPhrases)

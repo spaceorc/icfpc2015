@@ -156,11 +156,11 @@ namespace Emulator
 
 		public static IProblemSolver SelectSolver(Problem problem)
 		{
-			return new MuggleProblemSolver_MultiUnit(1);
+			//return new MuggleProblemSolver_MultiUnit(1);
+		    //return new AStarProblemSolver();
+            return new MuggleProblemSolver_MultiUnit(1);
 
-			//NOTE: this checking by now
-			/*var square = problem.height * problem.width;
-			if(square < 100)
+			if(square <= 100)
 				return new MuggleProblemSolver_MultiUnit(2, 4);
 			if(square < 3000)
 				return new MuggleProblemSolver_MultiUnit(1);
@@ -171,7 +171,8 @@ namespace Emulator
 		{
             var problem = ProblemsSet.GetProblem(problemnum);
 			//var problemSolver = new MagicProblemSolver();
-			var solver = new MuggleProblemSolver();
+			//var solver = new MuggleProblemSolver();
+			var solver = new MuggleProblemSolver_MultiUnit(1);
 			var fastConsole = new FastConsole();
 			solver.SolutionAdded += (g, s) =>
 			{

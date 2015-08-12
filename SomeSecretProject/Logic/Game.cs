@@ -20,24 +20,25 @@ namespace SomeSecretProject.Logic
 		}
 
 	    public readonly Problem problem;
-        private readonly int seed;
+        protected readonly int seed;
+        protected readonly string[] knownMagicSpells;
+        public readonly int[] UnitIndeces;
+        public readonly Unit[] units;
 		public Map map;
-		public State state { get; private set; }
-		public Unit[] units;
-        private readonly string[] knownMagicSpells;
-        public Unit currentUnit;
+		public State state { get; protected set; }
+		public Unit currentUnit;
 	    public int currentUnitIndex;
-        private int currentMovesScore;
-        private int currentSpellsScore;
-        private int previouslyExplodedLines;
+        public int currentMovesScore;
+        protected int currentSpellsScore;
+        public int previouslyExplodedLines;
         public StringBuilder enteredString;
         public List<string> EnteredMagicSpells;
-        private LinearCongruentalGenerator randomGenerator;
-        protected int step = 0;
-	    private ForbiddenSequenceChecker forbiddenSequenceChecker;
-	    private List<MoveType> moves;
+
+        public int step = 0;
+	    protected ForbiddenSequenceChecker forbiddenSequenceChecker;
+        public List<MoveType> moves;
 	    public int spawnedUnitIndex;
-	    public int[] UnitIndeces;
+	    
 
 	    public int CurrentScore
         {
@@ -49,6 +50,11 @@ namespace SomeSecretProject.Logic
             this.problem = problem;
             this.seed = seed;
             this.knownMagicSpells = knownMagicSpells.Select(s => s.ToLower()).ToArray();
+            units = problem.units;
+            UnitIndeces = new int[problem.sourceLength];
+            var randomGenerator = new LinearCongruentalGenerator(seed);
+            for (int i = 0; i < problem.sourceLength; i++)
+                UnitIndeces[i] = randomGenerator.GetNext() % units.Length;
             ReStart();
         }
 
@@ -65,18 +71,11 @@ namespace SomeSecretProject.Logic
                     else
                         map[x, y] = new Cell { x = x, y = y };
                 }
-            units = problem.units;
-			for (int i = 0; i < units.Length; i++)
+            			for (int i = 0; i < units.Length; i++)
 			{
 				units[i] = SpawnUnit(units[i], problem);
 			}
-			randomGenerator = new LinearCongruentalGenerator(seed);
-			UnitIndeces = new int[problem.sourceLength];
-	        for (int i = 0; i < problem.sourceLength; i++)
-	        {
-		        UnitIndeces[i] = randomGenerator.GetNext()%units.Length;
-	        }
-            state = State.WaitUnit;
+			state = State.WaitUnit;
             step = 0;
 	        currentUnit = null;
 	        forbiddenSequenceChecker = null;
